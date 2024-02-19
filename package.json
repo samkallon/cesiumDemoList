@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
+    "@turf/helpers": "^6.5.0",
     "@turf/turf": "^6.5.0",
     "cesium": "1.114.0",
     "element-plus": "^2.3.12",

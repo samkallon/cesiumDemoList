@@ -1,6 +1,7 @@
 import * as Cesium from "cesium";
 import {ElMessage} from "element-plus";
-import {TileMapServiceImageryProvider} from "cesium";
+import {getAssetsFile} from "@/utils/utils.js";
+import * as turf from '@turf/turf'
 
 export function initViewer(id) {
     Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJjMzM3OGE5Yi1lYjc5LTRhNzQtYWFjMC04M2M2MTY3YjFjM2YiLCJpZCI6NDEzMTIsImlhdCI6MTcwMzIwODY4MH0.Hda2inmYARoq6khHSp68tXlk0vPNfNEsenzYLFVLk_k'
@@ -69,6 +70,8 @@ export default class Draw {
                         material:Cesium.Color.fromCssColorString('rgba(255,255,255,0.49)')
                     }
                 })
+                console.log(this.polygonPoints)
+                handler.destroy()
             }else{
                 ElMessage.info('点数量不足3,无法构成面')
             }
@@ -96,4 +99,75 @@ export function removaEntitiesAndPrimitivesByName(name,viewer) {
 export function getEntitiesByName(name,viewer) {
     const entityList = viewer.entities._entities._array
     return entityList.filter(e => e.name === name)
+}
+
+export function addWallGeojson(
+    {
+        wallList,
+        maximumHeights,
+        minimumHeights,
+        viewer
+    }
+) {
+    const geometryInstances = wallList.map((positions) => {
+        positions.push(positions[0])
+        return new Cesium.GeometryInstance({
+            geometry: new Cesium.WallGeometry({
+                positions: positions,
+                maximumHeights: positions.map(() => maximumHeights),
+                minimumHeights: positions.map(() => minimumHeights),
+                vertexFormat: Cesium.MaterialAppearance.VERTEX_FORMAT,
+            }),
+        })
+    })
+    const wallPrimitive = new Cesium.Primitive({
+        geometryInstances,
+        appearance: new Cesium.MaterialAppearance({
+            material: new Cesium.Material({
+                fabric: {
+                    type: 'DynamicWall',
+                    uniforms: {
+                        image: getAssetsFile('imgs/materialImg/GradientRed.png'),
+                        color: Cesium.Color.fromCssColorString('#3a5e88'),
+                        speed: 2,
+                    },
+                    source: `
+              czm_material czm_getMaterial(czm_materialInput materialInput) {
+                  czm_material material = czm_getDefaultMaterial(materialInput);
+                  vec2 st = materialInput.st;
+                  vec4 colorImage = texture(image, vec2((1. - fract(st.t - speed * czm_frameNumber * 0.005)), st.t));
+                  vec4 fragColor;
+                  fragColor.rgb = color.rgb / 1.0;
+                  fragColor = czm_gammaCorrect(fragColor); // 伽马校正
+                  material.alpha = colorImage.a * color.a  * 0.8;
+                  material.diffuse = color.rgb;
+                  material.emission = fragColor.rgb;
+                  return material;
+              }
+          `,
+                }
+            }),
+        }),
+    })
+    wallPrimitive.name = 'dynamicWallChuiZhi'
+    viewer.scene.primitives.add(wallPrimitive)
+    debugger
+    viewer.scene.camera.flyToBoundingSphere()
+}
+
+export function getBoundingSphereFromCartesian3List(Cartesian3List) {
+    const latLngList = Cartesian3List.map(e => [getLatlngFromCartesian3(e).lng, getLatlngFromCartesian3(e).lat])
+    const center = turf.center(
+        turf.featureCollection(latLngList.map(e => {
+            return turf.point([e.lng, e.lat])
+        })))
+}
+
+export function getLatlngFromCartesian3(cartesian3Point) {
+    const cartographic = Cesium.Cartographic.fromCartesian(cartesian3Point)
+    return {
+        lat:Cesium.Math.toDegrees(cartographic.latitude),
+        lng:Cesium.Math.toDegrees(cartographic.longitude),
+        height:cartographic.height,
+    }
 }

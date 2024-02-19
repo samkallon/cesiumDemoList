@@ -4,8 +4,10 @@ import {onMounted, ref} from "vue";
 import demoList from "../../public/demoList.js";
 import {getAssetsFile} from "@/utils/utils.js";
 import DigTerrian from "@/components/demos/DigTerrian/DigTerrian.vue";
+import DynamicWallChuiZhi from "@/components/demos/dynamicWallChuiZhi/dynamicWallChuiZhi.vue";
 const compDic = {
-  'DigTerrian':DigTerrian
+  'DigTerrian':DigTerrian,
+  'DynamicWallChuiZhi':DynamicWallChuiZhi
 }
 
 const puBuLiuData = ref([])

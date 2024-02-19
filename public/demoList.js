@@ -13,7 +13,8 @@ export default [
     {
         title:'动态墙体垂直',
         tag:['特效'],
-        imgUrl:'imgs/demoFengMian/dtqtcz.png'
+        imgUrl:'imgs/demoFengMian/dtqtcz.png',
+        compName:'DynamicWallChuiZhi'
     },
     {
         title:'动态墙体水平',
