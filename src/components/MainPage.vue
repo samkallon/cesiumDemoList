@@ -1,23 +1,30 @@
 <script setup>
 // 瀑布流首页
 import {onMounted, ref} from "vue";
+import demoList from "../../public/demoList.js";
+import {getAssetsFile} from "@/utils/utils.js";
+import DigTerrian from "@/components/demos/DigTerrian/DigTerrian.vue";
+const compDic = {
+  'DigTerrian':DigTerrian
+}
 
 const puBuLiuData = ref([])
 
 onMounted(()=>{
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < demoList.length; i++) {
     puBuLiuData.value.push({
-      height:Math.random()*400 + 100,
-      color:getRandomColor()
+      imgUrl:demoList[i].imgUrl,
+      title:demoList[i].title,
+      compName:demoList[i].compName,
     })
   }
 })
 
-function getRandomColor(){
-  const r = Math.floor(Math.random()*255);
-  const g = Math.floor(Math.random()*255);
-  const b = Math.floor(Math.random()*255);
-  return 'rgba('+ r +','+ g +','+ b +',0.8)';
+const demoShow = ref(false)
+const currentComponent = ref('')
+async function showDemo(item) {
+  demoShow.value = true
+  currentComponent.value = compDic[item.compName]
 }
 </script>
 
@@ -27,9 +34,15 @@ function getRandomColor(){
   </div>
   <el-scrollbar>
     <div class="content">
-      <div class="item" v-for=" item in puBuLiuData" :style="{height:item.height + 'px',backgroundColor:item.color}"></div>
+      <div class="item" v-for=" item in puBuLiuData" @click="showDemo(item)">
+          <img :src="getAssetsFile(item.imgUrl)" alt="" style="width: 100%">
+          <div class="item-title">{{item.title}}</div>
+      </div>
     </div>
   </el-scrollbar>
+  <el-dialog class="demoDialog" v-model="demoShow" width="90%" top="5vh">
+    <component :is="currentComponent"></component>
+  </el-dialog>
 
 
 </template>
@@ -60,9 +73,19 @@ function getRandomColor(){
   margin-top: 58px;
   margin-left: 8px;
   .item{
+    cursor: pointer;
     position: relative;
     margin-bottom: 10px;
     break-inside: avoid;
+    .item-title{
+      box-sizing: border-box;
+      position: absolute;
+      bottom: 4px;
+      color: white;
+      background: rgba(0, 0, 0, 0.37);
+      width: 100%;
+      padding:8px
+    }
   }
   item::after{
     counter-increment: count;
@@ -78,6 +101,9 @@ function getRandomColor(){
     z-index: 2;
     left: 0;
     top: 0;
+  }
+  item:hover{
+    transform: scale(1.2);
   }
 }
 </style>

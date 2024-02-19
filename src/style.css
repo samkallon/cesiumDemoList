@@ -12,3 +12,9 @@ html,body {
   margin: 0 auto;
 }
 
+.demoDialog{
+    padding: 0!important;
+  .el-dialog__header{
+    display: none;
+  }
+}
