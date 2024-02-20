@@ -11,15 +11,10 @@ export default [
         imgUrl:'imgs/demoFengMian/pqxg.png'
     },
     {
-        title:'动态墙体垂直',
+        title:'动态墙体',
         tag:['特效','shader'],
         imgUrl:'imgs/demoFengMian/dtqtcz.png',
         compName:'DynamicWallChuiZhi'
-    },
-    {
-        title:'动态墙体水平',
-        tag:['特效','shader'],
-        imgUrl:'imgs/demoFengMian/default.png'
     },
     {
         title:'3dtile调整顶点高度',
