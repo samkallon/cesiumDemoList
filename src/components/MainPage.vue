@@ -85,7 +85,7 @@ async function showDemo(item) {
   margin-top: 70px;
   margin-left: 10px;
   .item{
-    font-size: 22px;
+    font-size: 18px;
     cursor: pointer;
     position: relative;
     margin-bottom: 10px;

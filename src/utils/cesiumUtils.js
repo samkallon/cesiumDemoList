@@ -28,6 +28,26 @@ export function initViewer(id) {
     viewer.scene.globe.depthTestAgainstTerrain = true
     viewer._cesiumWidget._creditContainer.style.display = 'none' //隐藏版权信息
     viewer.resolutionScale = 0.8
+    window.viewer = viewer
+
+    window.pickPointList = []
+    // const handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas)
+    // handler.setInputAction(mv=>{
+    //     const position = viewer.scene.pickPosition(mv.position)
+    //     window.pickPointList.push(position)
+    //     viewer.entities.add({
+    //         name:'pickPoint',
+    //         position,
+    //         point:{
+    //             disableDepthTestDistance:Number.POSITIVE_INFINITY,
+    //             pixelSize:18
+    //         }
+    //     })
+    // },Cesium.ScreenSpaceEventType.LEFT_CLICK)
+    // handler.setInputAction(mv=>{
+    //     window.pickPointList = []
+    //     removaEntitiesAndPrimitivesByName('pickPoint',viewer)
+    // },Cesium.ScreenSpaceEventType.RIGHT_CLICK)
     return viewer
 }
 
@@ -154,10 +174,6 @@ export function addWallGeojson(
     })
     wallPrimitive.name = 'dynamicWallChuiZhi'
     viewer.scene.primitives.add(wallPrimitive)
-    viewer.scene.camera.flyToBoundingSphere(getBoundingSphereFromCartesian3List(wallList[0]),{
-        offset:new Cesium.HeadingPitchRoll(0,-30,0),
-        duration:1
-    })
 }
 
 export function getBoundingSphereFromCartesian3List(Cartesian3List) {

@@ -1,36 +1,45 @@
 <script setup>
 import {onMounted, ref} from "vue";
-import {addWallGeojson, initViewer} from "@/utils/cesiumUtils.js";
+import {addWallGeojson, getBoundingSphereFromCartesian3List, initViewer} from "@/utils/cesiumUtils.js";
+import {Cesium3DTileset,HeadingPitchRoll,Math as CzmMath} from "cesium";
 
 let viewer = null
-onMounted(() => {
+onMounted(async () => {
   viewer = initViewer('cesiumContainer')
+  viewer.scene.primitives.add(
+      await Cesium3DTileset.fromIonAssetId(354759),
+  );
+  const wallList = [[
+    {
+      "x": 1532691.0113004209,
+      "y": -4465197.970253931,
+      "z": 4274384.632662207
+    },
+    {
+      "x": 1532746.191771099,
+      "y": -4465198.01788432,
+      "z": 4274364.919617005
+    },
+    {
+      "x": 1532786.9859714806,
+      "y": -4465066.866502248,
+      "z": 4274486.459959381
+    },
+    {
+      "x": 1532733.9624392178,
+      "y": -4465065.997455441,
+      "z": 4274506.267881826
+    }
+  ]]
   addWallGeojson({
-    wallList: [[
-      {
-        "x": -133197.33265570537,
-        "y": -4926384.199082031,
-        "z": 4035328.5546499547
-      },
-      {
-        "x": -171260.47851050113,
-        "y": -4960058.658651821,
-        "z": 3992701.4112747586
-      },
-      {
-        "x": -75647.79739509827,
-        "y": -4976743.420111386,
-        "z": 3974975.413831942
-      },
-      {
-        "x": -58289.114857055305,
-        "y": -4943130.989436044,
-        "z": 4016709.3028227384
-      }
-    ]],
-    maximumHeights: 20000,
+    wallList,
+    maximumHeights: 30,
     minimumHeights: 0,
     viewer
+  })
+  viewer.scene.camera.flyToBoundingSphere(getBoundingSphereFromCartesian3List(wallList[0]),{
+    offset: new HeadingPitchRoll(0,CzmMath.toRadians(-30),0),
+    duration:1
   })
 })
 

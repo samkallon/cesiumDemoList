@@ -7,9 +7,9 @@ let viewer = null
 onMounted(async () => {
   viewer = initViewer('cesiumContainer')
   const tileset = viewer.scene.primitives.add(
-      await Cesium3DTileset.fromIonAssetId(69380),
+      await Cesium3DTileset.fromIonAssetId(354759),
   );
-  viewer.flyTo(tileset)
+  viewer.flyTo(tileset,{duration:1})
   const fs = `
   uniform sampler2D colorTexture;
   uniform sampler2D depthTexture;

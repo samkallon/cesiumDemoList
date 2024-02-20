@@ -4,17 +4,10 @@ import {initViewer} from "@/utils/cesiumUtils.js";
 import Draw from '@/utils/cesiumUtils.js'
 import TerrainClipPlan from "@/utils/TerrainClipPlan.js";
 import {getAssetsFile} from "@/utils/utils.js";
-import {Terrain,CesiumTerrainProvider} from "cesium";
-
-let viewer,DrawObj,DigTerObj = null
-onMounted(()=>{
+import Cesium, {Cesium3DTileset} from "cesium";
+let viewer,DrawObj,DigTerObj,tileset = null
+onMounted(async()=>{
   viewer = initViewer('cesiumContainer')
-  viewer.scene.setTerrain(
-      new Terrain(
-          CesiumTerrainProvider.fromIonAssetId(1),
-      ),
-  );
-
   DrawObj = new Draw(viewer)
   DigTerObj = new TerrainClipPlan(viewer, {
     height: depth.value,
@@ -22,32 +15,39 @@ onMounted(()=>{
     bottomImg:  getAssetsFile('imgs/digTerrian/bottom.png'),
     wallImg: getAssetsFile('imgs/digTerrian/wall.png'),
   })
-  viewer.scene.camera.setView({
-    destination:{
-      "x": -2234804.07681179,
-      "y": -4823399.194414375,
-      "z": 3515619.778311906
-    },
-    orientation:{
-      heading:0.9814314172375651,
-      pitch:-0.40794237974748837,
-      roll:0
-    }
-  })
+  tileset = viewer.scene.primitives.add(
+      await Cesium3DTileset.fromIonAssetId(354759),
+  );
+  viewer.flyTo(tileset)
 })
 
-const depth = ref(200)
+const depth = ref(100)
 function digTerrian() {
-  DigTerObj.height = depth.value
-  DigTerObj.updateTerrainClipData(
+  const clipPlanes = DigTerObj.getClipPlanes(
       DrawObj.polygonPoints
   )
   DrawObj.clear()
+  try {
+    if (tileset){
+      const clipTileset = new Cesium.ClippingPlaneCollection({
+        clipPlanes,
+        edgeWidth: 1,
+        edgeColor: Cesium.Color.WHITE,
+        modelMatrix: Cesium.Matrix4.inverse(
+            Cesium.Transforms.eastNorthUpToFixedFrame(tileset.boundingSphere.center),
+            new Cesium.Matrix4()
+        )
+      })
+      tileset.clippingPlanes = clipTileset
+    }
+  }catch (e) {
+
+  }
 }
 
 function clear() {
   DrawObj.clear()
-  DigTerObj.clear()
+  tileset.clippingPlanes.removeAll()
 }
 
 function draw() {
@@ -59,16 +59,6 @@ function draw() {
   <div class="container">
     <div id="cesiumContainer"></div>
     <div class="dig-terrian-container">
-      <div style="display: flex; align-items: center; color: white;margin-bottom: 12px">
-        <div>开挖深度</div>
-        <el-input
-            style="margin-left: 10px; margin-right: 10px; width: 80px"
-            v-model="depth"
-            size="small"
-            placeholder="请输入开挖深度"
-        ></el-input>
-        <div>米</div>
-      </div>
       <div class="btn-groups">
         <el-button size="small" @click="draw">绘制</el-button>
         <el-button size="small" @click="digTerrian">开挖</el-button>
