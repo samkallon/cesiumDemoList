@@ -106,47 +106,22 @@ TerrainClipPlan.prototype.getClipPlanes = function (pointList) {
         pointList.reverse()
     }
     let planes = [],
-        pointLength = pointList.length,
-        n = Cesium.Cartesian3.subtract(pointList[0], pointList[1], new Cesium.Cartesian3);
-    // n = n.x > 0, this.excavateMinHeight = 9999;
-    if (n.x !== 0) this.excavateMinHeight = 9999;
+        pointLength = pointList.length
     for (let i = 0; i < pointLength; ++i) {
         let nextPointIndex = (i + 1) % pointLength
-        let currPointCartographic = Cesium.Cartographic.fromCartesian(pointList[i])
-        let currPointHeight = this.viewer.scene.globe.getHeight(currPointCartographic) || currPointCartographic.height;
-        if (currPointHeight < this.excavateMinHeight){
-            this.excavateMinHeight = currPointHeight
-        }
-
         let midpoint = Cesium.Cartesian3.add(pointList[i], pointList[nextPointIndex], new Cesium.Cartesian3());
         midpoint = Cesium.Cartesian3.multiplyByScalar(midpoint, 0.5, midpoint);
         // 中点的单位向量
         let up = Cesium.Cartesian3.normalize(midpoint, new Cesium.Cartesian3());
 
         let right = Cesium.Cartesian3.subtract(pointList[nextPointIndex], midpoint, new Cesium.Cartesian3());
-        if(right.x===0 && right.y===0 && right.z===0){
-            console.log("有点不在范围内1");
-        }else{
-            right = Cesium.Cartesian3.normalize(right, right);
-        }
+
         let normal = Cesium.Cartesian3.cross(right, up, new Cesium.Cartesian3());
-        if(normal.x===0 && normal.y===0 && normal.z===0){
-            console.log("有点不在范围内2");
-        }else{
-            normal = Cesium.Cartesian3.normalize(normal, normal);
-            let originCenteredPlane = new Cesium.Plane(normal, 0.0);
-            let distance = Cesium.Plane.getPointDistance(originCenteredPlane, midpoint);
-            planes.push(new Cesium.ClippingPlane(normal, distance));
-        }
+        normal = Cesium.Cartesian3.normalize(normal, normal);
+        planes.push(new Cesium.ClippingPlane.fromPlane(new Cesium.Plane.fromPointNormal(midpoint,normal)));
     }
-    const clippingPlaneCollection = new Cesium.ClippingPlaneCollection({
-        planes,
-        edgeWidth: 0,
-        edgeColor: Cesium.Color.WHITE,
-        enabled: true,
-        unionClippingRegions:false
-    })
-    return clippingPlaneCollection
+
+    return planes
 }
 TerrainClipPlan.prototype.clear = function () {
 

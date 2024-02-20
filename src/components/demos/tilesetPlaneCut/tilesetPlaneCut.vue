@@ -4,7 +4,7 @@ import {initViewer} from "@/utils/cesiumUtils.js";
 import Draw from '@/utils/cesiumUtils.js'
 import TerrainClipPlan from "@/utils/TerrainClipPlan.js";
 import {getAssetsFile} from "@/utils/utils.js";
-import Cesium, {Cesium3DTileset} from "cesium";
+import * as Cesium from "cesium"
 let viewer,DrawObj,DigTerObj,tileset = null
 onMounted(async()=>{
   viewer = initViewer('cesiumContainer')
@@ -16,7 +16,7 @@ onMounted(async()=>{
     wallImg: getAssetsFile('imgs/digTerrian/wall.png'),
   })
   tileset = viewer.scene.primitives.add(
-      await Cesium3DTileset.fromIonAssetId(354759),
+      await Cesium.Cesium3DTileset.fromIonAssetId(354759),
   );
   viewer.flyTo(tileset)
 })
@@ -30,7 +30,7 @@ function digTerrian() {
   try {
     if (tileset){
       const clipTileset = new Cesium.ClippingPlaneCollection({
-        clipPlanes,
+        planes:clipPlanes,
         edgeWidth: 1,
         edgeColor: Cesium.Color.WHITE,
         modelMatrix: Cesium.Matrix4.inverse(

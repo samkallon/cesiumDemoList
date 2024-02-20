@@ -13,8 +13,8 @@ export default [
     {
         title:'动态墙体',
         tag:['特效','shader'],
-        imgUrl:'imgs/demoFengMian/dtqtcz.png',
-        compName:'DynamicWallChuiZhi'
+        imgUrl:'imgs/demoFengMian/DynamicWall.png',
+        compName:'DynamicWall'
     },
     {
         title:'3dtile调整顶点高度',
@@ -29,7 +29,8 @@ export default [
     {
         title:'3dtile裁切',
         tag:['modelMatrix','3dtile'],
-        imgUrl:'imgs/demoFengMian/default.png',
+        imgUrl:'imgs/demoFengMian/tilesetPlaneCut.png',
+        compName:'TilesetPlaneCut'
     },
     {
         title:'积雪效果',

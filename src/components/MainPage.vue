@@ -4,17 +4,17 @@ import {onMounted, ref} from "vue";
 import demoList from "../../public/demoList.js";
 import {getAssetsFile} from "@/utils/utils.js";
 import DigTerrian from "@/components/demos/DigTerrian/DigTerrian.vue";
-import DynamicWallChuiZhi from "@/components/demos/dynamicWallChuiZhi/dynamicWallChuiZhi.vue";
-import DynamicWallShuiPing from "@/components/demos/dynamicWallShuiPing/dynamicWallShuiPing.vue";
+import DynamicWall from "@/components/demos/dynamicWall/dynamicWall.vue";
 import SnowCover from "@/components/demos/snowCover/snowCover.vue";
 import RainCover from "@/components/demos/rainCover/rainCover.vue";
+import TilesetPlaneCut from "@/components/demos/tilesetPlaneCut/tilesetPlaneCut.vue";
 import {ElMessage} from "element-plus";
 const compDic = {
   'DigTerrian':DigTerrian,
-  'DynamicWallChuiZhi':DynamicWallChuiZhi,
-  'DynamicWallShuiPing':DynamicWallShuiPing,
+  'DynamicWall':DynamicWall,
   'SnowCover':SnowCover,
   'RainCover':RainCover,
+  'TilesetPlaneCut':TilesetPlaneCut,
 }
 
 const puBuLiuData = ref([])
