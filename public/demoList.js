@@ -45,6 +45,7 @@ export default [
     {
         title:'积水效果',
         tag:['后处理','shader'],
-        imgUrl:'imgs/demoFengMian/default.png',
+        imgUrl:'imgs/demoFengMian/waterCover.png',
+        compName:'RainCover'
     },
 ]
