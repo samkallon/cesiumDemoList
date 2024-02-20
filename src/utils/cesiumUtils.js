@@ -27,7 +27,7 @@ export function initViewer(id) {
 
     viewer.scene.globe.depthTestAgainstTerrain = true
     viewer._cesiumWidget._creditContainer.style.display = 'none' //隐藏版权信息
-    viewer.resolutionScale = 0.8
+    viewer.resolutionScale = 1.0
     window.viewer = viewer
 
     window.pickPointList = []
