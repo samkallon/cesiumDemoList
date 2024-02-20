@@ -139,7 +139,7 @@ export function addWallGeojson(
                   vec4 fragColor;
                   fragColor.rgb = color.rgb / 1.0;
                   fragColor = czm_gammaCorrect(fragColor); // 伽马校正
-                  material.alpha = colorImage.a * color.a  * 0.8;
+                  material.alpha = colorImage.a * color.a  * 1.4;
                   material.diffuse = color.rgb;
                   material.emission = fragColor.rgb;
                   return material;
@@ -151,16 +151,26 @@ export function addWallGeojson(
     })
     wallPrimitive.name = 'dynamicWallChuiZhi'
     viewer.scene.primitives.add(wallPrimitive)
-    debugger
-    viewer.scene.camera.flyToBoundingSphere()
+    viewer.scene.camera.flyToBoundingSphere(getBoundingSphereFromCartesian3List(wallList[0]),{
+        offset:new Cesium.HeadingPitchRoll(0,-30,0)
+    })
 }
 
 export function getBoundingSphereFromCartesian3List(Cartesian3List) {
     const latLngList = Cartesian3List.map(e => [getLatlngFromCartesian3(e).lng, getLatlngFromCartesian3(e).lat])
-    const center = turf.center(
+    const bbox = turf.bbox(
         turf.featureCollection(latLngList.map(e => {
-            return turf.point([e.lng, e.lat])
+            return turf.point([e[0], e[1]])
         })))
+    // 计算两点距离
+    const from = turf.point([bbox[0], bbox[1]]);
+    const to = turf.point([bbox[2], bbox[3]]);
+    const distance = turf.distance(from, to, {units: 'kilometers'});
+    // 计算中心点
+    const center = turf.midpoint(from, to);
+    return new Cesium.BoundingSphere(Cesium.Cartesian3.fromDegrees(
+        center.geometry.coordinates[0],center.geometry.coordinates[1]
+    ),distance*1000/2)
 }
 
 export function getLatlngFromCartesian3(cartesian3Point) {

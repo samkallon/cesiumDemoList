@@ -12,13 +12,13 @@ export default [
     },
     {
         title:'动态墙体垂直',
-        tag:['特效'],
+        tag:['特效','shader'],
         imgUrl:'imgs/demoFengMian/dtqtcz.png',
         compName:'DynamicWallChuiZhi'
     },
     {
         title:'动态墙体水平',
-        tag:['特效'],
+        tag:['特效','shader'],
         imgUrl:'imgs/demoFengMian/dtqtcz.png'
     },
     {
@@ -28,13 +28,22 @@ export default [
     },
     {
         title:'3dtile调整位置,姿态',
-        tag:['shader','3dtile'],
+        tag:['modelMatrix','3dtile'],
         imgUrl:'imgs/demoFengMian/dtqtcz.png'
     },
     {
         title:'3dtile裁切',
-        tag:['3dtile'],
+        tag:['modelMatrix','3dtile'],
         imgUrl:'imgs/demoFengMian/dxkw.png',
-        compName:'DigTerrian'
+    },
+    {
+        title:'积雪效果',
+        tag:['后处理','shader'],
+        imgUrl:'imgs/demoFengMian/dxkw.png',
+    },
+    {
+        title:'积水效果',
+        tag:['后处理','shader'],
+        imgUrl:'imgs/demoFengMian/dxkw.png',
     },
 ]

@@ -28,7 +28,7 @@ onMounted(() => {
         "z": 4016709.3028227384
       }
     ]],
-    maximumHeights: 2000,
+    maximumHeights: 20000,
     minimumHeights: 0,
     viewer
   })
