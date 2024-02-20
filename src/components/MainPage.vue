@@ -5,6 +5,7 @@ import demoList from "../../public/demoList.js";
 import {getAssetsFile} from "@/utils/utils.js";
 import DigTerrian from "@/components/demos/DigTerrian/DigTerrian.vue";
 import DynamicWallChuiZhi from "@/components/demos/dynamicWallChuiZhi/dynamicWallChuiZhi.vue";
+import {ElMessage} from "element-plus";
 const compDic = {
   'DigTerrian':DigTerrian,
   'DynamicWallChuiZhi':DynamicWallChuiZhi
@@ -25,6 +26,10 @@ onMounted(()=>{
 const demoShow = ref(false)
 const currentComponent = ref('')
 async function showDemo(item) {
+  if (!item.compName){
+    ElMessage.info('功能开发中!')
+    return
+  }
   demoShow.value = true
   currentComponent.value = compDic[item.compName]
 }
@@ -36,9 +41,10 @@ async function showDemo(item) {
   </div>
   <el-scrollbar>
     <div class="content">
-      <div class="item" v-for=" item in puBuLiuData" @click="showDemo(item)">
+      <div class="item" v-for=" item in puBuLiuData" @click="showDemo(item)" >
           <img :src="getAssetsFile(item.imgUrl)" alt="" style="width: 100%">
           <div class="item-title">{{item.title}}</div>
+          <div class="item-title todo" v-if="!item.compName">功能开发中...</div>
       </div>
     </div>
   </el-scrollbar>
@@ -52,7 +58,7 @@ async function showDemo(item) {
 <style scoped lang="scss">
 .header{
   width: 100%;
-  height: 50px;
+  height: 60px;
   background: #213547;
   display: flex;
   align-items: center;
@@ -61,7 +67,7 @@ async function showDemo(item) {
   top: 0;
   .title{
     color: white;
-    font-size: 26px;
+    font-size: 32px;
     margin-left: 8px;
   }
 }
@@ -70,11 +76,12 @@ async function showDemo(item) {
   column-gap: 10px;
 
   counter-reset: count;
-  width: calc(100% - 16px);
-  height: calc(100% - 50px);
-  margin-top: 58px;
-  margin-left: 8px;
+  width: calc(100% - 20px);
+  height: calc(100% - 70px);
+  margin-top: 70px;
+  margin-left: 10px;
   .item{
+    font-size: 22px;
     cursor: pointer;
     position: relative;
     margin-bottom: 10px;
@@ -87,6 +94,9 @@ async function showDemo(item) {
       background: rgba(0, 0, 0, 0.37);
       width: 100%;
       padding:8px
+    }
+    .todo{
+      top: 4px;
     }
   }
   item::after{

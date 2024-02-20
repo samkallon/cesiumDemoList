@@ -19,31 +19,31 @@ export default [
     {
         title:'动态墙体水平',
         tag:['特效','shader'],
-        imgUrl:'imgs/demoFengMian/dtqtcz.png'
+        imgUrl:'imgs/demoFengMian/default.png'
     },
     {
         title:'3dtile调整顶点高度',
         tag:['shader','3dtile'],
-        imgUrl:'imgs/demoFengMian/dtqtcz.png'
+        imgUrl:'imgs/demoFengMian/default.png'
     },
     {
         title:'3dtile调整位置,姿态',
         tag:['modelMatrix','3dtile'],
-        imgUrl:'imgs/demoFengMian/dtqtcz.png'
+        imgUrl:'imgs/demoFengMian/default.png'
     },
     {
         title:'3dtile裁切',
         tag:['modelMatrix','3dtile'],
-        imgUrl:'imgs/demoFengMian/dxkw.png',
+        imgUrl:'imgs/demoFengMian/default.png',
     },
     {
         title:'积雪效果',
         tag:['后处理','shader'],
-        imgUrl:'imgs/demoFengMian/dxkw.png',
+        imgUrl:'imgs/demoFengMian/snowDuiJi.png',
     },
     {
         title:'积水效果',
         tag:['后处理','shader'],
-        imgUrl:'imgs/demoFengMian/dxkw.png',
+        imgUrl:'imgs/demoFengMian/default.png',
     },
 ]
