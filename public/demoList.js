@@ -40,6 +40,7 @@ export default [
         title:'积雪效果',
         tag:['后处理','shader'],
         imgUrl:'imgs/demoFengMian/snowDuiJi.png',
+        compName:'SnowCover'
     },
     {
         title:'积水效果',

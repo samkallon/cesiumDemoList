@@ -5,10 +5,12 @@ import demoList from "../../public/demoList.js";
 import {getAssetsFile} from "@/utils/utils.js";
 import DigTerrian from "@/components/demos/DigTerrian/DigTerrian.vue";
 import DynamicWallChuiZhi from "@/components/demos/dynamicWallChuiZhi/dynamicWallChuiZhi.vue";
+import SnowCover from "@/components/demos/snowCover/snowCover.vue";
 import {ElMessage} from "element-plus";
 const compDic = {
   'DigTerrian':DigTerrian,
-  'DynamicWallChuiZhi':DynamicWallChuiZhi
+  'DynamicWallChuiZhi':DynamicWallChuiZhi,
+  'SnowCover':SnowCover,
 }
 
 const puBuLiuData = ref([])

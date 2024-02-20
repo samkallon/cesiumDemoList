@@ -18,13 +18,16 @@ export function initViewer(id) {
         selectionIndicator: false, //是否显示选取指示器组件
         baseLayerPicker: false,
         baseLayer:false,
+        scene3DOnly:true
     })
+
     Cesium.IonImageryProvider.fromAssetId(2).then(res=>{
         viewer.imageryLayers.addImageryProvider(res);
     })
 
     viewer.scene.globe.depthTestAgainstTerrain = true
     viewer._cesiumWidget._creditContainer.style.display = 'none' //隐藏版权信息
+    viewer.resolutionScale = 0.8
     return viewer
 }
 
@@ -152,7 +155,8 @@ export function addWallGeojson(
     wallPrimitive.name = 'dynamicWallChuiZhi'
     viewer.scene.primitives.add(wallPrimitive)
     viewer.scene.camera.flyToBoundingSphere(getBoundingSphereFromCartesian3List(wallList[0]),{
-        offset:new Cesium.HeadingPitchRoll(0,-30,0)
+        offset:new Cesium.HeadingPitchRoll(0,-30,0),
+        duration:1
     })
 }
 
