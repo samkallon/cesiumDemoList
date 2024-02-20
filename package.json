@@ -13,6 +13,7 @@
     "@turf/helpers": "^6.5.0",
     "@turf/turf": "^6.5.0",
     "cesium": "1.114.0",
+    "dat.gui": "^0.7.9",
     "element-plus": "^2.3.12",
     "vue": "^3.4.15"
   },
