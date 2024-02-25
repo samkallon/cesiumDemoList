@@ -78,7 +78,7 @@ async function showDemo(item) {
   }
 }
 .content{
-  column-count: 4;
+  column-count: 5;
   column-gap: 10px;
 
   counter-reset: count;

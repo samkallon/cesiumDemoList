@@ -6,6 +6,12 @@ export default [
         compName:'DigTerrian'
     },
     {
+        title:'积水效果',
+        tag:['后处理','shader'],
+        imgUrl:'imgs/demoFengMian/waterCover.png',
+        compName:'RainCover'
+    },
+    {
         title:'喷泉效果',
         tag:['粒子'],
         imgUrl:'imgs/demoFengMian/pqxg.png'
@@ -123,12 +129,7 @@ export default [
         imgUrl:'imgs/demoFengMian/snowDuiJi.png',
         compName:'SnowCover'
     },
-    {
-        title:'积水效果',
-        tag:['后处理','shader'],
-        imgUrl:'imgs/demoFengMian/waterCover.png',
-        compName:'RainCover'
-    },
+
     {
         title:'天际线',
         tag:['后处理','shader'],

@@ -55,6 +55,9 @@ export default class Draw {
     constructor(viewer) {
         this.viewer = viewer
         this.polygonPoints = []
+        this.activePolygonPoints = []
+        this.activePolygonEntity = null
+        this.dynamicCallbackPoint = null
     }
 
     startDraw(type){
@@ -78,10 +81,31 @@ export default class Draw {
                 }
             })
             this.polygonPoints.push(position)
+            if (this.activePolygonPoints.length === 0){
+                this.activePolygonPoints.push(position)
+                this.dynamicCallbackPoint = new Cesium.CallbackProperty(function () {
+                    return new Cesium.PolygonHierarchy(this.activePolygonPoints);
+                }, false)
+                this.activePolygonEntity = this.viewer.entities.add({
+                    name:'tempPolygon',
+                    polygon:{
+                        hierarchy:this.dynamicCallbackPoint,
+                        material:Cesium.Color.fromCssColorString('rgba(255,255,255,0.49)')
+                    }
+                })
+            }
+            this.activePolygonPoints.push(position)
         },Cesium.ScreenSpaceEventType.LEFT_CLICK)
 
         handler.setInputAction(movement=>{
+            const tempPosition = this.viewer.scene.pickPosition(movement.endPosition)
+            // 添加临时面
+            if (tempPosition && this.activePolygonPoints.length !== 0){
+                this.activePolygonPoints.pop();
+                this.activePolygonPoints.push(tempPosition);
+                console.log(this.activePolygonPoints[this.activePolygonPoints.length -1].x)
 
+            }
         },Cesium.ScreenSpaceEventType.MOUSE_MOVE)
 
         handler.setInputAction(movement=>{
@@ -93,7 +117,11 @@ export default class Draw {
                         material:Cesium.Color.fromCssColorString('rgba(255,255,255,0.49)')
                     }
                 })
+                removaEntitiesAndPrimitivesByName('tempPolygon',this.viewer)
                 console.log(this.polygonPoints)
+                this.activePolygonPoints = []
+                this.polygonPoints = []
+                this.dynamicCallbackPoint = null
                 handler.destroy()
             }else{
                 ElMessage.info('点数量不足3,无法构成面')
