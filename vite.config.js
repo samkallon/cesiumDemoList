@@ -13,11 +13,4 @@ export default defineConfig({
   },
   base: '/cesiumDemoList/',
   root: './',
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: '@import "@/assets/vars.scss";',
-      },
-    },
-  },
 })

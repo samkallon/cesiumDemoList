@@ -1,8 +1,4 @@
-@mixin keyframes($animationName) {
-  @keyframes #{$animationName} {
-    @content;
-  }
-}
+
 
 @mixin MaoBoLi($color) {
   background-color: $color;

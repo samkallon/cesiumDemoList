@@ -66,7 +66,7 @@ function showWall(id,type,imgUrl) {
 <template>
   <div class="container">
     <div id="cesiumContainer"></div>
-    <div class="dig-terrian-container">
+    <div class="dig-terrian-container MaoBoLi">
       <div class="btn-groups">
         <el-button size="small" :type="curr == 1?'primary':''" @click="showWall(1,'shuiPing')">水平墙体1</el-button>
         <el-button size="small" :type="curr == 2?'primary':''" @click="showWall(2,'shuiPing','imgs/materialImg/dynamicWall.png')">水平墙体2</el-button>
@@ -88,7 +88,6 @@ function showWall(id,type,imgUrl) {
   position: absolute;
   top: 0;
   left: 0;
-  @include MaoBoLi(rgba(255, 255, 255, 0.37));
 }
 
 #cesiumContainer {

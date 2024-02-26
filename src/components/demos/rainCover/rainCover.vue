@@ -16,7 +16,9 @@ onMounted(async () => {
   in vec2 v_textureCoordinates;
   out vec4 glColor;
   vec4 toEye(in vec2 uv, in float depth){
+      // 将纹理坐标从0-1 转换到-1 到 1
       vec2 xy = vec2((uv.x * 2.0 - 1.0),(uv.y * 2.0 - 1.0));
+      // 将裁剪坐标转换为眼睛坐标
       vec4 posInCamera =czm_inverseProjection * vec4(xy, depth, 1.0);
       posInCamera =posInCamera / posInCamera.w;
       return posInCamera;
@@ -63,6 +65,7 @@ onMounted(async () => {
       vec4 currD = texture(depthTexture, v_textureCoordinates);
       // glColor = currD;
       // return;
+      // 对于深度大于1.0，即距离相机很远的点，应用其本身的颜色
       if(currD.r>=1.0){
           glColor = color;
           return;

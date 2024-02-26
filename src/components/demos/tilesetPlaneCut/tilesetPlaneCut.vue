@@ -58,7 +58,7 @@ function draw() {
 <template>
   <div class="container">
     <div id="cesiumContainer"></div>
-    <div class="dig-terrian-container">
+    <div class="dig-terrian-container MaoBoLi">
       <div class="btn-groups">
         <el-button size="small" @click="draw">绘制</el-button>
         <el-button size="small" @click="digTerrian">开挖</el-button>
@@ -79,7 +79,6 @@ function draw() {
   position: absolute;
   top: 0;
   left: 0;
-  @include MaoBoLi(rgba(255, 255, 255, 0.37));
 }
 #cesiumContainer{
   width: 100%;

@@ -58,7 +58,7 @@ function draw() {
 <template>
   <div class="container">
     <div id="cesiumContainer"></div>
-    <div class="dig-terrian-container">
+    <div class="dig-terrian-container MaoBoLi">
       <div style="display: flex; align-items: center; color: white;margin-bottom: 12px">
         <div>开挖深度</div>
         <el-input
@@ -89,7 +89,6 @@ function draw() {
   position: absolute;
   top: 0;
   left: 0;
-  @include MaoBoLi(rgba(255, 255, 255, 0.37));
 }
 #cesiumContainer{
   width: 100%;
