@@ -1,7 +1,7 @@
 export default [
     {
         title:'地形开挖',
-        tag:['功能'],
+        tag:['功能1'],
         imgUrl:'imgs/demoFengMian/dxkw.png',
         compName:'DigTerrian'
     },
