@@ -46,7 +46,7 @@ async function showDemo(item) {
 </script>
 
 <template>
-    <vue-particles id="bg" :options="grow"></vue-particles>
+    <vue-particles id="bg" :options="tsParticleEmitter"></vue-particles>
     <div class="header">
       <div class="title">标题</div>
     </div>
