@@ -6,7 +6,7 @@ import {
   initViewer,
   removaEntitiesAndPrimitivesByName
 } from "@/utils/cesiumUtils.js";
-import {Cesium3DTileset,HeadingPitchRoll,Math as CzmMath} from "cesium";
+import {Cesium3DTileset,HeadingPitchRoll,Math as CzmMath, Cartesian2} from "cesium";
 
 let viewer = null
 const wallList = [[
@@ -52,14 +52,18 @@ const curr = ref(1)
 function showWall(id,type,imgUrl) {
   curr.value = id
   removaEntitiesAndPrimitivesByName('DynamicWall',viewer)
-  addWallGeojson({
+  const params = {
     wallList,
     maximumHeights: 30,
     minimumHeights: 0,
     viewer,
     dynamicDir:type,
     imgUrl
-  })
+  }
+  if (id === 2){
+    params.repeat = new Cartesian2(10,1)
+  }
+  addWallGeojson(params)
 }
 </script>
 

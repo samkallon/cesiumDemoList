@@ -32,7 +32,8 @@ export default [
         title:'随机上升飞线',
         tag:['特效','shader'],
         imgUrl:'imgs/demoFengMian/upLine.png',
-        url:'https://blog.csdn.net/weixin_45782925/article/details/123299042'
+        url:'https://blog.csdn.net/weixin_45782925/article/details/123299042',
+        compName:'UpLine'
     },
     {
         title:'动态抛物线',
@@ -133,7 +134,7 @@ export default [
         title:'高度雾效果',
         tag:['后处理','shader'],
         imgUrl:'imgs/demoFengMian/hightFog.png',
-        compName:'Fog'
+        // compName:'Fog'
     },
     {
         title:'天际线',

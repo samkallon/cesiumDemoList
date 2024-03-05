@@ -10,6 +10,7 @@ import DynamicWall from "@/components/demos/dynamicWall/dynamicWall.vue";
 import SnowCover from "@/components/demos/snowCover/snowCover.vue";
 import RainCover from "@/components/demos/rainCover/rainCover.vue";
 import TilesetPlaneCut from "@/components/demos/tilesetPlaneCut/tilesetPlaneCut.vue";
+import UpLine from "./demos/randomUpLine/upLine.vue";
 import Fog from "./demos/Fog/Fog.vue";
 import {ElMessage} from "element-plus";
 const compDic = {
@@ -19,6 +20,7 @@ const compDic = {
   'RainCover':RainCover,
   'TilesetPlaneCut':TilesetPlaneCut,
   'Fog':Fog,
+  'UpLine':UpLine,
 }
 
 const puBuLiuData = ref([])
@@ -105,7 +107,7 @@ async function showDemo(item) {
       padding:8px
     }
     .todo{
-      top: 4px;
+      top: 0px;
     }
   }
   item::after{

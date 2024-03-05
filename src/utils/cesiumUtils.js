@@ -2,6 +2,7 @@ import * as Cesium from "cesium";
 import {ElMessage} from "element-plus";
 import {getAssetsFile} from "@/utils/utils.js";
 import * as turf from '@turf/turf'
+import {Appearance} from "cesium";
 
 export function initViewer(id) {
     Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJjMzM3OGE5Yi1lYjc5LTRhNzQtYWFjMC04M2M2MTY3YjFjM2YiLCJpZCI6NDEzMTIsImlhdCI6MTcwMzIwODY4MH0.Hda2inmYARoq6khHSp68tXlk0vPNfNEsenzYLFVLk_k'
@@ -31,23 +32,30 @@ export function initViewer(id) {
     window.viewer = viewer
 
     window.pickPointList = []
-    // const handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas)
-    // handler.setInputAction(mv=>{
-    //     const position = viewer.scene.pickPosition(mv.position)
-    //     window.pickPointList.push(position)
-    //     viewer.entities.add({
-    //         name:'pickPoint',
-    //         position,
-    //         point:{
-    //             disableDepthTestDistance:Number.POSITIVE_INFINITY,
-    //             pixelSize:18
-    //         }
-    //     })
-    // },Cesium.ScreenSpaceEventType.LEFT_CLICK)
-    // handler.setInputAction(mv=>{
-    //     window.pickPointList = []
-    //     removaEntitiesAndPrimitivesByName('pickPoint',viewer)
-    // },Cesium.ScreenSpaceEventType.RIGHT_CLICK)
+    const handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas)
+    handler.setInputAction(mv=>{
+        const position = viewer.scene.pickPosition(mv.position)
+        console.log('Cartesian3: %o',position)
+        const cartogra = Cesium.Cartographic.fromCartesian(position)
+        console.log('Cartographic: %o',{
+            lat:Cesium.Math.toDegrees(cartogra.latitude),
+            lng:Cesium.Math.toDegrees(cartogra.longitude),
+            height:cartogra.height
+        })
+        window.pickPointList.push(position)
+        // viewer.entities.add({
+        //     name:'pickPoint',
+        //     position,
+        //     point:{
+        //         disableDepthTestDistance:Number.POSITIVE_INFINITY,
+        //         pixelSize:18
+        //     }
+        // })
+    },Cesium.ScreenSpaceEventType.LEFT_CLICK)
+    handler.setInputAction(mv=>{
+        window.pickPointList = []
+        // removaEntitiesAndPrimitivesByName('pickPoint',viewer)
+    },Cesium.ScreenSpaceEventType.RIGHT_CLICK)
     return viewer
 }
 
@@ -159,7 +167,8 @@ export function addWallGeojson(
         minimumHeights,
         viewer,
         imgUrl,
-        dynamicDir
+        dynamicDir,
+        repeat
     }
 ) {
     const geometryInstances = wallList.map((positions) => {
@@ -182,12 +191,13 @@ export function addWallGeojson(
                     uniforms: {
                         image: getAssetsFile(imgUrl || 'imgs/materialImg/GradientRed.png'),
                         color: Cesium.Color.fromCssColorString('#3a5e88'),
+                        repeat: repeat || new Cesium.Cartesian2(4.0, 1.0),
                         speed: 1,
                     },
                     source: `
               czm_material czm_getMaterial(czm_materialInput materialInput) {
                   czm_material material = czm_getDefaultMaterial(materialInput);
-                  vec2 st = materialInput.st;
+                  vec2 st = materialInput.st * repeat;
                   ${dynamicDir == 'chuiZhi'?'vec4 colorImage = texture(image, vec2((1. - fract(st.t - speed * czm_frameNumber * 0.005)), st.t));':'vec4 colorImage = texture(image, vec2((1. - fract(st.s - speed * czm_frameNumber * 0.005)), st.t));'}
                   vec4 fragColor;
                   fragColor.rgb = color.rgb / 1.0;
@@ -231,3 +241,85 @@ export function getLatlngFromCartesian3(cartesian3Point) {
         height:cartographic.height,
     }
 }
+
+
+
+/**
+ * @description: 竖直随机飞线初始化
+ * @param {*} _viewer
+ * @param {*} _center ：中心点
+ * @param {*} _num ：数量
+ * @return {*}
+ */
+export function lineFlowInit(viewer, _center, _num) {
+    let _positions = generateRandomPosition(_center, _num);
+    let geometryInstances = []
+    _positions.forEach(item => {
+        // 经纬度
+        let start_lon = item[0];
+        let start_lat = item[1];
+
+        let startPoint = new Cesium.Cartesian3.fromDegrees(start_lon, start_lat, 0);
+
+        // 随机高度
+        let height = 5000 * Math.random();
+        let endPoint = new Cesium.Cartesian3.fromDegrees(start_lon, start_lat, height);
+        let linePositions = [];
+        linePositions.push(startPoint);
+        linePositions.push(endPoint);
+        geometryInstances.push(new Cesium.GeometryInstance({
+            geometry: new Cesium.PolylineGeometry({
+                positions: linePositions,
+                width: 3,
+                vertexFormat : Cesium.PolylineMaterialAppearance.VERTEX_FORMAT
+            })
+        }))
+    })
+    viewer.scene.primitives.add(new Cesium.Primitive({
+            geometryInstances,
+            appearance: new Cesium.PolylineMaterialAppearance({
+                material: new Cesium.Material({
+                    fabric: {
+                        type: 'upLine',
+                        uniforms: {
+                            color: new Cesium.Color.fromCssColorString('#fe01fa'),
+                            speed: 6,
+                            percent: 0.1, //线的拖尾长度
+                            gradient: 0.01
+                        },
+                        source: `
+                          czm_material czm_getMaterial(czm_materialInput materialInput){
+                              czm_material material = czm_getDefaultMaterial(materialInput);
+                              vec2 st = materialInput.st;
+                              float t =fract(czm_frameNumber * speed / 1000.0);
+                              t *= (1.0 + percent);
+                              float alpha = smoothstep(t- percent, t, st.s) * step(-t, -st.s);
+                              alpha += gradient;
+                              material.diffuse = color.rgb;
+                              material.alpha = alpha;
+                              return material;
+                            }`,
+                    }
+                }),
+            })
+        }
+    ))
+}
+
+/**
+ * @description: 产生随机点
+ * @param {*} position：中心点坐标
+ * @param {*} num：随机点数量
+ * @return {*}
+ */
+function generateRandomPosition(position, num) {
+    let list = []
+    for (let i = 0; i < num; i++) {
+        // random产生的随机数范围是0-1，需要加上正负模拟
+        let lon = position[0] + Math.random() * 0.04 * (i % 2 == 0 ? 1 : -1);
+        let lat = position[1] + Math.random() * 0.04 * (i % 2 == 0 ? 1 : -1);
+        list.push([lon, lat])
+    }
+    return list
+}
+
