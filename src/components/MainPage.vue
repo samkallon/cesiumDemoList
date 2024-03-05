@@ -3,11 +3,14 @@
 import {onMounted, ref} from "vue";
 import demoList from "../../public/demoList.js";
 import {getAssetsFile} from "@/utils/utils.js";
+import tsParticleEmitter from '/public/tsParticle/tsParticleEmitter.json'
+import grow from '/public/tsParticle/grow.json'
 import DigTerrian from "@/components/demos/DigTerrian/DigTerrian.vue";
 import DynamicWall from "@/components/demos/dynamicWall/dynamicWall.vue";
 import SnowCover from "@/components/demos/snowCover/snowCover.vue";
 import RainCover from "@/components/demos/rainCover/rainCover.vue";
 import TilesetPlaneCut from "@/components/demos/tilesetPlaneCut/tilesetPlaneCut.vue";
+import Fog from "./demos/Fog/Fog.vue";
 import {ElMessage} from "element-plus";
 const compDic = {
   'DigTerrian':DigTerrian,
@@ -15,6 +18,7 @@ const compDic = {
   'SnowCover':SnowCover,
   'RainCover':RainCover,
   'TilesetPlaneCut':TilesetPlaneCut,
+  'Fog':Fog,
 }
 
 const puBuLiuData = ref([])
@@ -42,23 +46,22 @@ async function showDemo(item) {
 </script>
 
 <template>
-  <div class="header">
-    <div class="title">标题</div>
-  </div>
-  <el-scrollbar>
-    <div class="content">
-      <div class="item" v-for=" item in puBuLiuData" @click="showDemo(item)" >
+    <vue-particles id="bg" :options="grow"></vue-particles>
+    <div class="header">
+      <div class="title">标题</div>
+    </div>
+    <el-scrollbar>
+      <div class="content">
+        <div class="item" v-for=" item in puBuLiuData" @click="showDemo(item)" >
           <img :src="getAssetsFile(item.imgUrl)" alt="" style="width: 100%">
           <div class="item-title">{{item.title}}</div>
           <div class="item-title todo" v-if="!item.compName">功能开发中...</div>
+        </div>
       </div>
-    </div>
-  </el-scrollbar>
-  <el-dialog class="demoDialog" v-model="demoShow" width="90%" top="5vh">
-    <component :is="currentComponent"></component>
-  </el-dialog>
-
-
+    </el-scrollbar>
+    <el-dialog class="demoDialog" v-model="demoShow" width="90%" top="5vh">
+      <component :is="currentComponent"></component>
+    </el-dialog>
 </template>
 
 <style scoped lang="scss">
@@ -79,7 +82,7 @@ async function showDemo(item) {
 }
 .content{
   column-count: 5;
-  column-gap: 10px;
+  column-gap: 20px;
 
   counter-reset: count;
   width: calc(100% - 20px);
