@@ -19,7 +19,7 @@ onMounted(async () => {
       }
   )
   // 随机竖直飞线
-  lineFlowInit(viewer, center, 120);
+  lineFlowInit(viewer, center, 200);
 })
 
 const curr = ref(1)

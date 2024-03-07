@@ -291,7 +291,7 @@ export function lineFlowInit(viewer, _center, _num) {
                         type: 'upLine',
                         uniforms: {
                             color: new Cesium.Color.fromCssColorString('#fe01fa'),
-                            speed: 6,
+                            speed: 6 * Math.random(),
                             percent: 0.1, //线的拖尾长度
                             gradient: 0.01
                         },
@@ -324,8 +324,8 @@ function generateRandomPosition(position, num) {
     let list = []
     for (let i = 0; i < num; i++) {
         // random产生的随机数范围是0-1，需要加上正负模拟
-        let lon = position[0] + Math.random() * 0.04 * (i % 2 == 0 ? 1 : -1);
-        let lat = position[1] + Math.random() * 0.04 * (i % 2 == 0 ? 1 : -1);
+        let lon = position[0] + Math.random() * 0.07 * (Math.random() > 0.5 ? 1 : -1);
+        let lat = position[1] + Math.random() * 0.07 * (Math.random() > 0.5? 1 : -1);
         list.push([lon, lat])
     }
     return list
