@@ -1,0 +1,50 @@
+<script setup>
+import {onMounted} from "vue";
+import {
+  initViewer,
+} from "@/utils/cesiumUtils.js";
+import {lightenEillposid} from "../../../utils/cesiumUtils.js";
+import * as Cesium from "cesium";
+
+let viewer = null
+let center = [118.79304711609575, 32.07511800768333]
+onMounted(async () => {
+  viewer = initViewer('cesiumContainer',true)
+  lightenEillposid(
+      {
+        viewer,
+        position:Cesium.Cartesian3.fromDegrees(...center),
+        radii:new Cesium.Cartesian3(2000,2000,2000),
+        color: Cesium.Color.fromCssColorString('#ffe100'),
+        speed:10.0
+      }
+  )
+})
+
+</script>
+
+<template>
+  <div class="container">
+    <div id="cesiumContainer"></div>
+  </div>
+
+</template>
+
+<style scoped lang="scss">
+.container {
+  width: 100%;
+  position: relative;
+}
+
+.dig-terrian-container {
+  padding: 8px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#cesiumContainer {
+  width: 100%;
+  height: 90vh;
+}
+</style>

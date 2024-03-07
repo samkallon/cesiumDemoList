@@ -11,6 +11,7 @@ import SnowCover from "@/components/demos/snowCover/snowCover.vue";
 import RainCover from "@/components/demos/rainCover/rainCover.vue";
 import TilesetPlaneCut from "@/components/demos/tilesetPlaneCut/tilesetPlaneCut.vue";
 import UpLine from "./demos/randomUpLine/upLine.vue";
+import LightenEllipsoid from "./demos/lightenEllipsoid/lightenEllipsoid.vue";
 import Fog from "./demos/Fog/Fog.vue";
 import {ElMessage} from "element-plus";
 const compDic = {
@@ -21,6 +22,7 @@ const compDic = {
   'TilesetPlaneCut':TilesetPlaneCut,
   'Fog':Fog,
   'UpLine':UpLine,
+  'LightenEllipsoid':LightenEllipsoid,
 }
 
 const puBuLiuData = ref([])

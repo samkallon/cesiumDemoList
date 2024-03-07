@@ -100,7 +100,8 @@ export default [
         title:'闪电球体',
         tag:['特效','shader','球'],
         imgUrl:'imgs/demoFengMian/ellipsoid2.png',
-        url:'https://blog.csdn.net/weixin_45782925/article/details/123280363'
+        url:'https://blog.csdn.net/weixin_45782925/article/details/123280363',
+        compName: 'LightenEllipsoid'
     },
     {
         title:'3dtile调整顶点高度',
@@ -147,5 +148,11 @@ export default [
         tag:['后处理','shader'],
         imgUrl:'imgs/demoFengMian/dianGuangYuan.png',
         url:'https://blog.csdn.net/kuyewb/article/details/133157526'
+    },
+    {
+        title:'绕点旋转',
+        tag:['相机'],
+        imgUrl:'imgs/demoFengMian/dianGuangYuan.png',
+        url:'https://dc.dvgis.cn/#/editor?type=scene-ext&subType=animation&example=around_point'
     },
 ]
