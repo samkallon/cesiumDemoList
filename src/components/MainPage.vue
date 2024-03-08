@@ -13,6 +13,7 @@ import TilesetPlaneCut from "@/components/demos/tilesetPlaneCut/tilesetPlaneCut.
 import UpLine from "./demos/randomUpLine/upLine.vue";
 import LightenEllipsoid from "./demos/lightenEllipsoid/lightenEllipsoid.vue";
 import Fog from "./demos/Fog/Fog.vue";
+import KuoSanYuan from "./demos/kuoSanYuan/kuoSanYuan.vue";
 import {ElMessage} from "element-plus";
 const compDic = {
   'DigTerrian':DigTerrian,
@@ -23,6 +24,7 @@ const compDic = {
   'Fog':Fog,
   'UpLine':UpLine,
   'LightenEllipsoid':LightenEllipsoid,
+  'KuoSanYuan':KuoSanYuan,
 }
 
 const puBuLiuData = ref([])

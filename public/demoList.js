@@ -57,7 +57,8 @@ export default [
         title:'点扩散圆',
         tag:['特效','shader','圆'],
         imgUrl:'imgs/demoFengMian/circle1.png',
-        url:'https://blog.csdn.net/weixin_45782925/article/details/122561852'
+        url:'https://blog.csdn.net/weixin_45782925/article/details/122561852',
+        compName: 'KuoSanYuan'
     },
 
     {
