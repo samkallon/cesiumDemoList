@@ -3,6 +3,7 @@ import {onMounted, ref} from "vue";
 import {addWallGeojson, initViewer} from "@/utils/cesiumUtils.js";
 import { Cesium3DTileset,PostProcessStage,Cartesian3 } from "cesium";
 import dat from 'dat.gui'
+import * as Cesium from "cesium";
 
 
 
@@ -24,6 +25,12 @@ onMounted(async () => {
   uniform sampler2D depthTexture;
   uniform float alpha;
   uniform float height;
+  uniform vec3 oneOverRadii;
+  uniform vec3 oneOverRadiiSquared;
+  uniform float centerToleranceSquared;
+  uniform float EPSILON12;
+
+
   in vec2 v_textureCoordinates;
   out vec4 glColor;
 
@@ -40,6 +47,101 @@ onMounted(async () => {
     float f_range = czm_depthRange.far;
     return (2.0 * z_window - n_range - f_range) / (f_range - n_range);
   }
+  // 将经纬度转换为世界坐标,单位是弧度
+  vec3 getWorldPosition(float longitude,float latitude,float height) {
+     float cosLatitude = cos(latitude);
+     vec3 scratchN = vec3(cosLatitude * cos(longitude),cosLatitude * sin(longitude),sin(latitude));
+     scratchN = normalize(scratchN);
+     vec3 scratchK = vec3(rx * rx * scratchN.x, ry * ry * scratchN.y, rz * rz * scratchN.z);
+      float gamma = sqrt(scratchN.x * scratchK.x + scratchN.y * scratchK.y + scratchN.z * scratchK.z);
+     scratchK = scratchK.xyz / gamma;
+     scratchN = scratchN.xyz * height;
+     return scratchK + scratchN;
+  }
+
+  float magnitude(vec3 v){
+    return sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+  }
+
+  // 沿大地表面法线缩放提供的笛卡尔位置,使其位于该椭球体的表面上
+  vec3 scaleToGeodeticSurface(vec3 cartesian){
+    float x2 = cartesian.x * cartesian.x * oneOverRadii.x * oneOverRadii.x;
+    float y2 = cartesian.y * cartesian.y * oneOverRadii.y * oneOverRadii.y;
+    float z2 = cartesian.z * cartesian.z * oneOverRadii.z * oneOverRadii.z;
+
+    float squaredNorm = x2 + y2 + z2;
+    float ratio = sqrt(1.0 / squaredNorm);
+    vec3 intersection = cartesian * ratio;
+
+    float oneOverRadiiSquaredX = oneOverRadiiSquared.x;
+    float oneOverRadiiSquaredY = oneOverRadiiSquared.y;
+    float oneOverRadiiSquaredZ = oneOverRadiiSquared.z;
+
+    vec3 gradient = vec3(intersection.x * oneOverRadiiSquaredX * 2.0,intersection.y * oneOverRadiiSquaredY * 2.0,intersection.z * oneOverRadiiSquaredZ * 2.0);
+
+    float lambda = ((1.0 - ratio) * magnitude(gradient) ) / (0.5 * magnitude(gradient));
+    float correction = 0.0;
+    float func = 0.0;
+    float denominator = 0.0;
+    float xMultiplier = 0.0;
+    float yMultiplier = 0.0;
+    float zMultiplier = 0.0;
+    float xMultiplier2 = 0.0;
+    float yMultiplier2 = 0.0;
+    float zMultiplier2 = 0.0;
+    float xMultiplier3 = 0.0;
+    float yMultiplier3 = 0.0;
+    float zMultiplier3 = 0.0;
+    do {
+        lambda -= correction;
+
+        xMultiplier = 1.0 / (1.0 + lambda * oneOverRadiiSquaredX);
+        yMultiplier = 1.0 / (1.0 + lambda * oneOverRadiiSquaredY);
+        zMultiplier = 1.0 / (1.0 + lambda * oneOverRadiiSquaredZ);
+
+        xMultiplier2 = xMultiplier * xMultiplier;
+        yMultiplier2 = yMultiplier * yMultiplier;
+        zMultiplier2 = zMultiplier * zMultiplier;
+
+        xMultiplier3 = xMultiplier2 * xMultiplier;
+        yMultiplier3 = yMultiplier2 * yMultiplier;
+        zMultiplier3 = zMultiplier2 * zMultiplier;
+
+        func = x2 * xMultiplier2 + y2 * yMultiplier2 + z2 * zMultiplier2 - 1.0;
+
+        // "denominator" here refers to the use of this expression in the velocity and acceleration
+        // computations in the sections to follow.
+        denominator =
+          x2 * xMultiplier3 * oneOverRadiiSquaredX +
+          y2 * yMultiplier3 * oneOverRadiiSquaredY +
+          z2 * zMultiplier3 * oneOverRadiiSquaredZ;
+
+        const derivative = -2.0 * denominator;
+
+        correction = func / derivative;
+    } while (abs(func) > EPSILON12);
+    return vec3(positionX * xMultiplier, positionY * yMultiplier, positionZ * zMultiplier);
+  }
+
+  vec3 multiplyComponents(vec3 left,vec3 right){
+    return vec3(left.x * right.x, left.y * right.y, left.z * right.z);
+  }
+
+
+  // 将世界坐标转为经纬度高度
+  vec3 getCartographicFromCartesian3(vec3 cartesian3){
+    vec3 p = scaleToGeodeticSurface(cartesian);
+    vec3 n = multiplyComponents(p,oneOverRadiiSquared);
+    n = normalize(n)
+    vec3 h = cartesian - p;
+
+    const longitude = atan2(n.y, n.x);
+    const latitude = asin(n.z);
+    const height = sign(Cartesian3.dot(h, cartesian)) * magnitude(h);
+
+    return vec3(longitude,latitude,height);
+  }
+
   void main(){
     vec4 color = texture(colorTexture, v_textureCoordinates);
     vec4 currD = texture(depthTexture, v_textureCoordinates);
@@ -58,7 +160,10 @@ onMounted(async () => {
     uniforms : {
       alpha : controls['雾浓度'],
       height: controls['雾高度'],
-
+      oneOverRadii: Cesium.Ellipsoid.WGS84.wgs84OneOverRadii,
+      oneOverRadiiSquared: Cesium.Ellipsoid.WGS84.oneOverRadiiSquared,
+      centerToleranceSquared : Cesium.Ellipsoid.WGS84._centerToleranceSquared,
+      EPSILON12:Cesium.Math.EPSILON12
     }
   })
   viewer.scene.postProcessStages.add(snowCoverPostProcess);
