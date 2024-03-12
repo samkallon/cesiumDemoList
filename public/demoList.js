@@ -136,7 +136,7 @@ export default [
         title:'高度雾效果',
         tag:['后处理','shader'],
         imgUrl:'imgs/demoFengMian/hightFog.png',
-        // compName:'Fog'
+        compName:'Fog'
     },
     {
         title:'天际线',
