@@ -45,7 +45,8 @@ export default [
         title:'雷达平扫',
         tag:['特效','shader','圆','雷达'],
         imgUrl:'imgs/demoFengMian/radar1.png',
-        url:'https://blog.csdn.net/weixin_45782925/article/details/122560610'
+        url:'https://blog.csdn.net/weixin_45782925/article/details/122560610',
+        compName:'Radar1'
     },
     {
         title:'雷达波纹',
