@@ -14,6 +14,7 @@ import UpLine from "./demos/randomUpLine/upLine.vue";
 import LightenEllipsoid from "./demos/lightenEllipsoid/lightenEllipsoid.vue";
 import Fog from "./demos/Fog/Fog.vue";
 import KuoSanYuan from "./demos/kuoSanYuan/kuoSanYuan.vue";
+import Radar1 from "./demos/radar/radar1.vue";
 import {ElMessage} from "element-plus";
 const compDic = {
   'DigTerrian':DigTerrian,
@@ -25,6 +26,7 @@ const compDic = {
   'UpLine':UpLine,
   'LightenEllipsoid':LightenEllipsoid,
   'KuoSanYuan':KuoSanYuan,
+  'Radar1':Radar1,
 }
 
 const puBuLiuData = ref([])

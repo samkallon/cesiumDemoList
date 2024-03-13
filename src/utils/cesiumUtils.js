@@ -501,3 +501,96 @@ export function kuoSanYuan({viewer,latlng,color,radius,speed,height}) {
     viewer.scene.primitives.add(circlePrimitive)
 }
 
+export function addRadar1({viewer,latlng,color,radius,speed,height}) {
+    const geometryInstances = new Cesium.GeometryInstance({
+        geometry: new Cesium.CircleGeometry({
+            center: Cesium.Cartesian3.fromDegrees(latlng[0], latlng[1],latlng[2]),
+            radius: radius,
+            height
+        }),
+    })
+    const circlePrimitive = new Cesium.Primitive({
+        geometryInstances,
+        appearance: new Cesium.MaterialAppearance({
+            material: new Cesium.Material({
+                fabric: {
+                    type: 'radar1',
+                    uniforms: {
+                        color: Cesium.Color.fromCssColorString(color),
+                        speed,
+                        radius
+                    },
+                    source: `
+                      uniform vec4 color;
+                      uniform float speed;
+                      
+                      vec2 rotatePoint(float angle,vec2 p)
+                        {
+                          float s = sin(angle);
+                          float c = cos(angle);
+                          // rotate point
+                          float xnew = p.x * c - p.y * s;
+                          float ynew = p.x * s + p.y * c;
+                          p.x = xnew;
+                          p.y = ynew;
+                          return p;
+                        }
+                        
+                      float LineToPointDistance2D( vec2 b, vec2 p)
+                        {
+                            vec2 pa = p;
+                            vec2 ba = b;
+                        
+                            float h = clamp( dot(pa,ba)/dot(ba,ba), 0.0, 1.0);
+                        
+                            return length( pa - ba*h );
+                        }
+                 
+                      czm_material czm_getMaterial(czm_materialInput materialInput)
+                      {
+                        czm_material material = czm_getDefaultMaterial(materialInput);
+                        vec2 st = materialInput.st - 0.5;
+                        // st的范围是 -0.5到0.5  所以半径是 0.5
+                        vec4 colorTemp = color;
+                        colorTemp.a = 0.;
+                        material.diffuse = vec3(0.);
+                        material.emission = vec3(0);
+                        float t = czm_frameNumber * speed / 100.0;
+                        // 边线宽度
+                        float circleWitdh = 0.5 * 0.02;
+                        // 扫描线宽度
+                        float lineWitdh = 0.5 * 0.02;
+                        // 点到圆心的距离
+                        float distanceToCenter = distance(vec2(0.),st);
+                        // 点到圆边的距离
+                        float disPointToCircle = abs(distanceToCenter - 0.5);
+                        //画圆
+                        if (disPointToCircle < circleWitdh)
+                        {
+                            colorTemp *= 1.0-(disPointToCircle/circleWitdh);
+                            colorTemp.a = 3.0;
+                        }
+                        // 旋转线
+                        vec2 lineEnd =  vec2(0.,0.5); // 线终点的初始位置
+                        float angle = t;
+                        lineEnd = rotatePoint(angle,lineEnd);
+                        //Draw Line
+                        float distPointToLine = LineToPointDistance2D(lineEnd,st);
+                        if (distPointToLine<lineWitdh)
+                        { 
+                            float val = 1.0-distPointToLine/lineWitdh;
+                            colorTemp*=val;
+                            colorTemp.a = 3.0;
+                             
+                        }
+                        material.diffuse = colorTemp.rgb;
+                        material.alpha = colorTemp.a;
+                        return material;
+                      }
+                  `,
+                }
+            }),
+        }),
+    })
+    viewer.scene.primitives.add(circlePrimitive)
+}
