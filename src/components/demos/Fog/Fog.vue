@@ -48,12 +48,13 @@ onMounted(async () => {
     return (2.0 * z_window - n_range - f_range) / (f_range - n_range);
   }
 
-  vec4 getWorldCoordinateFromDepth(in vec4 currD){
+
+  vec3 getWorldCoordinateFromDepth(in vec4 currD){
     float depth = czm_unpackDepth(currD);
     vec4 eyeCoordinate = czm_windowToEyeCoordinates(gl_FragCoord.xy, depth);
-    float distance = -eyeCoordinate.z / eyeCoordinate.w;
     vec4 worldCoordinate4 = czm_inverseView * eyeCoordinate;
-    return worldCoordinate4;
+    vec3 worldCoordinate = worldCoordinate4.xyz / worldCoordinate4.w;
+    return worldCoordinate;
   }
 
   // 将经纬度转换为世界坐标,单位是弧度
@@ -179,12 +180,12 @@ onMounted(async () => {
     // float depth = getDepth(currD);
     // vec4 positionEC = toEye(v_textureCoordinates, depth);
     // vec4 positionWC = czm_inverseView * positionEC;
-    vec4 positionWC = getWorldCoordinateFromDepth(currD);
     // 获取当前点的高度
-    // vec3 cartographic = getCartographicFromCartesian3(vec3(positionWC.x,positionWC.y,positionWC.z));
-    // float pointHeight = cartographic.z;
+    vec3 positionWC = getWorldCoordinateFromDepth(currD);
+    vec3 cartographic = getCartographicFromCartesian3(vec3(positionWC.x,positionWC.y,positionWC.z));
+    float pointHeight = cartographic.z;
     // 这个不闪烁 但是旋转相机会有部分地表没有雾
-    float pointHeight = getHeight(currD);
+    // float pointHeight = getHeight(currD);
     // 当前点高度越高,雾浓度越小,高度达到设定高度,雾浓度为0,同时乘以深度,距离越远,浓度越大
     float fog =  (height/pointHeight - 1.);
     fog = clamp(fog, 0.0, 1.0);
@@ -195,28 +196,26 @@ onMounted(async () => {
   let snowCoverPostProcess
   viewer.flyTo(tileset, {
     duration: 0,
-    oncomplete: function () {
-      snowCoverPostProcess = new PostProcessStage({
-        fragmentShader: fs,
-        uniforms: {
-          alpha: controls['雾浓度'],
-          height: controls['雾高度'],
-          oneOverRadii: Cesium.Ellipsoid.WGS84.oneOverRadii,
-          oneOverRadiiSquared: Cesium.Ellipsoid.WGS84.oneOverRadiiSquared,
-          centerToleranceSquared: Cesium.Ellipsoid.WGS84._centerToleranceSquared,
-          EPSILON12: Cesium.Math.EPSILON12,
-          earthRadius: Cesium.Cartesian3.magnitude(viewer.camera.positionWC) - viewer.camera.positionCartographic.height
-          // earthRadius: function () {
-          //   // 获取相机所在处的地球半径
-          //   const height = Cesium.Cartesian3.magnitude(viewer.camera.positionWC) - viewer.camera.positionCartographic.height
-          //   console.log(height)
-          //   return height
-          // }
-        }
-      })
-      viewer.scene.postProcessStages.add(snowCoverPostProcess);
+  })
+  snowCoverPostProcess = new PostProcessStage({
+    fragmentShader: fs,
+    uniforms: {
+      alpha: controls['雾浓度'],
+      height: controls['雾高度'],
+      oneOverRadii: Cesium.Ellipsoid.WGS84.oneOverRadii,
+      oneOverRadiiSquared: Cesium.Ellipsoid.WGS84.oneOverRadiiSquared,
+      centerToleranceSquared: Cesium.Ellipsoid.WGS84._centerToleranceSquared,
+      EPSILON12: Cesium.Math.EPSILON12,
+      // earthRadius: Cesium.Cartesian3.magnitude(viewer.camera.positionWC) - viewer.camera.positionCartographic.height
+      earthRadius: function () {
+        // 获取相机所在处的地球半径
+        const height = Cesium.Cartesian3.magnitude(viewer.camera.positionWC) - viewer.camera.positionCartographic.height
+        console.log(height)
+        return height
+      }
     }
   })
+  viewer.scene.postProcessStages.add(snowCoverPostProcess);
 
 
   const gui = new dat.GUI();
