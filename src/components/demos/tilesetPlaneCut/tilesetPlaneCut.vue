@@ -1,7 +1,7 @@
 <script setup>
 import {onMounted, ref} from "vue";
 import {initViewer} from "@/utils/cesiumUtils.js";
-import Draw from '@/utils/cesiumUtils.js'
+import Draw from '@/utils/Draw.js'
 import TerrainClipPlan from "@/utils/TerrainClipPlan.js";
 import {getAssetsFile} from "@/utils/utils.js";
 import * as Cesium from "cesium"
@@ -24,7 +24,7 @@ onMounted(async()=>{
 const depth = ref(100)
 function digTerrian() {
   const clipPlanes = DigTerObj.getClipPlanes(
-      DrawObj.polygonPoints
+      DrawObj.activeShapePoints
   )
   DrawObj.clear()
   try {
