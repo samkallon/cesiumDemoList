@@ -518,12 +518,13 @@ export function addRadar1({viewer,latlng,color,radius,speed,height}) {
                     uniforms: {
                         color: Cesium.Color.fromCssColorString(color),
                         speed,
-                        radius
                     },
                     source: `
                       uniform vec4 color;
                       uniform float speed;
-                      
+                      vec2 center = vec2(0.,0.);
+                      float radius = 0.45;
+                      // 旋转点
                       vec2 rotatePoint(float angle,vec2 p)
                         {
                           float s = sin(angle);
@@ -535,7 +536,7 @@ export function addRadar1({viewer,latlng,color,radius,speed,height}) {
                           p.y = ynew;
                           return p;
                         }
-                        
+                      // 计算点到线的距离
                       float LineToPointDistance2D( vec2 b, vec2 p)
                         {
                             vec2 pa = p;
@@ -544,6 +545,23 @@ export function addRadar1({viewer,latlng,color,radius,speed,height}) {
                             float h = clamp( dot(pa,ba)/dot(ba,ba), 0.0, 1.0);
                         
                             return length( pa - ba*h );
+                        }
+                        
+                      float angleVec(vec2 a_, vec2 b_) 
+                        {
+                            vec3 a = vec3(a_, 0);
+                            vec3 b = vec3(b_, 0);
+                             float dotProd = dot(a,b); 
+                             vec3 crossprod = cross(a,b);
+                             float crossprod_l = length(crossprod);
+                             float lenProd = length(a)*length(b);
+                             float cosa = dotProd/lenProd;
+                             float sina = crossprod_l/lenProd;
+                             float angle = atan(sina, cosa);
+
+                             if(dot(vec3(0,0,1), crossprod) < 0.0) 
+                                angle=90.0;
+                             return (angle * (180.0 / czm_pi));
                         }
                  
                       czm_material czm_getMaterial(czm_materialInput materialInput)
@@ -555,34 +573,51 @@ export function addRadar1({viewer,latlng,color,radius,speed,height}) {
                         colorTemp.a = 0.;
                         material.diffuse = vec3(0.);
                         material.emission = vec3(0);
-                        float t = czm_frameNumber * speed / 100.0;
+                        float t = -czm_frameNumber * speed / 500.0;
                         // 边线宽度
-                        float circleWitdh = 0.5 * 0.02;
+                        float circleWitdh = radius * 0.02;
                         // 扫描线宽度
-                        float lineWitdh = 0.5 * 0.02;
+                        float lineWitdh = circleWitdh * 0.5;
                         // 点到圆心的距离
                         float distanceToCenter = distance(vec2(0.),st);
-                        // 点到圆边的距离
-                        float disPointToCircle = abs(distanceToCenter - 0.5);
+                        // 点到圆边的距离  去除边线的宽度
+                        float disPointToCircle = abs(distanceToCenter - 0.45 - circleWitdh);
                         //画圆
                         if (disPointToCircle < circleWitdh)
                         {
-                            colorTemp *= 1.0-(disPointToCircle/circleWitdh);
-                            colorTemp.a = 3.0;
+                            float val = 1.0-(disPointToCircle/circleWitdh);
+                            // +0.5后，黑边可以去除，提高颜色亮度
+                            colorTemp *= (val + 0.5);
+                            colorTemp.a = val;
                         }
                         // 旋转线
-                        vec2 lineEnd =  vec2(0.,0.5); // 线终点的初始位置
+                        vec2 lineEnd =  vec2(0.,0.45); // 线终点的初始位置
                         float angle = t;
                         lineEnd = rotatePoint(angle,lineEnd);
-                        //Draw Line
+                        // 画线
                         float distPointToLine = LineToPointDistance2D(lineEnd,st);
                         if (distPointToLine<lineWitdh)
                         { 
                             float val = 1.0-distPointToLine/lineWitdh;
-                            colorTemp*=val;
-                            colorTemp.a = 3.0;
+                            colorTemp*=(val+0.5);
+                            colorTemp.a = val;
                              
                         }
+                        float angleStela = 180.0;
+                        // 画动态阴影
+                        //Draw Stela
+                          float angleStelaToApply = angleVec(normalize(lineEnd-center),normalize(st-center));
+                          // 当前st和线夹角小于180的 赋予扫描颜色
+                          if (angleStelaToApply<angleStela && distanceToCenter<radius-circleWitdh/2.0 + 0.008)
+                          {
+                            float factorAngle = 1.0-angleStelaToApply/angleStela;
+                            float removeAngle = 0.0; // 在这180度中,从尾部去掉这些角度不上色
+                            float finalFactorAngle = (factorAngle*0.5)-removeAngle;
+                            colorTemp*=(finalFactorAngle + 0.5);
+                            colorTemp.a = finalFactorAngle *2.;
+                          }
+                          
+                        colorTemp.b = 0.;
                         material.diffuse = colorTemp.rgb;
                         material.alpha = colorTemp.a;
                         return material;
