@@ -107,7 +107,7 @@ onMounted(async () => {
       c+=snow(uv,6.);
       c+=snow(uv,5.);
       finalColor=(vec3(c));
-      glColor=mix(texture(colorTexture,v_textureCoordinates),vec4(finalColor,1),.5);
+      glColor=mix(texture(colorTexture,v_textureCoordinates),vec4(finalColor,1),.1);
       }
   `
   const snowPostProcess = new PostProcessStage({
