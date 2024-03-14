@@ -606,6 +606,7 @@ export function addRadar1({viewer,latlng,color,radius,speed,height}) {
                         float angleStela = 180.0;
                         // 画动态阴影
                         //Draw Stela
+                        // 计算当前st和当前扫描线的夹角
                           float angleStelaToApply = angleVec(normalize(lineEnd-center),normalize(st-center));
                           // 当前st和线夹角小于180的 赋予扫描颜色
                           if (angleStelaToApply<angleStela && distanceToCenter<radius-circleWitdh/2.0 + 0.008)
@@ -616,8 +617,6 @@ export function addRadar1({viewer,latlng,color,radius,speed,height}) {
                             colorTemp*=(finalFactorAngle + 0.5);
                             colorTemp.a = finalFactorAngle *2.;
                           }
-                          
-                        colorTemp.b = 0.;
                         material.diffuse = colorTemp.rgb;
                         material.alpha = colorTemp.a;
                         return material;
