@@ -193,15 +193,14 @@ export function lineFlowInit(viewer, _center, _num) {
         let linePositions = [];
         linePositions.push(startPoint);
         linePositions.push(endPoint);
-        geometryInstances.push(new Cesium.GeometryInstance({
+        geometryInstances = new Cesium.GeometryInstance({
             geometry: new Cesium.PolylineGeometry({
                 positions: linePositions,
                 width: 3,
                 vertexFormat : Cesium.PolylineMaterialAppearance.VERTEX_FORMAT
             })
-        }))
-    })
-    viewer.scene.primitives.add(new Cesium.Primitive({
+        })
+        viewer.scene.primitives.add(new Cesium.Primitive({
             geometryInstances,
             appearance: new Cesium.PolylineMaterialAppearance({
                 material: new Cesium.Material({
@@ -210,7 +209,7 @@ export function lineFlowInit(viewer, _center, _num) {
                         uniforms: {
                             color: new Cesium.Color.fromCssColorString('#fe01fa'),
                             speed: 6 * Math.random(),
-                            percent: 0.1, //线的拖尾长度
+                            percent: 0.2, //线的拖尾长度
                             gradient: 0.01
                         },
                         source: `
@@ -228,8 +227,9 @@ export function lineFlowInit(viewer, _center, _num) {
                     }
                 }),
             })
-        }
-    ))
+        }))
+    })
+
 }
 
 /**
