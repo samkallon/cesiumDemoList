@@ -31,7 +31,7 @@ export default [
     {
         title:'随机上升飞线',
         tag:['特效','shader'],
-        imgUrl:'imgs/demoFengMian/upLine.png',
+        imgUrl:'imgs/demoFengMian/upLine.mp4',
         url:'https://blog.csdn.net/weixin_45782925/article/details/123299042',
         compName:'UpLine'
     },
@@ -44,7 +44,7 @@ export default [
     {
         title:'雷达平扫',
         tag:['特效','shader','圆','雷达'],
-        imgUrl:'imgs/demoFengMian/radar1.png',
+        imgUrl:'imgs/demoFengMian/radar1.mp4',
         url:'https://blog.csdn.net/weixin_45782925/article/details/122560610,https://www.shadertoy.com/view/XdsXRf',
         compName:'Radar1'
     },
@@ -101,7 +101,7 @@ export default [
     {
         title:'闪电球体',
         tag:['特效','shader','球'],
-        imgUrl:'imgs/demoFengMian/ellipsoid2.png',
+        imgUrl:'imgs/demoFengMian/ellipsoid2.mp4',
         url:'https://blog.csdn.net/weixin_45782925/article/details/123280363',
         compName: 'LightenEllipsoid'
     },

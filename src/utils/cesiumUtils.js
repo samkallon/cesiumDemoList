@@ -356,7 +356,7 @@ export function lightenEillposid({viewer, position, radii, color, speed}) {
                             temp = mix(temp, vec4(color.rgb, 0.1), (st2.s - 0.95) / 0.05);
                         }
                         material.diffuse = temp.rgb;
-                        material.alpha = temp.a * 2.0;
+                        material.alpha = temp.a * 3.0;
                         return material;
                         }
                     `

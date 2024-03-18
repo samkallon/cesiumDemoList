@@ -61,7 +61,8 @@ async function showDemo(item) {
     <el-scrollbar>
       <div class="content">
         <div class="item" v-for=" item in puBuLiuData" @click="showDemo(item)" >
-          <img :src="getAssetsFile(item.imgUrl)" alt="" style="width: 100%">
+          <video v-if="item.imgUrl.indexOf('mp4') > -1" :src="getAssetsFile(item.imgUrl)" autoplay muted loop alt="" style="width: 100%"/>
+          <img v-else :src="getAssetsFile(item.imgUrl)" alt="" style="width: 100%">
           <div class="item-title">{{item.title}}</div>
           <div class="item-title todo" v-if="!item.compName">功能开发中...</div>
         </div>

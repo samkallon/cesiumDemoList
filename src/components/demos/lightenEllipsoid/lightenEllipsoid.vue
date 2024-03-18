@@ -15,7 +15,7 @@ onMounted(async () => {
         viewer,
         position:Cesium.Cartesian3.fromDegrees(...center),
         radii:new Cesium.Cartesian3(2000,2000,2000),
-        color: Cesium.Color.fromCssColorString('#ffe100'),
+        color: Cesium.Color.fromCssColorString('#fffc00'),
         speed:10.0
       }
   )
