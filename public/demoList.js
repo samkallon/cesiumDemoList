@@ -108,7 +108,8 @@ export default [
     {
         title:'3dtile调整顶点高度',
         tag:['shader','3dtile'],
-        imgUrl:'imgs/demoFengMian/default.png'
+        imgUrl:'imgs/demoFengMian/default.png',
+        compName: 'TilesetVertexModify'
     },
     {
         title:'3dtile白膜动态特效',
@@ -136,7 +137,7 @@ export default [
     {
         title:'高度雾效果',
         tag:['后处理','shader'],
-        imgUrl:'imgs/demoFengMian/hightFog.png',
+        imgUrl:'imgs/demoFengMian/hightFog.mp4',
         compName:'Fog'
     },
     {

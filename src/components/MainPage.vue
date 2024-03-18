@@ -15,6 +15,7 @@ import LightenEllipsoid from "./demos/lightenEllipsoid/lightenEllipsoid.vue";
 import Fog from "./demos/Fog/Fog.vue";
 import KuoSanYuan from "./demos/kuoSanYuan/kuoSanYuan.vue";
 import Radar1 from "./demos/radar/radar1.vue";
+import TilesetVertexModify from "./demos/TilesetVertexModify/TilesetVertexModify.vue";
 import {ElMessage} from "element-plus";
 const compDic = {
   'DigTerrian':DigTerrian,
@@ -27,6 +28,7 @@ const compDic = {
   'LightenEllipsoid':LightenEllipsoid,
   'KuoSanYuan':KuoSanYuan,
   'Radar1':Radar1,
+  'TilesetVertexModify':TilesetVertexModify,
 }
 
 const puBuLiuData = ref([])
