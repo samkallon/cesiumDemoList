@@ -53,12 +53,16 @@ async function showDemo(item) {
   demoShow.value = true
   currentComponent.value = compDic[item.compName]
 }
+
 </script>
 
 <template>
     <vue-particles id="bg" :options="tsParticleEmitter"></vue-particles>
     <div class="header">
       <div class="title">标题</div>
+      <el-select>
+        <el-option></el-option>
+      </el-select>
     </div>
     <el-scrollbar>
       <div class="content">
