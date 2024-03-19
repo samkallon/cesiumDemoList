@@ -158,4 +158,10 @@ export default [
         imgUrl:'imgs/demoFengMian/dianGuangYuan.png',
         url:'https://dc.dvgis.cn/#/editor?type=scene-ext&subType=animation&example=around_point'
     },
+    {
+        title:'DrawCommand绘制自定义Primitive',
+        tag:['DrawCommand','Primitive','shader'],
+        imgUrl:'imgs/demoFengMian/dianGuangYuan.png',
+        compName: 'DrawCommandPrimitive'
+    },
 ]
