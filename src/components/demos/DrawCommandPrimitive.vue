@@ -1,8 +1,17 @@
 <script setup>
-const viewer = new Cesium.Viewer("cesiumContainer");
-viewer.scene.sun = new Cesium.Sun();
+import * as Cesium from 'cesium'
+import {onMounted} from "vue";
+import {initViewer} from "../../utils/cesiumUtils.js";
+let viewer = null
+onMounted(async()=>{
+  viewer = initViewer('cesiumContainer',true)
+// try!
+  viewer.scene.globe.depthTestAgainstTerrain = true
+  viewer.scene.primitives.add(new StaticTrianglePrimitive(modelMatrix))
+  viewer.camera.flyTo({destination:Cesium.Cartesian3.fromDegrees(118.79304711609575, 32.07511800768333, 200),duration:1});
+})
 
-const modelCenter = Cesium.Cartesian3.fromDegrees(112, 23, 0)
+const modelCenter = Cesium.Cartesian3.fromDegrees(118.79304711609575, 32.07511800768333, 0)
 const modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(modelCenter)
 
 const vertexShaderText = `
@@ -15,11 +24,29 @@ void main() {
   o_color = a_color;
 }`
 const fragmentShaderText = `
+float random (vec2 st) {
+    return fract(sin(dot(st.xy,vec2(12.9898,78.233)))*43758.5453123);
+}
+float easeOutBounce(float x) {
+  float n1 = 7.5625;
+  float d1 = 2.75;
+
+  if (x < (1. / d1)) {
+      return n1 * x * x;
+  } else if (x < (2. / d1)) {
+      return n1 * (x -= 1.5 / d1) * x + 0.75;
+  } else if (x < 2.5 / d1) {
+      return n1 * (x -= (2.25 / d1)) * x + 0.9375;
+  } else {
+      return n1 * (x -= (2.625 / d1)) * x + 0.984375;
+  }
+}
+
 uniform vec3 u_color;
 in vec3 o_color;
 out vec4 fsOutput;
 void main(){
-  fsOutput = vec4(o_color,1.0);
+  fsOutput = vec4(abs(cos(czm_frameNumber*3./1000.)),o_color.y,fract(cos(czm_frameNumber*3./1000.)),1.0);
 }`
 // 六边形钻石体的最下面的点
 const sourceCenter = [0,0,0]
@@ -84,37 +111,44 @@ const createCommand = (frameState, matrix) => {
     ].flat(1)),
     context: frameState.context,
   })
+  // 返回 [[1,0,0],[1,0,0],[1,0,0]] 三个顶点都为红色
+  function get3PointsColor(color) {
+    const colorTemp = Cesium.Color.fromCssColorString(color)
+    return [[colorTemp.red, colorTemp.green, colorTemp.blue],
+            [colorTemp.red, colorTemp.green, colorTemp.blue],
+            [colorTemp.red, colorTemp.green, colorTemp.blue]]
+  }
   const colorBuffer = Cesium.Buffer.createVertexBuffer({
     usage: Cesium.BufferUsage.STATIC_DRAW,
     typedArray: new Float32Array([
       // 保证逆时针,否则会被剔除
       // 底部侧面颜色 每个顶点的颜色
-      [1,0,0],[1,0,0],[1,0,0],
-      [1,0,0],[1,0,0],[1,0,0],
-      [1,0,0],[1,0,0],[1,0,0],
-      [1,0,0],[1,0,0],[1,0,0],
-      [1,0,0],[1,0,0],[1,0,0],
-      [1,0,0],[1,0,0],[1,0,0],
+      get3PointsColor('#a6abbb'),
+      get3PointsColor('#565d6a'),
+      get3PointsColor('#898d93'),
+      get3PointsColor('#c6c7d4'),
+      get3PointsColor('#a6abbb'),
+      get3PointsColor('#d8dee0'),
       // 中部侧面,以lower为底边
-      [1,1,0],[1,1,0],[1,1,0],
-      [1,1,0],[1,1,0],[1,1,0],
-      [1,1,0],[1,1,0],[1,1,0],
-      [1,1,0],[1,1,0],[1,1,0],
-      [1,1,0],[1,1,0],[1,1,0],
-      [1,1,0],[1,1,0],[1,1,0],
+      get3PointsColor('#edf0f6'),
+      get3PointsColor('#85a3c3'),
+      get3PointsColor('#97a5b0'),
+      get3PointsColor('#b6aeb4'),
+      get3PointsColor('#6f757f'),
+      get3PointsColor('#a6abbb'),
       // 中部侧面,以upper为底边
-      [1,1,0],[1,1,0],[1,1,0],
-      [1,1,0],[1,1,0],[1,1,0],
-      [1,1,0],[1,1,0],[1,1,0],
-      [1,1,0],[1,1,0],[1,1,0],
-      [1,1,0],[1,1,0],[1,1,0],
-      [1,1,0],[1,1,0],[1,1,0],
+      get3PointsColor('#d3d8e0'),
+      get3PointsColor('#6c7b83'),
+      get3PointsColor('#93afcd'),
+      get3PointsColor('#6b85a5'),
+      get3PointsColor('#636d75'),
+      get3PointsColor('#a6abbb'),
       // 顶部封口的面,共由四个三角面组成
-      [1,0,1],[1,0,1],[1,0,1],
-      [1,0,1],[1,0,1],[1,0,1],
-      [1,0,1],[1,0,1],[1,0,1],
-      [1,0,1],[1,0,1],[1,0,1],
-    ].flat(1)),
+      get3PointsColor('#e7edf6'),
+      get3PointsColor('#a9b4ba'),
+      get3PointsColor('#a3a9a9'),
+      get3PointsColor('#a6abbb'),
+    ].flat(2)),
     context: frameState.context,
   })
   const vertexArray = new Cesium.VertexArray({
@@ -182,16 +216,24 @@ class StaticTrianglePrimitive {
   }
 }
 
-// try!
-viewer.scene.globe.depthTestAgainstTerrain = true
-viewer.scene.primitives.add(new StaticTrianglePrimitive(modelMatrix))
-viewer.camera.flyTo({destination:Cesium.Cartesian3.fromDegrees(112, 23, 200),duration:1});
+
 </script>
 
 <template>
-
+  <div class="container">
+    <div id="cesiumContainer"></div>
+  </div>
 </template>
 
 <style scoped lang="scss">
+.container {
+  width: 100%;
+  position: relative;
+}
 
+
+#cesiumContainer {
+  width: 100%;
+  height: 90vh;
+}
 </style>
