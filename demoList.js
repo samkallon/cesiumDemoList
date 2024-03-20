@@ -19,7 +19,7 @@ export default [
     {
         title:'动态墙体',
         tag:['shader','墙'],
-        imgUrl:'imgs/demoFengMian/DynamicWall.png',
+        imgUrl:'imgs/demoFengMian/DynamicWall.mp4',
         compName:'DynamicWall'
     },
     {
@@ -57,7 +57,7 @@ export default [
     {
         title:'点扩散圆',
         tag:['shader','圆'],
-        imgUrl:'imgs/demoFengMian/circle1.png',
+        imgUrl:'imgs/demoFengMian/circle1.mp4',
         url:'https://blog.csdn.net/weixin_45782925/article/details/122561852',
         compName: 'KuoSanYuan'
     },
