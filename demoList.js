@@ -1,7 +1,7 @@
 export default [
     {
         title:'地形开挖',
-        tag:['功能1'],
+        tag:['地形'],
         imgUrl:'imgs/demoFengMian/dxkw.png',
         compName:'DigTerrian'
     },
@@ -18,45 +18,45 @@ export default [
     },
     {
         title:'动态墙体',
-        tag:['特效','shader'],
+        tag:['shader','墙'],
         imgUrl:'imgs/demoFengMian/DynamicWall.png',
         compName:'DynamicWall'
     },
     {
         title:'动态线',
-        tag:['特效','shader'],
+        tag:['shader','线'],
         imgUrl:'imgs/demoFengMian/DynamicLine.png',
         url:'https://blog.csdn.net/weixin_45782925/article/details/122559827'
     },
     {
         title:'随机上升飞线',
-        tag:['特效','shader'],
+        tag:['shader','线'],
         imgUrl:'imgs/demoFengMian/upLine.mp4',
         url:'https://blog.csdn.net/weixin_45782925/article/details/123299042',
         compName:'UpLine'
     },
     {
         title:'动态抛物线',
-        tag:['特效','shader'],
+        tag:['线','shader'],
         imgUrl:'imgs/demoFengMian/paoWuLine.png',
         url:'https://blog.csdn.net/weixin_45782925/article/details/123301657'
     },
     {
         title:'雷达平扫',
-        tag:['特效','shader','圆','雷达'],
+        tag:['shader','圆','雷达'],
         imgUrl:'imgs/demoFengMian/radar1.mp4',
         url:'https://blog.csdn.net/weixin_45782925/article/details/122560610,https://www.shadertoy.com/view/XdsXRf',
         compName:'Radar1'
     },
     {
         title:'雷达波纹',
-        tag:['特效','shader','圆','雷达'],
+        tag:['shader','圆','雷达'],
         imgUrl:'imgs/demoFengMian/radar2.png',
         url:'https://blog.csdn.net/weixin_45782925/article/details/123284150'
     },
     {
         title:'点扩散圆',
-        tag:['特效','shader','圆'],
+        tag:['shader','圆'],
         imgUrl:'imgs/demoFengMian/circle1.png',
         url:'https://blog.csdn.net/weixin_45782925/article/details/122561852',
         compName: 'KuoSanYuan'
@@ -64,43 +64,43 @@ export default [
 
     {
         title:'旋转材质圆',
-        tag:['特效','shader','圆'],
+        tag:['shader','圆'],
         imgUrl:'imgs/demoFengMian/circle2.png',
         url:'https://blog.csdn.net/weixin_45782925/article/details/123277979'
     },
     {
         title:'水波扩散圆',
-        tag:['特效','shader','圆'],
+        tag:['shader','圆'],
         imgUrl:'imgs/demoFengMian/circle3.png',
         url:'https://blog.csdn.net/weixin_45782925/article/details/123270788'
     },
     {
         title:'厚重点扩散圆',
-        tag:['特效','shader','圆'],
+        tag:['shader','圆'],
         imgUrl:'imgs/demoFengMian/circle4.png',
         url:'https://blog.csdn.net/weixin_45782925/article/details/123270654'
     },
     {
         title:'脉冲圆',
-        tag:['特效','shader','圆'],
+        tag:['shader','圆'],
         imgUrl:'imgs/demoFengMian/circle5.png',
         url:'https://blog.csdn.net/weixin_45782925/article/details/123266936'
     },
     {
         title:'立体雷达',
-        tag:['特效','shader','球','雷达'],
+        tag:['shader','球','雷达'],
         imgUrl:'imgs/demoFengMian/radar3.png',
         url:'https://blog.csdn.net/weixin_45782925/article/details/123294411'
     },
     {
         title:'动态球体',
-        tag:['特效','shader','球'],
+        tag:['shader','球'],
         imgUrl:'imgs/demoFengMian/ellipsoid1.png',
         url:'https://blog.csdn.net/weixin_45782925/article/details/123281149'
     },
     {
         title:'闪电球体',
-        tag:['特效','shader','球'],
+        tag:['shader','球'],
         imgUrl:'imgs/demoFengMian/ellipsoid2.mp4',
         url:'https://blog.csdn.net/weixin_45782925/article/details/123280363',
         compName: 'LightenEllipsoid'
@@ -113,7 +113,7 @@ export default [
     },
     {
         title:'3dtile白膜动态特效',
-        tag:['shader','3dtile','特效'],
+        tag:['shader','3dtile'],
         imgUrl:'imgs/demoFengMian/3dtileDynamicBaiMo.png',
         url:'https://blog.csdn.net/weixin_45782925/article/details/122562177'
     },
@@ -161,7 +161,7 @@ export default [
     {
         title:'DrawCommand绘制自定义Primitive',
         tag:['DrawCommand','Primitive','shader'],
-        imgUrl:'imgs/demoFengMian/dianGuangYuan.png',
+        imgUrl:'imgs/demoFengMian/DrawCommandPrimitive.mp4',
         compName: 'DrawCommandPrimitive'
     },
 ]
