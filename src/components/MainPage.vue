@@ -34,7 +34,8 @@ const compDic = {
 }
 
 const puBuLiuData = ref([])
-
+const selectTypeList = ref([])
+const currSelectType = ref('')
 onMounted(()=>{
   for (let i = 0; i < demoList.length; i++) {
     puBuLiuData.value.push({
@@ -43,7 +44,40 @@ onMounted(()=>{
       compName:demoList[i].compName,
     })
   }
+  selectTypeList.value = Array.from(new Set(
+      demoList.map(e=>{
+        return e.tag
+      }).flat(1))
+  ).map(e=>{
+    return {
+      label:e,
+      value:e
+    }
+  })
+  selectTypeList.value.unshift({
+    label:'已完成',
+    value:'已完成'
+  })
+  selectTypeList.value.unshift({
+    label:'全部',
+    value:''
+  })
 })
+
+function selectType(item) {
+  console.log(item)
+  puBuLiuData.value = []
+  for (let i = 0; i < demoList.length; i++) {
+    if (demoList[i].tag.includes(item) || item == '' || (item == '已完成' && demoList[i].compName)){
+      puBuLiuData.value.push({
+        imgUrl:demoList[i].imgUrl,
+        title:demoList[i].title,
+        compName:demoList[i].compName,
+      })
+    }
+
+  }
+}
 
 const demoShow = ref(false)
 const currentComponent = ref('')
@@ -56,14 +90,15 @@ async function showDemo(item) {
   currentComponent.value = compDic[item.compName]
 }
 
+
 </script>
 
 <template>
     <vue-particles id="bg" :options="tsParticleEmitter"></vue-particles>
     <div class="header">
       <div class="title">标题</div>
-      <el-select>
-        <el-option></el-option>
+      <el-select style="width: 150px;margin-right: 20px" v-model="currSelectType" @change="selectType">
+        <el-option v-for="item in selectTypeList" :label="item.label" :value="item.value"></el-option>
       </el-select>
     </div>
     <el-scrollbar>
@@ -95,6 +130,7 @@ async function showDemo(item) {
     color: white;
     font-size: 32px;
     margin-left: 8px;
+    flex-grow: 2;
   }
 }
 .content{
