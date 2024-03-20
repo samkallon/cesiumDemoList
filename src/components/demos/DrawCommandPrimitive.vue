@@ -4,11 +4,22 @@ import {onMounted} from "vue";
 import {initViewer} from "../../utils/cesiumUtils.js";
 let viewer = null
 onMounted(async()=>{
-  viewer = initViewer('cesiumContainer',true)
+  viewer = initViewer('cesiumContainer')
 // try!
   viewer.scene.globe.depthTestAgainstTerrain = true
   viewer.scene.primitives.add(new StaticTrianglePrimitive(modelMatrix))
-  viewer.camera.flyTo({destination:Cesium.Cartesian3.fromDegrees(118.79304711609575, 32.07511800768333, 200),duration:1});
+  viewer.camera.setView({
+    destination:{
+      "x": -2605877.6351897535,
+      "y": 4741170.8930678805,
+      "z": 3367173.3836399023
+    },
+    orientation:{
+      heading:6.03062824032168,
+      pitch:-0.3269054991435494,
+      roll:6.283184968930444
+    }
+  })
 })
 
 const modelCenter = Cesium.Cartesian3.fromDegrees(118.79304711609575, 32.07511800768333, 0)

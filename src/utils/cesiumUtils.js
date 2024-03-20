@@ -29,7 +29,7 @@ export function initViewer(id,initCamera) {
     viewer.scene.globe.depthTestAgainstTerrain = true
     viewer._cesiumWidget._creditContainer.style.display = 'none' //隐藏版权信息
     viewer.resolutionScale = 1.0
-    // window.viewer = viewer
+    window.viewer = viewer
     if (initCamera){
         viewer.scene.camera.flyToBoundingSphere(
             new Cesium.BoundingSphere(Cesium.Cartesian3.fromDegrees(118.79304711609575, 32.07511800768333), 3000),
