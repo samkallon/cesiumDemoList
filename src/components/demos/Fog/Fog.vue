@@ -58,18 +58,6 @@ onMounted(async () => {
     return worldCoordinate;
   }
 
-  // 将经纬度转换为世界坐标,单位是弧度
-  // vec3 getWorldPosition(float longitude,float latitude,float height) {
-  //    float cosLatitude = cos(latitude);
-  //    vec3 scratchN = vec3(cosLatitude * cos(longitude),cosLatitude * sin(longitude),sin(latitude));
-  //    scratchN = normalize(scratchN);
-  //    vec3 scratchK = vec3(rx * rx * scratchN.x, ry * ry * scratchN.y, rz * rz * scratchN.z);
-  //     float gamma = sqrt(scratchN.x * scratchK.x + scratchN.y * scratchK.y + scratchN.z * scratchK.z);
-  //    scratchK = scratchK.xyz / gamma;
-  //    scratchN = scratchN.xyz * height;
-  //    return scratchK + scratchN;
-  // }
-
   float magnitude(in vec3 v){
     return sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
   }
@@ -185,8 +173,6 @@ onMounted(async () => {
     // vec3 positionWC = getWorldCoordinateFromDepth(currD);
     vec3 cartographic = getCartographicFromCartesian3(vec3(positionWC.x,positionWC.y,positionWC.z));
     float pointHeight = cartographic.z + 10.;
-    // 这个不闪烁 但是旋转相机会有部分地表没有雾
-    // float pointHeight = getHeight(currD);
     // 当前点高度越高,雾浓度越小,高度达到设定高度,雾浓度为0,同时乘以深度,距离越远,浓度越大
     float fog =  (height/pointHeight - 1.);
     fog = clamp(fog, 0.0, 1.0);
