@@ -31,33 +31,21 @@ in vec3 position;
 
 out vec3 o_color;
 void main() {
-  gl_Position = czm_projection * czm_view * czm_model * vec4(position, 1.0);
+  vec3 positonTemp = position;
+  positonTemp.z += abs(sin(czm_frameNumber*10. /1000.0)) * 30.;
+  positonTemp.x = position.x * cos(czm_frameNumber*3. /1000.0) - position.y * sin(czm_frameNumber*3. /1000.0);
+  positonTemp.y = position.x * sin(czm_frameNumber*3. /1000.0) + position.y * cos(czm_frameNumber*3. /1000.0);
+  gl_Position = czm_projection * czm_view * czm_model * vec4(positonTemp, 1.0);
   o_color = a_color;
 }`
 const fragmentShaderText = `
-float random (vec2 st) {
-    return fract(sin(dot(st.xy,vec2(12.9898,78.233)))*43758.5453123);
-}
-float easeOutBounce(float x) {
-  float n1 = 7.5625;
-  float d1 = 2.75;
-
-  if (x < (1. / d1)) {
-      return n1 * x * x;
-  } else if (x < (2. / d1)) {
-      return n1 * (x -= 1.5 / d1) * x + 0.75;
-  } else if (x < 2.5 / d1) {
-      return n1 * (x -= (2.25 / d1)) * x + 0.9375;
-  } else {
-      return n1 * (x -= (2.625 / d1)) * x + 0.984375;
-  }
-}
-
 uniform vec3 u_color;
 in vec3 o_color;
 out vec4 fsOutput;
 void main(){
+  // 变色钻石
   fsOutput = vec4(abs(cos(czm_frameNumber*3./1000.)),o_color.y,fract(cos(czm_frameNumber*3./1000.)),1.0);
+  // fsOutput = vec4(o_color,1.0);
 }`
 // 六边形钻石体的最下面的点
 const sourceCenter = [0,0,0]
