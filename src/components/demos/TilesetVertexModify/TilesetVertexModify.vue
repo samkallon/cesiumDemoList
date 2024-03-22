@@ -74,7 +74,7 @@ function digTerrian() {
                 // 如果当前顶点在范围内,就把他的顶点高度设成第一个绘制点的模型顶点高度
                 if(pointInPolygon(vsOutput.positionMC,point)){
                   // vsOutput.positionMC.z = point1MC.z - 10.;
-                  vsOutput.positionMC.z = 100.;
+                  vsOutput.positionMC.z = 0.;
                 }
               }
               `
