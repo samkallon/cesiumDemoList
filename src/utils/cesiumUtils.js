@@ -622,3 +622,54 @@ export function addCircleWaterExpand({viewer,latlng,color,radius,speed,height,co
     })
     viewer.scene.primitives.add(circlePrimitive)
 }
+
+export function addWeightCircleExpand({viewer,latlng,color,radius,speed,height}) {
+    const geometryInstances = new Cesium.GeometryInstance({
+        geometry: new Cesium.CircleGeometry({
+            center: Cesium.Cartesian3.fromDegrees(latlng[0], latlng[1],latlng[2]),
+            radius: radius,
+            height
+        }),
+    })
+    const circlePrimitive = new Cesium.Primitive({
+        geometryInstances,
+        appearance: new Cesium.MaterialAppearance({
+            material: new Cesium.Material({
+                fabric: {
+                    type: 'CircleWaterExpand',
+                    uniforms: {
+                        color: Cesium.Color.fromCssColorString(color),
+                        speed,
+                    },
+                    source: `
+                        uniform vec4 color;
+                        uniform float speed;
+
+                        vec3 circlePing(float r, float innerTail,  float frontierBorder, float timeResetSeconds,  float radarPingSpeed,  float fadeDistance){
+                        float t = fract(czm_frameNumber * speed / 1000.0);
+                        float time = mod(t, timeResetSeconds) * radarPingSpeed;
+                        float circle;
+                        circle += smoothstep(time - innerTail, time, r) * smoothstep(time + frontierBorder,time, r);
+                        circle *= smoothstep(fadeDistance, 0.0, r);
+                        return vec3(circle);
+                        }
+
+                        czm_material czm_getMaterial(czm_materialInput materialInput){
+                        czm_material material = czm_getDefaultMaterial(materialInput);
+                        vec2 st = materialInput.st * 2.0  - 1.0 ;
+                        vec2 center = vec2(0.);
+                        float time = fract(czm_frameNumber * speed / 1000.0);
+                        vec3 flagColor;
+                        float r = length(st - center) / 4.;
+                        flagColor += circlePing(r, 0.25, 0.025, 4.0, 0.3, 1.0) * color.rgb;
+                        material.alpha = length(flagColor);
+                        material.diffuse = flagColor.rgb;
+                        return material;
+                        }
+                  `,
+                }
+            }),
+        }),
+    })
+    viewer.scene.primitives.add(circlePrimitive)
+}
