@@ -78,8 +78,9 @@ export default [
     {
         title:'厚重点扩散圆',
         tag:['shader','圆'],
-        imgUrl:'imgs/demoFengMian/circle4.png',
-        url:'https://blog.csdn.net/weixin_45782925/article/details/123270654'
+        imgUrl:'imgs/demoFengMian/circle4.mp4',
+        url:'https://blog.csdn.net/weixin_45782925/article/details/123270654',
+        compName:'WeightCircleExpand'
     },
     {
         title:'脉冲圆',
