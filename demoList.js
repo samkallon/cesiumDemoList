@@ -71,8 +71,9 @@ export default [
     {
         title:'水波扩散圆',
         tag:['shader','圆'],
-        imgUrl:'imgs/demoFengMian/circle3.png',
-        url:'https://blog.csdn.net/weixin_45782925/article/details/123270788'
+        imgUrl:'imgs/demoFengMian/circle3.mp4',
+        url:'https://blog.csdn.net/weixin_45782925/article/details/123270788',
+        compName:'CircleWaterExpand'
     },
     {
         title:'厚重点扩散圆',
