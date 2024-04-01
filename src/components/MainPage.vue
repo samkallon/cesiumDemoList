@@ -19,6 +19,7 @@ import TilesetVertexModify from "./demos/TilesetVertexModify/TilesetVertexModify
 import DrawCommandPrimitive from "./demos/DrawCommandPrimitive.vue";
 import CircleWaterExpand from "./demos/CircleWaterExpand/CircleWaterExpand.vue";
 import WeightCircleExpand from "./demos/WeightCircleExpand/WeightCircleExpand.vue";
+import PointLight from "./demos/PointLight.vue";
 import {ElMessage} from "element-plus";
 const compDic = {
   'DigTerrian':DigTerrian,
@@ -35,6 +36,7 @@ const compDic = {
   'DrawCommandPrimitive':DrawCommandPrimitive,
   'CircleWaterExpand':CircleWaterExpand,
   'WeightCircleExpand':WeightCircleExpand,
+  'PointLight':PointLight,
 }
 
 const puBuLiuData = ref([])
