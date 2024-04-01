@@ -152,7 +152,8 @@ export default [
         title:'点光源',
         tag:['后处理','shader'],
         imgUrl:'imgs/demoFengMian/dianGuangYuan.png',
-        url:'https://blog.csdn.net/kuyewb/article/details/133157526'
+        url:'https://blog.csdn.net/kuyewb/article/details/133157526',
+        compName: "PointLight"
     },
     {
         title:'绕点旋转',
