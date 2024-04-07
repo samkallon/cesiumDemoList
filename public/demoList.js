@@ -14,7 +14,8 @@ export default [
     {
         title:'喷泉效果',
         tag:['粒子'],
-        imgUrl:'imgs/demoFengMian/pqxg.png'
+        imgUrl:'imgs/demoFengMian/pqxg.png',
+        compName: 'Fountain'
     },
     {
         title:'动态墙体',

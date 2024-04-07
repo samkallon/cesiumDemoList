@@ -20,6 +20,7 @@ import DrawCommandPrimitive from "./demos/DrawCommandPrimitive.vue";
 import CircleWaterExpand from "./demos/CircleWaterExpand/CircleWaterExpand.vue";
 import WeightCircleExpand from "./demos/WeightCircleExpand/WeightCircleExpand.vue";
 import PointLight from "./demos/PointLight.vue";
+import Fountain from "./demos/Fountain/Fountain.vue";
 import {ElMessage} from "element-plus";
 const compDic = {
   'DigTerrian':DigTerrian,
@@ -37,6 +38,7 @@ const compDic = {
   'CircleWaterExpand':CircleWaterExpand,
   'WeightCircleExpand':WeightCircleExpand,
   'PointLight':PointLight,
+  'Fountain':Fountain,
 }
 
 const puBuLiuData = ref([])

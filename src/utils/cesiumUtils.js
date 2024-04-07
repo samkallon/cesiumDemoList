@@ -4,7 +4,7 @@ import {getAssetsFile} from "@/utils/utils.js";
 import * as turf from '@turf/turf'
 import {Appearance, HeadingPitchRoll, Math as CzmMath} from "cesium";
 
-export function initViewer(id,initCamera) {
+export function initViewer(id,initCamera,viewerOptions = {}) {
     Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJjMzM3OGE5Yi1lYjc5LTRhNzQtYWFjMC04M2M2MTY3YjFjM2YiLCJpZCI6NDEzMTIsImlhdCI6MTcwMzIwODY4MH0.Hda2inmYARoq6khHSp68tXlk0vPNfNEsenzYLFVLk_k'
     const viewer = new Cesium.Viewer(id, {
         infoBox: false,
@@ -12,8 +12,8 @@ export function initViewer(id,initCamera) {
         homeButton: false, //是否显示Home按钮
         sceneModePicker: false, //是否显示3D/2D选择器
         navigationHelpButton: false, //是否显示右上角的帮助按钮
-        animation: false, //是否创建动画小器件，左下角仪表
-        timeline: false, //是否显示时间轴
+        animation: viewerOptions.animation || false, //是否创建动画小器件，左下角仪表
+        timeline: viewerOptions.timeline || false, //是否显示时间轴
         fullscreenButtion: false, //是否显示全屏按钮
         vrButton: false,
         selectionIndicator: false, //是否显示选取指示器组件

@@ -13,4 +13,9 @@ export default defineConfig({
   },
   base: '/cesiumDemoList/',
   root: './',
+  server:{
+    host:'0.0.0.0',
+    port: 3957,
+    hmr:false
+  }
 })
