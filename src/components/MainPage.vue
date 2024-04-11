@@ -104,7 +104,7 @@ async function showDemo(item) {
 <template>
     <vue-particles id="bg" :options="tsParticleEmitter"></vue-particles>
     <div class="header">
-      <div class="title">标题</div>
+      <div class="title">cesium示例</div>
       <el-select style="width: 150px;margin-right: 20px" v-model="currSelectType" @change="selectType">
         <el-option v-for="item in selectTypeList" :label="item.label" :value="item.value"></el-option>
       </el-select>

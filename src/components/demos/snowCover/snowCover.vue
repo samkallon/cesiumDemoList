@@ -49,13 +49,26 @@ onMounted(async () => {
     }
     float depth = getDepth(currD);
     vec4 positionEC = toEye(v_textureCoordinates, depth);
-    vec3 dx = dFdx(positionEC.xyz);
-    vec3 dy = dFdy(positionEC.xyz);
-    vec3 nor = normalize(cross(dx,dy));
-
     vec4 positionWC = normalize(czm_inverseView * positionEC);
-    vec3 normalWC = normalize(czm_inverseViewRotation * nor);
-    float dotNumWC = dot(positionWC.xyz,normalWC);
+
+    // 从深度图计算法向量
+    // 计算右和上偏移1像素的眼睛坐标
+    vec4 positionEC_r = toEye(v_textureCoordinates + vec2(1.0,0.0), depth);
+    vec4 positionEC_l = toEye(v_textureCoordinates + vec2(-1.0,0.0), depth);
+    vec4 positionEC_u = toEye(v_textureCoordinates + vec2(0.0,1.0), depth);
+    vec4 positionEC_d = toEye(v_textureCoordinates + vec2(0.0,-1.0), depth);
+    // 获取当前位置和每个偏移位置之间的差异
+    vec3 hDeriv = positionEC_r.xyz - positionEC_l.xyz;
+    vec3 vDeriv = positionEC_u.xyz - positionEC_d.xyz;
+    // 从差值的交叉积中获取视图空间法线, 再转为世界法线
+    vec3 normalWC = normalize(czm_inverseViewRotation * cross(hDeriv, vDeriv));
+
+    // vec3 dx = dFdx(positionEC.xyz);
+    // vec3 dy = dFdy(positionEC.xyz);
+    // vec3 nor = normalize(cross(dx,dy));
+    // vec3 normalWC = normalize(czm_inverseViewRotation * nor);
+
+    float dotNumWC = dot(positionWC.xyz,normalWC.xyz);
     if(dotNumWC<=0.3){
       glColor = mix(color,vec4(1.0),alpha*0.3);
       return;
