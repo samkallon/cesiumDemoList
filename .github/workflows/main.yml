@@ -5,7 +5,7 @@ on:
     branches:
       - master
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages1
 permissions:
   contents: write # We generate static HTML, JS, CSS so we need write access to the repo
   pages: write
