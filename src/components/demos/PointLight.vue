@@ -1,15 +1,17 @@
 <script setup>
 import {onMounted, ref} from "vue";
-import { initViewer} from "@/utils/cesiumUtils.js";
-import { Cesium3DTileset,PostProcessStage,Cartesian3,Color,UniformType } from "cesium";
+import SamCesiumUtils from "sam-czm-utils";
+import * as Cesium from "cesium";
 
 let viewer = null
 onMounted(async () => {
-  viewer = initViewer('cesiumContainer')
+  const samCzm = new SamCesiumUtils.samCzm({Cesium:Cesium})
+  samCzm.initViewer({id:'cesiumContainer'})
+  viewer = samCzm.viewer
   const tileset = viewer.scene.primitives.add(
-      await Cesium3DTileset.fromIonAssetId(354759),
+      await Cesium.Cesium3DTileset.fromIonAssetId(354759),
   );
-  console.log(Cartesian3.fromDegrees(120,30))
+  console.log(Cesium.Cartesian3.fromDegrees(120,30))
   viewer.flyTo(tileset,{duration:1})
   const fs = `
   uniform sampler2D colorTexture;
@@ -61,20 +63,20 @@ onMounted(async () => {
       glColor.rgb *= light;
   }
   `;
-  viewer.scene.postProcessStages.add(new PostProcessStage({
+  viewer.scene.postProcessStages.add(new Cesium.PostProcessStage({
     fragmentShader : fs,
     uniforms : {
       u_cameraDirectionWC:{
-        type: UniformType.VEC3,
+        type: Cesium.UniformType.VEC3,
         value: viewer.scene.camera.positionWC,
       },
       u_lightColor: {
-        type: UniformType.VEC4,
-        value: Color.fromCssColorString('#fff'),
+        type: Cesium.UniformType.VEC4,
+        value: Cesium.Color.fromCssColorString('#fff'),
       },
-      u_lightPosition: Cartesian3.fromDegrees(42.356631037502524,-71.06027196889957,200),
+      u_lightPosition: Cesium.Cartesian3.fromDegrees(42.356631037502524,-71.06027196889957,200),
       u_distance: {
-        type: UniformType.FLOAT,
+        type: Cesium.UniformType.FLOAT,
         value: 300
       }
     }

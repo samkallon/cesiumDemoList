@@ -1,6 +1,5 @@
 <script setup>
 import {onMounted} from "vue";
-import {addWeightCircleExpand} from "../../../utils/cesiumUtils.js";
 import SamCesiumUtils from "sam-czm-utils";
 import * as Cesium from "cesium";
 

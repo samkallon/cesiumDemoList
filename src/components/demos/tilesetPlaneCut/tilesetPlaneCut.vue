@@ -10,7 +10,7 @@ onMounted(async()=>{
   samCzm.initViewer({id:'cesiumContainer'})
   viewer = samCzm.viewer
   DrawObj = new Draw(viewer)
-  DigTerObj = new samCzm.TerrainClipPlan(viewer, {
+  DigTerObj = new SamCesiumUtils.TerrainClipPlan(viewer, {
     height: depth.value,
     splitNum: 300,
     bottomImg:  getAssetsFile('imgs/digTerrian/bottom.png'),

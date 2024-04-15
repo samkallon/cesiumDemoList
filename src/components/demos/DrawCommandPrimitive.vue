@@ -9,7 +9,7 @@ onMounted(async()=>{
   viewer = samCzm.viewer
 // try!
   viewer.scene.globe.depthTestAgainstTerrain = true
-  viewer.scene.primitives.add(new samCzm.CustomPrimitive.DimondPrimitive({Cesium}))
+  viewer.scene.primitives.add(new SamCesiumUtils.CustomPrimitive.DimondPrimitive({Cesium}))
   viewer.camera.setView({
     destination:{
       "x": -2605877.6351897535,

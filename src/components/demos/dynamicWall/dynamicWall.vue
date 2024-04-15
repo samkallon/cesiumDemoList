@@ -3,6 +3,7 @@ import {onMounted, ref} from "vue";
 
 import * as Cesium from "cesium";
 import SamCesiumUtils from "sam-czm-utils";
+import {getAssetsFile} from "@/utils/utils.js";
 
 let viewer = null
 const wallList = [[
@@ -27,8 +28,9 @@ const wallList = [[
     "z": 4274506.267881826
   }
 ]]
+let samCzm
 onMounted(async () => {
-  const samCzm = new SamCesiumUtils.samCzm({Cesium:Cesium})
+  samCzm = new SamCesiumUtils.samCzm({Cesium:Cesium})
   samCzm.initViewer({id:'cesiumContainer'})
   viewer = samCzm.viewer
   viewer.scene.primitives.add(
@@ -39,7 +41,7 @@ onMounted(async () => {
     wallList,
     maximumHeights: 30,
     minimumHeights: 0,
-    viewer,
+    imgUrl:getAssetsFile( 'imgs/materialImg/GradientRed.png')
   })
   viewer.scene.camera.flyToBoundingSphere(samCzm.getBoundingSphereFromCartesian3List(wallList[0]),{
     offset: new Cesium.HeadingPitchRoll(0,Cesium.Math.toRadians(-30),0),
@@ -54,9 +56,8 @@ function showWall(id,type,imgUrl) {
     wallList,
     maximumHeights: 30,
     minimumHeights: 0,
-    viewer,
     dynamicDir:type,
-    imgUrl
+    imgUrl:getAssetsFile(imgUrl || 'imgs/materialImg/GradientRed.png')
   }
   if (id === 2){
     params.repeat = new Cesium.Cartesian2(10,1)

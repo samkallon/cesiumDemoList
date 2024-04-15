@@ -1,6 +1,4 @@
-import {ElMessage} from "element-plus";
 import * as Cesium from "cesium";
-import {removaEntitiesAndPrimitivesByName} from "./cesiumUtils.js";
 
 export default class Draw {
     constructor(viewer) {
@@ -9,6 +7,20 @@ export default class Draw {
         this.activeShapePoints = []
         this.activeShape = null;
         this.floatingPoint = null;
+    }
+    removaEntitiesAndPrimitivesByName(name) {
+        const entities = this.getEntitiesByName(name)
+        entities.forEach(e => {
+            this.viewer.entities.remove(e)
+        })
+        const primitives = this.viewer.scene.primitives._primitives.filter(e => e.name === name)
+        primitives.forEach(e => {
+            this.viewer.scene.primitives.remove(e)
+        })
+    }
+    getEntitiesByName(name) {
+        const entityList = this.viewer.entities._entities._array
+        return entityList.filter(e => e.name === name)
     }
     createPoint(worldPosition) {
         const point = this.viewer.entities.add({
@@ -103,9 +115,9 @@ export default class Draw {
         // this.activeShapePoints = [];
     }
     clear(){
-        removaEntitiesAndPrimitivesByName('drawPolygon',this.viewer)
-        removaEntitiesAndPrimitivesByName('drawLine',this.viewer)
-        removaEntitiesAndPrimitivesByName('drawPoint',this.viewer)
+        this.removaEntitiesAndPrimitivesByName('drawPolygon',this.viewer)
+        this.removaEntitiesAndPrimitivesByName('drawLine',this.viewer)
+        this.removaEntitiesAndPrimitivesByName('drawPoint',this.viewer)
     }
 
 }
