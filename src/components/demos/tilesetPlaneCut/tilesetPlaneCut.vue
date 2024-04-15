@@ -1,20 +1,21 @@
 <script setup>
 import {onMounted, ref} from "vue";
-import {initViewer} from "@/utils/cesiumUtils.js";
 import Draw from '@/utils/Draw.js'
-import TerrainClipPlan from "@/utils/TerrainClipPlan.js";
 import {getAssetsFile} from "@/utils/utils.js";
 import * as Cesium from "cesium"
+import SamCesiumUtils from "sam-czm-utils";
 let viewer,DrawObj,DigTerObj,tileset = null
 onMounted(async()=>{
-  viewer = initViewer('cesiumContainer')
+  const samCzm = new SamCesiumUtils.samCzm({Cesium:Cesium})
+  samCzm.initViewer({id:'cesiumContainer'})
+  viewer = samCzm.viewer
   DrawObj = new Draw(viewer)
-  DigTerObj = new TerrainClipPlan(viewer, {
+  DigTerObj = new samCzm.TerrainClipPlan(viewer, {
     height: depth.value,
     splitNum: 300,
     bottomImg:  getAssetsFile('imgs/digTerrian/bottom.png'),
     wallImg: getAssetsFile('imgs/digTerrian/wall.png'),
-  })
+  },Cesium)
   tileset = viewer.scene.primitives.add(
       await Cesium.Cesium3DTileset.fromIonAssetId(354759),
   );

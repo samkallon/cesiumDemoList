@@ -1,25 +1,23 @@
 <script setup>
 import {onMounted, ref} from "vue";
-import {
-  initViewer,
-} from "@/utils/cesiumUtils.js";
-import {lineFlowInit} from "../../../utils/cesiumUtils.js";
 import * as Cesium from "cesium";
-import {HeadingPitchRoll, Math as CzmMath} from "cesium";
+import SamCesiumUtils from "sam-czm-utils";
 
 let viewer = null
 let center = [118.79304711609575, 32.07511800768333]
 onMounted(async () => {
-  viewer = initViewer('cesiumContainer')
+  const samCzm = new SamCesiumUtils.samCzm({Cesium:Cesium})
+  samCzm.initViewer({id:'cesiumContainer', initCamera:false})
+  viewer = samCzm.viewer
   viewer.scene.camera.flyToBoundingSphere(
       new Cesium.BoundingSphere(Cesium.Cartesian3.fromDegrees(center[0],center[1]), 3000),
       {
-        offset: new HeadingPitchRoll(0, CzmMath.toRadians(-30), 0),
+        offset: new Cesium.HeadingPitchRoll(0, Cesium.Math.toRadians(-30), 0),
         duration: 1
       }
   )
   // 随机竖直飞线
-  lineFlowInit(viewer, center, 200);
+  samCzm.lineFlowInit(center, 200);
 })
 
 const curr = ref(1)

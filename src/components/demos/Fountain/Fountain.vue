@@ -1,12 +1,14 @@
 <script setup>
 import * as Cesium from 'cesium'
 import {onMounted} from "vue";
-import {initViewer} from "../../../utils/cesiumUtils.js";
 import smoke from './smoke.png?url'
 import dat from "dat.gui";
+import SamCesiumUtils from "sam-czm-utils";
 let viewer = null
 onMounted(async()=>{
-  viewer = initViewer('cesiumContainer',false,{timeline:true,animation:true})
+  const samCzm = new SamCesiumUtils.samCzm({Cesium: Cesium})
+  samCzm.initViewer({id: 'cesiumContainer', initCamera: false, viewerOptions: {timeline: true, animation: true}})
+  viewer = samCzm.viewer
 // try!
   viewer.scene.globe.depthTestAgainstTerrain = true
   viewer.camera.setView({

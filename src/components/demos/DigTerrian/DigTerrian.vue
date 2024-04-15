@@ -1,27 +1,28 @@
 <script setup>
 import {onMounted, ref} from "vue";
-import {initViewer} from "@/utils/cesiumUtils.js";
 import Draw from '@/utils/Draw.js'
-import TerrainClipPlan from "@/utils/TerrainClipPlan.js";
 import {getAssetsFile} from "@/utils/utils.js";
-import {Terrain,CesiumTerrainProvider} from "cesium";
+import SamCesiumUtils from "sam-czm-utils";
+import * as Cesium from "cesium";
 
 let viewer,DrawObj,DigTerObj = null
 onMounted(()=>{
-  viewer = initViewer('cesiumContainer')
+  const samCzm = new SamCesiumUtils.samCzm({Cesium:Cesium})
+  samCzm.initViewer({id:'cesiumContainer'})
+  viewer = samCzm.viewer
   viewer.scene.setTerrain(
-      new Terrain(
-          CesiumTerrainProvider.fromIonAssetId(1),
+      new Cesium.Terrain(
+          Cesium.CesiumTerrainProvider.fromIonAssetId(1),
       ),
   );
 
   DrawObj = new Draw(viewer)
-  DigTerObj = new TerrainClipPlan(viewer, {
+  DigTerObj = new SamCesiumUtils.TerrainClipPlan(viewer, {
     height: depth.value,
     splitNum: 300,
     bottomImg:  getAssetsFile('imgs/digTerrian/bottom.png'),
     wallImg: getAssetsFile('imgs/digTerrian/wall.png'),
-  })
+  },Cesium)
   viewer.scene.camera.setView({
     destination:{
       "x": -2234804.07681179,

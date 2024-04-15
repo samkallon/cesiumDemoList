@@ -1,12 +1,8 @@
 <script setup>
 import {onMounted, ref} from "vue";
-import {
-  addWallGeojson,
-  getBoundingSphereFromCartesian3List,
-  initViewer,
-  removaEntitiesAndPrimitivesByName
-} from "@/utils/cesiumUtils.js";
-import {Cesium3DTileset,HeadingPitchRoll,Math as CzmMath, Cartesian2} from "cesium";
+
+import * as Cesium from "cesium";
+import SamCesiumUtils from "sam-czm-utils";
 
 let viewer = null
 const wallList = [[
@@ -32,26 +28,28 @@ const wallList = [[
   }
 ]]
 onMounted(async () => {
-  viewer = initViewer('cesiumContainer')
+  const samCzm = new SamCesiumUtils.samCzm({Cesium:Cesium})
+  samCzm.initViewer({id:'cesiumContainer'})
+  viewer = samCzm.viewer
   viewer.scene.primitives.add(
-      await Cesium3DTileset.fromIonAssetId(354759),
+      await Cesium.Cesium3DTileset.fromIonAssetId(354759),
   );
 
-  addWallGeojson({
+  samCzm.addWallGeojson({
     wallList,
     maximumHeights: 30,
     minimumHeights: 0,
     viewer,
   })
-  viewer.scene.camera.flyToBoundingSphere(getBoundingSphereFromCartesian3List(wallList[0]),{
-    offset: new HeadingPitchRoll(0,CzmMath.toRadians(-30),0),
+  viewer.scene.camera.flyToBoundingSphere(samCzm.getBoundingSphereFromCartesian3List(wallList[0]),{
+    offset: new Cesium.HeadingPitchRoll(0,Cesium.Math.toRadians(-30),0),
     duration:1
   })
 })
 const curr = ref(1)
 function showWall(id,type,imgUrl) {
   curr.value = id
-  removaEntitiesAndPrimitivesByName('DynamicWall',viewer)
+  samCzm.removaEntitiesAndPrimitivesByName('DynamicWall')
   const params = {
     wallList,
     maximumHeights: 30,
@@ -61,9 +59,9 @@ function showWall(id,type,imgUrl) {
     imgUrl
   }
   if (id === 2){
-    params.repeat = new Cartesian2(10,1)
+    params.repeat = new Cesium.Cartesian2(10,1)
   }
-  addWallGeojson(params)
+  samCzm.addWallGeojson(params)
 }
 </script>
 

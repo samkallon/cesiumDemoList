@@ -1,17 +1,17 @@
 <script setup>
 import {onMounted} from "vue";
-import {
-  initViewer,
-} from "@/utils/cesiumUtils.js";
 import {addWeightCircleExpand} from "../../../utils/cesiumUtils.js";
+import SamCesiumUtils from "sam-czm-utils";
+import * as Cesium from "cesium";
 
 let viewer = null
 let center = [118.79304711609575, 32.07511800768333]
 onMounted(async () => {
-  viewer = initViewer('cesiumContainer',true)
-  addWeightCircleExpand(
+  const samCzm = new SamCesiumUtils.samCzm({Cesium:Cesium})
+  samCzm.initViewer({id:'cesiumContainer', initCamera:true})
+  viewer = samCzm.viewer
+  samCzm.addWeightCircleExpand(
       {
-        viewer,
         latlng:center,
         radius:3000,
         color: '#ffe100',

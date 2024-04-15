@@ -1,16 +1,15 @@
 <script setup>
 import {onMounted} from "vue";
-import {
-  initViewer,
-} from "@/utils/cesiumUtils.js";
-import {lightenEillposid} from "../../../utils/cesiumUtils.js";
 import * as Cesium from "cesium";
+import SamCesiumUtils from "sam-czm-utils";
 
 let viewer = null
 let center = [118.79304711609575, 32.07511800768333]
 onMounted(async () => {
-  viewer = initViewer('cesiumContainer',true)
-  lightenEillposid(
+  const samCzm = new SamCesiumUtils.samCzm({Cesium:Cesium})
+  samCzm.initViewer({id:'cesiumContainer', initCamera:true})
+  viewer = samCzm.viewer
+  samCzm.lightenEillposid(
       {
         viewer,
         position:Cesium.Cartesian3.fromDegrees(...center),
