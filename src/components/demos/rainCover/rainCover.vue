@@ -14,8 +14,8 @@ onMounted(async () => {
   viewer.flyTo(tileset,{duration:1})
 
   viewer.scene.postProcessStages.add(samCzm.getRainPostProcess());
+  viewer.scene.postProcessStages.add(samCzm.getRainFlyPostProcess());
 })
-
 </script>
 
 <template>

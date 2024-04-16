@@ -28,8 +28,8 @@ export default class Draw {
             position: worldPosition,
             point: {
                 color: Cesium.Color.WHITE,
-                pixelSize: 5,
-                heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+                pixelSize: 10,
+
             },
         });
         return point;

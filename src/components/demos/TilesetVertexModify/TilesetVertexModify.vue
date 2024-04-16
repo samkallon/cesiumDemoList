@@ -3,23 +3,33 @@ import {onMounted, ref} from "vue";
 import Draw from '@/utils/Draw.js'
 import * as Cesium from "cesium"
 import SamCesiumUtils from "sam-czm-utils";
-let viewer,DrawObj,tileset = null
+import dat from "dat.gui";
+let viewer,DrawObj,tileset,samCzm = null
 onMounted(async()=>{
-  const samCzm = new SamCesiumUtils.samCzm({Cesium:Cesium})
+  samCzm = new SamCesiumUtils.samCzm({Cesium:Cesium})
   samCzm.initViewer({id:'cesiumContainer'})
   viewer = samCzm.viewer
   DrawObj = new Draw(viewer)
   tileset = viewer.scene.primitives.add(
-      await Cesium.Cesium3DTileset.fromIonAssetId(354759),
+      await Cesium.Cesium3DTileset.fromIonAssetId(2539804),
   );
-  viewer.flyTo(tileset)
+  viewer.zoomTo(tileset);
+  const controls =  {
+    'u_height': 100
+  }
+  const gui = new dat.GUI();
+  gui.domElement.style = 'position:absolute;top:0px;left:200px;'
+  document.querySelector('.container').appendChild(gui.domElement)
+  gui.add(controls, 'u_height', -200, 200).onChange(v=>{
+    tileset.customShader.setUniform('u_height',controls['u_height'])
+  });
 })
-
-const depth = ref(100)
 function digTerrian() {
   let customShader = samCzm.getVertexChangeHeightCustomShader(DrawObj.activeShapePoints)
+  DrawObj.clear()
   tileset.customShader = customShader;
 }
+
 
 function clear() {
   DrawObj.clear()
