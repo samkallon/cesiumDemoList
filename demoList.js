@@ -118,7 +118,8 @@ export default [
         title:'3dtile白膜动态特效',
         tag:['shader','3dtile'],
         imgUrl:'imgs/demoFengMian/3dtileDynamicBaiMo.png',
-        url:'https://blog.csdn.net/weixin_45782925/article/details/122562177'
+        url:'https://blog.csdn.net/weixin_45782925/article/details/122562177',
+        compName: 'TilesetCustomFragmentShader'
     },
     {
         title:'3dtile调整位置,姿态',
