@@ -21,6 +21,7 @@ import CircleWaterExpand from "./demos/CircleWaterExpand/CircleWaterExpand.vue";
 import WeightCircleExpand from "./demos/WeightCircleExpand/WeightCircleExpand.vue";
 import PointLight from "./demos/PointLight.vue";
 import Fountain from "./demos/Fountain/Fountain.vue";
+import TilesetCustomFragmentShader from "@/components/demos/TilesetCustomFragmentShader.vue";
 import {ElMessage} from "element-plus";
 const compDic = {
   'DigTerrian':DigTerrian,
@@ -39,6 +40,7 @@ const compDic = {
   'WeightCircleExpand':WeightCircleExpand,
   'PointLight':PointLight,
   'Fountain':Fountain,
+  'TilesetCustomFragmentShader':TilesetCustomFragmentShader,
 }
 
 const puBuLiuData = ref([])
