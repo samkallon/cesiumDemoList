@@ -22,6 +22,7 @@ import WeightCircleExpand from "./demos/WeightCircleExpand/WeightCircleExpand.vu
 import PointLight from "./demos/PointLight.vue";
 import Fountain from "./demos/Fountain/Fountain.vue";
 import TilesetCustomFragmentShader from "@/components/demos/TilesetCustomFragmentShader.vue";
+import DigitalBillboard from "@/components/demos/DigitalBillboard.vue";
 import {ElMessage} from "element-plus";
 const compDic = {
   'DigTerrian':DigTerrian,
@@ -41,6 +42,7 @@ const compDic = {
   'PointLight':PointLight,
   'Fountain':Fountain,
   'TilesetCustomFragmentShader':TilesetCustomFragmentShader,
+  'DigitalBillboard':DigitalBillboard,
 }
 
 const puBuLiuData = ref([])
@@ -92,12 +94,15 @@ function selectType(item) {
 const demoShow = ref(false)
 const currentComponent = ref('')
 async function showDemo(item) {
+  currentComponent.value = ''
   if (!item.compName){
     ElMessage.info('功能开发中!')
     return
   }
   demoShow.value = true
-  currentComponent.value = compDic[item.compName]
+  setTimeout(()=>{
+    currentComponent.value = compDic[item.compName]
+  },200)
 }
 
 
