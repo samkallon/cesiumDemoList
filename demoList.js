@@ -169,4 +169,10 @@ export default [
         imgUrl:'imgs/demoFengMian/DrawCommandPrimitive.mp4',
         compName: 'DrawCommandPrimitive'
     },
+    {
+        title:'电子公告牌',
+        tag:['Model','shader'],
+        imgUrl:'imgs/demoFengMian/dynamicBillboardModel.png',
+        compName: 'DigitalBillboard'
+    },
 ]
