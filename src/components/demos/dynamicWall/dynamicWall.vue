@@ -6,6 +6,7 @@ import SamCesiumUtils from "sam-czm-utils";
 import {getAssetsFile} from "@/utils/utils.js";
 
 let viewer = null
+let samCzm
 const wallList = [[
   {
     "x": 1532691.0113004209,
