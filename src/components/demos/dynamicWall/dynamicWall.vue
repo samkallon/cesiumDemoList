@@ -28,7 +28,7 @@ const wallList = [[
     "z": 4274506.267881826
   }
 ]]
-let samCzm
+
 onMounted(async () => {
   samCzm = new SamCesiumUtils.samCzm({Cesium:Cesium})
   samCzm.initViewer({id:'cesiumContainer'})

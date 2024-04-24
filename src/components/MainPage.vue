@@ -4,46 +4,7 @@ import {onMounted, ref} from "vue";
 import demoList from "../../public/demoList.js";
 import {getAssetsFile} from "@/utils/utils.js";
 import tsParticleEmitter from '/public/tsParticle/tsParticleEmitter.json'
-import grow from '/public/tsParticle/grow.json'
-import DigTerrian from "@/components/demos/DigTerrian/DigTerrian.vue";
-import DynamicWall from "@/components/demos/dynamicWall/dynamicWall.vue";
-import SnowCover from "@/components/demos/snowCover/snowCover.vue";
-import RainCover from "@/components/demos/rainCover/rainCover.vue";
-import TilesetPlaneCut from "@/components/demos/tilesetPlaneCut/tilesetPlaneCut.vue";
-import UpLine from "./demos/randomUpLine/upLine.vue";
-import LightenEllipsoid from "./demos/lightenEllipsoid/lightenEllipsoid.vue";
-import Fog from "./demos/Fog/Fog.vue";
-import KuoSanYuan from "./demos/kuoSanYuan/kuoSanYuan.vue";
-import Radar1 from "./demos/radar/radar1.vue";
-import TilesetVertexModify from "./demos/TilesetVertexModify/TilesetVertexModify.vue";
-import DrawCommandPrimitive from "./demos/DrawCommandPrimitive.vue";
-import CircleWaterExpand from "./demos/CircleWaterExpand/CircleWaterExpand.vue";
-import WeightCircleExpand from "./demos/WeightCircleExpand/WeightCircleExpand.vue";
-import PointLight from "./demos/PointLight.vue";
-import Fountain from "./demos/Fountain/Fountain.vue";
-import TilesetCustomFragmentShader from "@/components/demos/TilesetCustomFragmentShader.vue";
-import DigitalBillboard from "@/components/demos/DigitalBillboard.vue";
 import {ElMessage} from "element-plus";
-const compDic = {
-  'DigTerrian':DigTerrian,
-  'DynamicWall':DynamicWall,
-  'SnowCover':SnowCover,
-  'RainCover':RainCover,
-  'TilesetPlaneCut':TilesetPlaneCut,
-  'Fog':Fog,
-  'UpLine':UpLine,
-  'LightenEllipsoid':LightenEllipsoid,
-  'KuoSanYuan':KuoSanYuan,
-  'Radar1':Radar1,
-  'TilesetVertexModify':TilesetVertexModify,
-  'DrawCommandPrimitive':DrawCommandPrimitive,
-  'CircleWaterExpand':CircleWaterExpand,
-  'WeightCircleExpand':WeightCircleExpand,
-  'PointLight':PointLight,
-  'Fountain':Fountain,
-  'TilesetCustomFragmentShader':TilesetCustomFragmentShader,
-  'DigitalBillboard':DigitalBillboard,
-}
 
 const puBuLiuData = ref([])
 const selectTypeList = ref([])
@@ -99,10 +60,7 @@ async function showDemo(item) {
     ElMessage.info('功能开发中!')
     return
   }
-  demoShow.value = true
-  setTimeout(()=>{
-    currentComponent.value = compDic[item.compName]
-  },200)
+  window.open(`/cesiumDemoList/demo/${item.compName}.html`)
 }
 
 
@@ -118,7 +76,7 @@ async function showDemo(item) {
     </div>
     <el-scrollbar>
       <div class="content">
-        <div class="item" v-for=" item in puBuLiuData" @click="showDemo(item)" >
+        <div class="item" v-for=" item in puBuLiuData" @click="showDemo(item)">
           <video v-if="item.imgUrl.indexOf('mp4') > -1" :src="getAssetsFile(item.imgUrl)" autoplay muted loop alt="" style="width: 100%"/>
           <img v-else :src="getAssetsFile(item.imgUrl)" alt="" style="width: 100%">
           <div class="item-title">{{item.title}}</div>
@@ -126,9 +84,6 @@ async function showDemo(item) {
         </div>
       </div>
     </el-scrollbar>
-    <el-dialog class="demoDialog" v-model="demoShow" width="90%" top="5vh">
-      <component :is="currentComponent"></component>
-    </el-dialog>
 </template>
 
 <style scoped lang="scss">
