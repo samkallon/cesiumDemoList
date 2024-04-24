@@ -40,7 +40,8 @@ export default [
         title:'动态抛物线',
         tag:['线','shader'],
         imgUrl:'imgs/demoFengMian/paoWuLine.png',
-        url:'https://blog.csdn.net/weixin_45782925/article/details/123301657'
+        url:'https://blog.csdn.net/weixin_45782925/article/details/123301657',
+        compName:'ParabolaFlowLine'
     },
     {
         title:'雷达平扫',

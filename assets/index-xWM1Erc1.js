@@ -1,0 +1,2 @@
+const __vite__fileDeps=["assets/StrokeColorUpdater-CGYKbobk.js","assets/index-D5HpnfQ3.js","assets/index-CcA54FOX.css"],__vite__mapDeps=i=>i.map(i=>__vite__fileDeps[i]);
+import{_ as e}from"./index-D5HpnfQ3.js";async function i(r,o=!0){await r.addParticleUpdater("strokeColor",async t=>{const{StrokeColorUpdater:a}=await e(()=>import("./StrokeColorUpdater-CGYKbobk.js"),__vite__mapDeps([0,1,2]));return new a(t)},o)}export{i as loadStrokeColorUpdater};
