@@ -49,14 +49,16 @@ const compDic = {
 
 const puBuLiuData = ref([])
 const selectTypeList = ref([])
-const currSelectType = ref('')
+const currSelectType = ref('已完成')
 onMounted(()=>{
   for (let i = 0; i < demoList.length; i++) {
-    puBuLiuData.value.push({
-      imgUrl:demoList[i].imgUrl,
-      title:demoList[i].title,
-      compName:demoList[i].compName,
-    })
+    if (demoList[i].compName){
+      puBuLiuData.value.push({
+        imgUrl:demoList[i].imgUrl,
+        title:demoList[i].title,
+        compName:demoList[i].compName,
+      })
+    }
   }
   selectTypeList.value = Array.from(new Set(
       demoList.map(e=>{

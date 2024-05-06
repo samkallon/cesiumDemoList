@@ -24,8 +24,8 @@ dependencies:
     specifier: ^6.5.0
     version: 6.5.0
   cesium:
-    specifier: 1.116.0
-    version: 1.116.0
+    specifier: ^1.117.0
+    version: 1.117.0
   dat.gui:
     specifier: ^0.7.9
     version: 0.7.9
@@ -54,7 +54,7 @@ devDependencies:
     version: 5.1.3(sass@1.71.0)
   vite-plugin-cesium:
     specifier: ^1.2.22
-    version: 1.2.22(cesium@1.116.0)(rollup@2.79.1)(vite@5.1.3)
+    version: 1.2.22(cesium@1.117.0)(rollup@2.79.1)(vite@5.1.3)
 
 packages:
 
@@ -81,8 +81,8 @@ packages:
       '@babel/helper-validator-identifier': 7.22.20
       to-fast-properties: r2.cnpmjs.org/to-fast-properties@2.0.0
 
-  /@cesium/engine@9.0.0:
-    resolution: {integrity: sha512-GIeBitHo1t6OwgWnxAsCoHuCcJEfdki2G0hbKfaP87r2EapbnDLBmfxZziscl1ksv7kQiQ6x2FOOSPuV9QFvhA==}
+  /@cesium/engine@9.1.0:
+    resolution: {integrity: sha512-sDscnq8Tl2tSJCJRoxlrTSj2TfdsZr8zOXyrj6bLJaqBDuf53vgPS5Y5D+WKbwUomZ/hI2EIlMtLD2Ev4MwnAg==}
     engines: {node: '>=14.0.0'}
     dependencies:
       '@tweenjs/tween.js': 23.1.1
@@ -105,11 +105,11 @@ packages:
       topojson-client: 3.1.0
       urijs: 1.19.11
 
-  /@cesium/widgets@6.0.0:
-    resolution: {integrity: sha512-zq0UqHji4PgPWTVdUB2hNb/FXe60eNDB11oW35/Z3REQfE4LBOkeR/RGck7hBOfYaubMiqwuwOw2lbl54OXzIA==}
+  /@cesium/widgets@6.1.0:
+    resolution: {integrity: sha512-wNPEsHFXiDOwosf+6O3+daee83t+lL/1lXxmK2dOKe5tV4h5BBIFAq8A8ttSmdAhDj+WVMS/ZGCvIi5Y87GTpw==}
     engines: {node: '>=14.0.0'}
     dependencies:
-      '@cesium/engine': 9.0.0
+      '@cesium/engine': 9.1.0
       nosleep.js: 0.12.0
 
   /@ctrl/tinycolor@3.6.1:
@@ -2198,12 +2198,12 @@ packages:
     resolution: {integrity: sha512-JFPQs34lHKx1B5t1EpQpWH4c+29zIyn/haGsbpfq3suuV9v56enjFt23zqijxGTMwy1p/4H2tjnQMY+p1WoAyA==}
     dev: false
 
-  /cesium@1.116.0:
-    resolution: {integrity: sha512-RZOOMePztCVb74JU/DTCTfuha7xTsJtEm3FRZeMUXyZABeRhbYjT1GwtAtoaPPJ5/IoqNjLvZnTNJdnU3LVE5g==}
+  /cesium@1.117.0:
+    resolution: {integrity: sha512-gJ4J8oLgDTAYEGL69vK395MTjYDzxdLw4MqBXAXi9G2bhAp0U2DfxwuRqDcyW1SFdJVHj6ekcOBHszTMbmBOOA==}
     engines: {node: '>=14.0.0'}
     dependencies:
-      '@cesium/engine': 9.0.0
-      '@cesium/widgets': 6.0.0
+      '@cesium/engine': 9.1.0
+      '@cesium/widgets': 6.1.0
 
   /chokidar@3.6.0:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
@@ -3251,13 +3251,13 @@ packages:
   /urijs@1.19.11:
     resolution: {integrity: sha512-HXgFDgDommxn5/bIv0cnQZsPhHDA90NPHD6+c/v21U5+Sx5hoP8+dP9IZXBU1gIfvdRfhG8cel9QNPeionfcCQ==}
 
-  /vite-plugin-cesium@1.2.22(cesium@1.116.0)(rollup@2.79.1)(vite@5.1.3):
+  /vite-plugin-cesium@1.2.22(cesium@1.117.0)(rollup@2.79.1)(vite@5.1.3):
     resolution: {integrity: sha512-OnS+VKNGck4kUu4/67Fdfhz0/zF9mDVNUp9hUWtX19C38O0mJsJy2MH1ev2QcrVLf6VieJ7vCGxkLchdB1n1HQ==}
     peerDependencies:
       cesium: ^1.95.0
       vite: '>=2.7.1'
     dependencies:
-      cesium: 1.116.0
+      cesium: 1.117.0
       fs-extra: r2.cnpmjs.org/fs-extra@9.1.0
       rollup-plugin-external-globals: r2.cnpmjs.org/rollup-plugin-external-globals@0.6.1(rollup@2.79.1)
       serve-static: 1.15.0

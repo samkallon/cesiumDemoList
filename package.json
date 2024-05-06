@@ -15,7 +15,7 @@
     "@tsparticles/vue3": "^3.0.0",
     "@turf/helpers": "^6.5.0",
     "@turf/turf": "^6.5.0",
-    "cesium": "1.116.0",
+    "cesium": "^1.117.0",
     "dat.gui": "^0.7.9",
     "element-plus": "^2.3.12",
     "sam-czm-utils": "^1.2.6",
