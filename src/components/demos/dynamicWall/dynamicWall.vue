@@ -44,9 +44,20 @@ onMounted(async () => {
     minimumHeights: 0,
     imgUrl:getAssetsFile( 'imgs/materialImg/GradientRed.png')
   })
-  viewer.scene.camera.flyToBoundingSphere(samCzm.getBoundingSphereFromCartesian3List(wallList[0]),{
-    offset: new Cesium.HeadingPitchRoll(0,Cesium.Math.toRadians(-30),0),
-    duration:1
+  // viewer.scene.camera.flyToBoundingSphere(samCzm.getBoundingSphereFromCartesian3List(wallList[0]),{
+  //   offset: new Cesium.HeadingPitchRoll(0,Cesium.Math.toRadians(-30),0),
+  //   duration:1
+  // })
+  viewer.scene.camera.setView({
+    destination:{
+      "x": 1532851.2612119971,
+      "y": -4465330.125452218,
+      "z": 4274372.120113395
+    },
+    orientation:{
+      heading:5.992900698274014,
+      pitch:-0.5761080026007832
+    }
   })
 })
 const curr = ref(1)

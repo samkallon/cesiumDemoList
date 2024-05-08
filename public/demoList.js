@@ -3,7 +3,7 @@ export default [
         title:'地形开挖',
         tag:['地形'],
         imgUrl:'imgs/demoFengMian/dxkw.png',
-        compName:'DigTerrian'
+        // compName:'DigTerrian'
     },
     {
         title:'积水效果',
@@ -118,7 +118,7 @@ export default [
     {
         title:'3dtile白膜动态特效',
         tag:['shader','3dtile'],
-        imgUrl:'imgs/demoFengMian/3dtileDynamicBaiMo.png',
+        imgUrl:'imgs/demoFengMian/3dtileDynamicBaiMo.mp4',
         url:'https://blog.csdn.net/weixin_45782925/article/details/122562177',
         compName: 'TilesetCustomFragmentShader'
     },
@@ -131,7 +131,7 @@ export default [
         title:'3dtile裁切',
         tag:['modelMatrix','3dtile'],
         imgUrl:'imgs/demoFengMian/tilesetPlaneCut.png',
-        compName:'TilesetPlaneCut'
+        // compName:'TilesetPlaneCut'
     },
     {
         title:'积雪效果',
