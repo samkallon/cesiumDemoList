@@ -176,4 +176,10 @@ export default [
         imgUrl:'imgs/demoFengMian/dynamicBillboardModel.png',
         compName: 'DigitalBillboard'
     },
+    {
+        title:'视锥体检测动态拉伸',
+        tag:[],
+        imgUrl:'imgs/demoFengMian/dynamicBillboardModel.png',
+        compName: 'CullingVolume'
+    },
 ]
