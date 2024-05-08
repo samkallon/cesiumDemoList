@@ -24,6 +24,7 @@ import Fountain from "./demos/Fountain/Fountain.vue";
 import TilesetCustomFragmentShader from "@/components/demos/TilesetCustomFragmentShader.vue";
 import DigitalBillboard from "@/components/demos/DigitalBillboard.vue";
 import ParabolaFlowLine from "@/components/demos/ParabolaFlowLine.vue";
+import CullingVolume from '@/components/demos/CullingVolume.vue'
 import {ElMessage} from "element-plus";
 const compDic = {
   'DigTerrian':DigTerrian,
@@ -45,6 +46,7 @@ const compDic = {
   'TilesetCustomFragmentShader':TilesetCustomFragmentShader,
   'DigitalBillboard':DigitalBillboard,
   'ParabolaFlowLine':ParabolaFlowLine,
+  'CullingVolume':CullingVolume,
 }
 
 const puBuLiuData = ref([])
