@@ -3,7 +3,7 @@ export default [
         title:'地形开挖',
         tag:['地形'],
         imgUrl:'imgs/demoFengMian/dxkw.png',
-        // compName:'DigTerrian'
+        compName:'DigTerrian'
     },
     {
         title:'积水效果',
@@ -149,7 +149,8 @@ export default [
         title:'天际线',
         tag:['后处理','shader'],
         imgUrl:'imgs/demoFengMian/tianJiXian.png',
-        url:'https://www.cnblogs.com/wanghui2011/articles/11513144.html'
+        url:'https://www.cnblogs.com/wanghui2011/articles/11513144.html',
+        compName:'TianJiXian'
     },
     {
         title:'点光源',
@@ -181,5 +182,22 @@ export default [
         tag:[],
         imgUrl:'imgs/demoFengMian/dynamicBillboardModel.png',
         compName: 'CullingVolume'
+    },
+    {
+        title:'全局特效处理夜视/黑白/三角网/马赛克',
+        tag:['后处理'],
+        imgUrl:'imgs/demoFengMian/houChuLiQuanju.gif',
+    },
+    {
+        title:'3dtile单体化',
+        tag:['3dtile'],
+        imgUrl:'imgs/demoFengMian/houChuLiQuanju.gif',
+        url:'https://github.com/liukun6356/cesium-demo.git  taishi3dtiles 路由 '
+    },
+    {
+        title:'雷达云图',
+        tag:['layer'],
+        imgUrl:'imgs/demoFengMian/houChuLiQuanju.gif',
+        url:'https://github.com/liukun6356/cesium-demo.git  czWater yutu'
     },
 ]
