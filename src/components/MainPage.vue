@@ -25,6 +25,7 @@ import TilesetCustomFragmentShader from "@/components/demos/TilesetCustomFragmen
 import DigitalBillboard from "@/components/demos/DigitalBillboard.vue";
 import ParabolaFlowLine from "@/components/demos/ParabolaFlowLine.vue";
 import CullingVolume from '@/components/demos/CullingVolume.vue'
+import TianJiXian from "@/components/demos/TianJiXian.vue";
 import {ElMessage} from "element-plus";
 const compDic = {
   'DigTerrian':DigTerrian,
@@ -47,6 +48,7 @@ const compDic = {
   'DigitalBillboard':DigitalBillboard,
   'ParabolaFlowLine':ParabolaFlowLine,
   'CullingVolume':CullingVolume,
+  TianJiXian
 }
 
 const puBuLiuData = ref([])
