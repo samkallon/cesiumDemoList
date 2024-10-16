@@ -44,7 +44,6 @@ export default defineConfig({
           // ... [See more](https://github.com/javascript-obfuscator/javascript-obfuscator)
         }
       }),
-      apply: 'build' // 仅在生产环境下使用
     }
   ],
   resolve: {
