@@ -11,7 +11,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  base: '/cesiumDemoList/',
+  base: './',
   root: './',
   server:{
     host:'0.0.0.0',
