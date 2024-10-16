@@ -9,6 +9,7 @@ import { createPinia } from 'pinia'
 import Particles from "@tsparticles/vue3";
 import { loadSlim } from "@tsparticles/slim";
 
+
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
