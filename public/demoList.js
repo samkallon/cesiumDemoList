@@ -7,7 +7,7 @@ export default [
     },
     {
         title:'积水效果',
-        tag:['后处理','shader'],
+        tag:['后处理'],
         imgUrl:'imgs/demoFengMian/waterCover.png',
         compName:'RainCover'
     },
@@ -19,46 +19,46 @@ export default [
     },
     {
         title:'动态墙体',
-        tag:['shader','墙'],
+        tag:['实体'],
         imgUrl:'imgs/demoFengMian/DynamicWall.mp4',
         compName:'DynamicWall'
     },
     {
         title:'动态线',
-        tag:['shader','线'],
+        tag:['实体'],
         imgUrl:'imgs/demoFengMian/DynamicLine.png',
         url:'https://blog.csdn.net/weixin_45782925/article/details/122559827'
     },
     {
         title:'随机上升飞线',
-        tag:['shader','线'],
+        tag:['实体'],
         imgUrl:'imgs/demoFengMian/upLine.mp4',
         url:'https://blog.csdn.net/weixin_45782925/article/details/123299042',
         compName:'UpLine'
     },
     {
         title:'动态抛物线',
-        tag:['线','shader'],
-        imgUrl:'imgs/demoFengMian/paoWuLine.png',
+        tag:['实体'],
+        imgUrl:'imgs/demoFengMian/paoWuLine.gif',
         url:'https://blog.csdn.net/weixin_45782925/article/details/123301657',
         compName:'ParabolaFlowLine'
     },
     {
         title:'雷达平扫',
-        tag:['shader','圆','雷达'],
+        tag:['实体'],
         imgUrl:'imgs/demoFengMian/radar1.mp4',
         url:'https://blog.csdn.net/weixin_45782925/article/details/122560610,https://www.shadertoy.com/view/XdsXRf',
         compName:'Radar1'
     },
     {
         title:'雷达波纹',
-        tag:['shader','圆','雷达'],
+        tag:['实体'],
         imgUrl:'imgs/demoFengMian/radar2.png',
         url:'https://blog.csdn.net/weixin_45782925/article/details/123284150'
     },
     {
         title:'点扩散圆',
-        tag:['shader','圆'],
+        tag:['实体'],
         imgUrl:'imgs/demoFengMian/circle1.mp4',
         url:'https://blog.csdn.net/weixin_45782925/article/details/122561852',
         compName: 'KuoSanYuan'
@@ -66,95 +66,95 @@ export default [
 
     {
         title:'旋转材质圆',
-        tag:['shader','圆'],
+        tag:['实体'],
         imgUrl:'imgs/demoFengMian/circle2.png',
         url:'https://blog.csdn.net/weixin_45782925/article/details/123277979'
     },
     {
         title:'水波扩散圆',
-        tag:['shader','圆'],
+        tag:['实体'],
         imgUrl:'imgs/demoFengMian/circle3.mp4',
         url:'https://blog.csdn.net/weixin_45782925/article/details/123270788',
         compName:'CircleWaterExpand'
     },
     {
         title:'厚重点扩散圆',
-        tag:['shader','圆'],
+        tag:['实体'],
         imgUrl:'imgs/demoFengMian/circle4.mp4',
         url:'https://blog.csdn.net/weixin_45782925/article/details/123270654',
         compName:'WeightCircleExpand'
     },
     {
         title:'脉冲圆',
-        tag:['shader','圆'],
+        tag:['实体'],
         imgUrl:'imgs/demoFengMian/circle5.png',
         url:'https://blog.csdn.net/weixin_45782925/article/details/123266936'
     },
     {
         title:'立体雷达',
-        tag:['shader','球','雷达'],
+        tag:['实体'],
         imgUrl:'imgs/demoFengMian/radar3.png',
         url:'https://blog.csdn.net/weixin_45782925/article/details/123294411'
     },
     {
         title:'动态球体',
-        tag:['shader','球'],
+        tag:['实体'],
         imgUrl:'imgs/demoFengMian/ellipsoid1.png',
         url:'https://blog.csdn.net/weixin_45782925/article/details/123281149'
     },
     {
         title:'闪电球体',
-        tag:['shader','球'],
+        tag:['实体'],
         imgUrl:'imgs/demoFengMian/ellipsoid2.mp4',
         url:'https://blog.csdn.net/weixin_45782925/article/details/123280363',
         compName: 'LightenEllipsoid'
     },
     {
         title:'3dtile调整顶点高度',
-        tag:['shader','3dtile'],
+        tag:['3dtile'],
         imgUrl:'imgs/demoFengMian/default.png',
         compName: 'TilesetVertexModify'
     },
     {
         title:'3dtile白膜动态特效',
-        tag:['shader','3dtile'],
+        tag:['3dtile'],
         imgUrl:'imgs/demoFengMian/3dtileDynamicBaiMo.mp4',
         url:'https://blog.csdn.net/weixin_45782925/article/details/122562177',
         compName: 'TilesetCustomFragmentShader'
     },
     {
         title:'3dtile调整位置,姿态',
-        tag:['modelMatrix','3dtile'],
+        tag:['3dtile'],
         imgUrl:'imgs/demoFengMian/default.png'
     },
     {
         title:'3dtile裁切',
-        tag:['modelMatrix','3dtile'],
+        tag:['3dtile'],
         imgUrl:'imgs/demoFengMian/tilesetPlaneCut.png',
-        // compName:'TilesetPlaneCut'
+        compName:'TilesetPlaneCut'
     },
     {
         title:'积雪效果',
-        tag:['后处理','shader'],
+        tag:['后处理'],
         imgUrl:'imgs/demoFengMian/snowDuiJi.png',
         compName:'SnowCover'
     },
     {
         title:'高度雾效果',
-        tag:['后处理','shader'],
+        tag:['后处理'],
         imgUrl:'imgs/demoFengMian/hightFog.mp4',
         compName:'Fog'
     },
     {
         title:'天际线',
-        tag:['后处理','shader'],
+        tag:['后处理'],
         imgUrl:'imgs/demoFengMian/tianJiXian.png',
         url:'https://www.cnblogs.com/wanghui2011/articles/11513144.html',
         compName:'TianJiXian'
     },
     {
         title:'点光源',
-        tag:['后处理','shader'],
+        tag:['后处理'],
         imgUrl:'imgs/demoFengMian/dianGuangYuan.png',
         url:'https://blog.csdn.net/kuyewb/article/details/133157526',
         // compName: "PointLight"
@@ -167,7 +167,7 @@ export default [
     },
     {
         title:'DrawCommand绘制自定义Primitive',
-        tag:['DrawCommand','Primitive','shader'],
+        tag:['DrawCommand'],
         imgUrl:'imgs/demoFengMian/DrawCommandPrimitive.mp4',
         compName: 'DrawCommandPrimitive'
     },
@@ -175,13 +175,13 @@ export default [
         title:'电子公告牌',
         tag:['Model','shader'],
         imgUrl:'imgs/demoFengMian/dynamicBillboardModel.png',
-        compName: 'DigitalBillboard'
+        // compName: 'DigitalBillboard'
     },
     {
         title:'视锥体检测动态拉伸',
         tag:[],
         imgUrl:'imgs/demoFengMian/dynamicBillboardModel.png',
-        compName: 'CullingVolume'
+        // compName: 'CullingVolume'
     },
     {
         title:'全局特效处理夜视/黑白/三角网/马赛克',
@@ -199,5 +199,25 @@ export default [
         tag:['layer'],
         imgUrl:'imgs/demoFengMian/houChuLiQuanju.gif',
         url:'https://github.com/liukun6356/cesium-demo.git  czWater yutu'
+    },
+    {
+        title:'离屏渲染',
+        tag:['fbo'],
+        imgUrl:'imgs/demoFengMian/houChuLiQuanju.gif',
+    },
+    {
+        title:'反射水面',
+        tag:['fbo'],
+        imgUrl:'imgs/demoFengMian/houChuLiQuanju.gif',
+    },
+    {
+        title:'丁达尔效应',
+        tag:['fbo','后处理'],
+        imgUrl:'imgs/demoFengMian/houChuLiQuanju.gif',
+    },
+    {
+        title:'体积云',
+        tag:['fbo','后处理'],
+        imgUrl:'imgs/demoFengMian/houChuLiQuanju.gif',
     },
 ]
