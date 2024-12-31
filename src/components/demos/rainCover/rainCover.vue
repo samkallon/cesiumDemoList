@@ -13,8 +13,11 @@ onMounted(async () => {
   );
   viewer.flyTo(tileset,{duration:1})
 
-  viewer.scene.postProcessStages.add(samCzm.getRainPostProcess());
-  viewer.scene.postProcessStages.add(samCzm.getRainFlyPostProcess());
+  let PostProcessUtils
+
+  PostProcessUtils = new SamCesiumUtils.PostProcessUtils({viewer,Cesium})
+  PostProcessUtils.add('RainFly')
+  PostProcessUtils.add('RainReflect')
 })
 </script>
 

@@ -1,4 +1,5 @@
 <script setup>
+debugger
 import {onMounted, ref} from "vue";
 import dat from 'dat.gui'
 import * as Cesium from "cesium";
@@ -24,20 +25,20 @@ onMounted(async () => {
   })
 
 
-  let snowCoverPostProcess
+  let PostProcessUtils
 
-  snowCoverPostProcess = samCzm.getFogPostProcess(controls['雾浓度'],controls['雾高度'])
-  viewer.scene.postProcessStages.add(snowCoverPostProcess);
+  PostProcessUtils = new SamCesiumUtils.PostProcessUtils({viewer,Cesium})
+  PostProcessUtils.add('HightFog',{alpha:0.9,height:100})
 
 
   const gui = new dat.GUI();
   gui.domElement.style = 'position:absolute;top:10px;left:10px;'
   document.querySelector('.container').appendChild(gui.domElement)
   gui.add(controls, '雾浓度', 0, 1).onChange(v=>{
-    snowCoverPostProcess.uniforms.alpha = controls['雾浓度']
+    PostProcessUtils.HightFog.uniforms.alpha = controls['雾浓度']
   });
   gui.add(controls, '雾高度', 0, 300).onChange(v=>{
-    snowCoverPostProcess.uniforms.height = controls['雾高度']
+    PostProcessUtils.HightFog.uniforms.height = controls['雾高度']
   });
 })
 

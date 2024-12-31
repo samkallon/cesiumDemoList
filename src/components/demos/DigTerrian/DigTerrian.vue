@@ -7,6 +7,7 @@ import * as Cesium from "cesium";
 
 let viewer,DrawObj,DigTerObj = null
 onMounted(()=>{
+  debugger
   const samCzm = new SamCesiumUtils.samCzm({Cesium:Cesium})
   samCzm.initViewer({id:'cesiumContainer'})
   viewer = samCzm.viewer

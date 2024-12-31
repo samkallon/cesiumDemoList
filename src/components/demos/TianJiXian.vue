@@ -13,6 +13,8 @@ const controls =  {
   '物体描边距离': 500,
 }
 
+let PostProcessUtils
+
 onMounted(async () => {
   samCzm = new SamCesiumUtils.samCzm({Cesium:Cesium})
   samCzm.initViewer({id:'cesiumContainer'})
@@ -23,26 +25,18 @@ onMounted(async () => {
   viewer.flyTo(tileset, {
     duration: 0,
   })
-
-
-
+  PostProcessUtils = new SamCesiumUtils.PostProcessUtils({viewer,Cesium})
 })
 
+
+
+
 function addSkyLine() {
-  skylinePostProcess = samCzm.getSkyLinePostProcess({})
-  // skylinePostProcess = getSkyLinePostProcess({})
-  viewer.scene.postProcessStages.add(skylinePostProcess);
+  PostProcessUtils.add('SkyLine',{})
 
-
-  // const gui = new dat.GUI();
-  // gui.domElement.style = 'position:absolute;top:10px;left:100px;'
-  // document.querySelector('.container').appendChild(gui.domElement)
-  // gui.add(controls, '物体描边距离', 200, 700).onChange(v=>{
-  //   skylinePostProcess.uniforms.mbDis = controls['物体描边距离']
-  // });
 }
 function clear() {
-
+  PostProcessUtils.remove('SkyLine')
 }
 
 </script>

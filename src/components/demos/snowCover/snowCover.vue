@@ -22,28 +22,22 @@ onMounted(async () => {
   );
   viewer.flyTo(tileset,{duration:1})
 
-
-  const snowCoverPostProcess = new Cesium.PostProcessStage(
-      samCzm.getSnowCoverPostProcess(controls['雪覆盖']))
-  viewer.scene.postProcessStages.add(snowCoverPostProcess);
-
-
-  const snowPostProcess = new Cesium.PostProcessStage(
-      samCzm.getSnowFlyPostProcess(controls['雪速度'],controls['雪花大小']))
-  viewer.scene.postProcessStages.add(snowPostProcess);
-
+  let PostProcessUtils
+  PostProcessUtils = new SamCesiumUtils.PostProcessUtils({viewer,Cesium})
+  PostProcessUtils.add('SnowCover',{alpha:controls['雪覆盖']})
+  PostProcessUtils.add('SnowFly',{snowSpeed:controls['雪速度'],snowSize:controls['雪花大小']})
 
   const gui = new dat.GUI();
   gui.domElement.style = 'position:absolute;top:10px;left:10px;'
   document.querySelector('.container').appendChild(gui.domElement)
   gui.add(controls, '雪覆盖', 0, 1).onChange(v=>{
-    snowCoverPostProcess.uniforms.alpha = controls['雪覆盖']
+    PostProcessUtils.SnowCover.uniforms.alpha = controls['雪覆盖']
   });
   gui.add(controls, '雪速度', 30, 150).onChange(v=>{
-    snowPostProcess.uniforms.snowSpeed = controls['雪速度']
+    PostProcessUtils.SnowFly.uniforms.snowSpeed = controls['雪速度']
   });
   gui.add(controls, '雪花大小', 0, 0.03).onChange(v=>{
-    snowPostProcess.uniforms.snowSize = controls['雪花大小']
+    PostProcessUtils.SnowFly.uniforms.snowSize = controls['雪花大小']
   });
 })
 
