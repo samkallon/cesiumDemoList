@@ -9,13 +9,13 @@ dependencies:
     specifier: ^2.1.0
     version: 2.3.1(vue@3.4.19)
   '@tsparticles/engine':
-    specifier: ^3.3.0
+    specifier: 3.3.0
     version: 3.3.0
   '@tsparticles/slim':
-    specifier: ^3.3.0
+    specifier: 3.3.0
     version: 3.3.0
   '@tsparticles/vue3':
-    specifier: ^3.0.0
+    specifier: 3.0.0
     version: 3.0.0
   '@turf/helpers':
     specifier: ^6.5.0
@@ -797,6 +797,7 @@ packages:
 
   /@tsparticles/vue3@3.0.0:
     resolution: {integrity: sha512-HKLYqt2BjzA5ZO8L5cOjiVIx/pPXZT2a+8v78nEyQVZvN0Upv5upte4grYqpD52Z5U6v6Ah78gNn5UNoUsHmtg==}
+    deprecated: 3.0.1 is out, please use that instead
     dependencies:
       '@tsparticles/engine': 3.3.0
       vue: 3.4.19

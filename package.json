@@ -4,15 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host 0.0.0.0",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
-    "@tsparticles/engine": "^3.3.0",
-    "@tsparticles/slim": "^3.3.0",
-    "@tsparticles/vue3": "^3.0.0",
+    "@tsparticles/engine": "3.3.0",
+    "@tsparticles/slim": "3.3.0",
+    "@tsparticles/vue3": "3.0.0",
     "@turf/helpers": "^6.5.0",
     "@turf/turf": "^6.5.0",
     "cesium": "^1.117.0",
