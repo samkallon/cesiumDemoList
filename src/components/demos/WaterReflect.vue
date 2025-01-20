@@ -1,16 +1,13 @@
 <script setup>
 import {onMounted, ref} from "vue";
-import dat from 'dat.gui'
 import * as Cesium from "cesium";
 import SamCesiumUtils from "sam-czm-utils";
+import {getAssetsFile} from "@/utils/utils.js";
 
 
 
 let viewer = null
-const controls =  {
-  '雾浓度': 0.88,
-  '雾高度': 73,
-}
+
 
 onMounted(async () => {
   const samCzm = new SamCesiumUtils.samCzm({Cesium:Cesium})
@@ -23,22 +20,42 @@ onMounted(async () => {
     duration: 0,
   })
 
+  let positions = [
+    {
+      "latitude": 42.37206041690349,
+      "longitude": -71.08035649839435,
+    },
+    {
+      "latitude": 42.37142968902346,
+      "longitude": -71.04800190669161,
+    },
+    {
+      "latitude": 42.349202756140386,
+      "longitude": -71.04595812050403,
+    },
+    {
+      "latitude": 42.35050276522226,
+      "longitude": -71.07621270035652
+    },
+    {
+      "latitude": 42.37206041690349,
+      "longitude": -71.08035649839435,
+    },
+  ]
+  // 添加反射水面
+  // const reflectWaterPrimitive = new ReflectWaterPrimitive({
+  const reflectWaterPrimitive = new SamCesiumUtils.CustomPrimitive.ReflectWaterPrimitive({
+    Cesium,
+    scene:viewer.scene,
+    height: 2,
+    positions:positions.map(e=>{
+      e.latitude = Cesium.Math.toRadians(e.latitude)
+      e.longitude = Cesium.Math.toRadians(e.longitude)
+      return e
+    }),
+    normalMapUrl:getAssetsFile('imgs/materialImg/waterNormals.jpg'),
+  })
 
-  let snowCoverPostProcess
-
-  snowCoverPostProcess = samCzm.getFogPostProcess(controls['雾浓度'],controls['雾高度'])
-  viewer.scene.postProcessStages.add(snowCoverPostProcess);
-
-
-  const gui = new dat.GUI();
-  gui.domElement.style = 'position:absolute;top:10px;left:10px;'
-  document.querySelector('.container').appendChild(gui.domElement)
-  gui.add(controls, '雾浓度', 0, 1).onChange(v=>{
-    snowCoverPostProcess.uniforms.alpha = controls['雾浓度']
-  });
-  gui.add(controls, '雾高度', 0, 300).onChange(v=>{
-    snowCoverPostProcess.uniforms.height = controls['雾高度']
-  });
 
 })
 

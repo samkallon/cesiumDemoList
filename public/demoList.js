@@ -209,6 +209,7 @@ export default [
         title:'反射水面',
         tag:['fbo'],
         imgUrl:'imgs/demoFengMian/houChuLiQuanju.gif',
+        compName: 'WaterReflect'
     },
     {
         title:'丁达尔效应',

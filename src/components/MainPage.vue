@@ -27,6 +27,7 @@ import ParabolaFlowLine from "@/components/demos/ParabolaFlowLine.vue";
 import CullingVolume from '@/components/demos/CullingVolume.vue'
 import TianJiXian from "@/components/demos/TianJiXian.vue";
 import {ElMessage} from "element-plus";
+import WaterReflect from "@/components/demos/WaterReflect.vue";
 const compDic = {
   'DigTerrian':DigTerrian,
   'DynamicWall':DynamicWall,
@@ -48,7 +49,8 @@ const compDic = {
   'DigitalBillboard':DigitalBillboard,
   'ParabolaFlowLine':ParabolaFlowLine,
   'CullingVolume':CullingVolume,
-  TianJiXian
+  TianJiXian,
+  WaterReflect
 }
 
 const puBuLiuData = ref([])

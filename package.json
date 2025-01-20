@@ -19,7 +19,7 @@
     "dat.gui": "^0.7.9",
     "element-plus": "^2.3.12",
     "gsap": "^3.12.4",
-    "sam-czm-utils": "1.4.12",
+    "sam-czm-utils": "1.4.15",
     "vue": "^3.4.15"
   },
   "devDependencies": {

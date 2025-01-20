@@ -1,5 +1,4 @@
 <script setup>
-debugger
 import {onMounted, ref} from "vue";
 import dat from 'dat.gui'
 import * as Cesium from "cesium";

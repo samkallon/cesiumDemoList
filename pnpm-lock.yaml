@@ -36,8 +36,8 @@ dependencies:
     specifier: ^3.12.4
     version: 3.12.5
   sam-czm-utils:
-    specifier: 1.4.12
-    version: 1.4.12
+    specifier: 1.4.15
+    version: 1.4.15
   vue:
     specifier: ^3.4.15
     version: 3.4.19
@@ -3444,8 +3444,8 @@ packages:
     resolution: {integrity: sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==}
     dev: false
 
-  /sam-czm-utils@1.4.12:
-    resolution: {integrity: sha512-xTLCcFIEMEUCPVAidYM2wLzxfAoroHPCoTcoKRAhN1yf+P0jP8Vw+NWs9TOjMVoCD5EP4U3J25iOW4iKQsvKlw==}
+  /sam-czm-utils@1.4.15:
+    resolution: {integrity: sha512-3Ml0mhuVDYt9FfiU6TULEhpnauykSW2428Wp7Fm7APXf/sAVBaeo0pip7eeJIoPbfdpEFjWxCCsMfr8wPXapYA==}
     dependencies:
       webpack: 5.91.0(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack@5.91.0)
