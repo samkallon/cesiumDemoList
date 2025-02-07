@@ -7,112 +7,6 @@ import * as Cesium from "cesium";
 
 let viewer,DrawObj,DigTerObj = null
 
-class Dig {
-  tileset
-  viewer
-  depth
-  Cesium
-
-  constructor({viewer,tileset,Cesium,terrainProvider}) {
-    this.viewer = viewer
-    this.tileset = tileset
-    this.Cesium = Cesium
-    this.terrainProvider = terrainProvider
-  }
-
-  async createDig (DigList) {
-    let polygons = []
-    for (let i = 0; i < DigList.length; i++) {
-      const item = DigList[i];
-
-      // 构建墙体侧面
-      // 插值点位,将原来的多边形点(如4个点)插值到4x20个点
-      const lerpFun = Array(item.intersectPointsNum).fill(0).map((e,i)=>i/(item.intersectPointsNum-1))
-      let finalPositions = []
-      item.car3PositionsList.forEach((e,i)=>{
-        if (i<item.car3PositionsList.length-1){
-          const lerpPositions = lerpFun.map((lerp) =>
-              this.Cesium.Cartesian3.lerp(
-                  item.car3PositionsList[i],
-                  item.car3PositionsList[i+1],
-                  lerp,
-                  new this.Cesium.Cartesian3()
-              ))
-          finalPositions.push(...lerpPositions)
-        }
-      })
-      // 获取最低点,再减去depth获得墙体entity的minimumHeights
-      const min = Math.min(...item.car3PositionsList.map(e=>this.Cesium.Cartographic.fromCartesian(e).height))
-      const minimumHeights = finalPositions.map(e=>min-item.depth)
-      // 针对finalPositions的每个点进行地形采样获取高度数组maximumHeights
-      const updatedCartographic = await this.Cesium.sampleTerrainMostDetailed(this.terrainProvider, finalPositions.map(e=>this.Cesium.Cartographic.fromCartesian(e)));
-      const maximumHeights = updatedCartographic.map(e=>e.height)
-      // 添加墙体entity
-      this.viewer.entities.add({
-        name:'digWall',
-        wall:{
-          positions: finalPositions,
-          minimumHeights: minimumHeights,
-          maximumHeights: maximumHeights,
-          material: new this.Cesium.ImageMaterialProperty({
-            image: item.wallImg,
-          })
-        }
-      })
-
-      // 构建底部  //重新应用高度
-      this.viewer.entities.add({
-        name:'digBottom',
-        polygon:{
-          hierarchy: item.car3PositionsList.map(e=>{
-            const CartographicPosition = this.Cesium.Cartographic.fromCartesian(e)
-            CartographicPosition.height = min-item.depth
-            return this.Cesium.Cartesian3.fromRadians(CartographicPosition.longitude, CartographicPosition.latitude, CartographicPosition.height)
-          }),
-          material: item.bottomImg,
-          perPositionHeight:true
-        }
-      })
-
-
-      polygons.push(
-          new this.Cesium.ClippingPolygon({
-            positions: item.car3PositionsList
-          }))
-    }
-
-    this.viewer.scene.globe.clippingPolygons = new this.Cesium.ClippingPolygonCollection({
-      polygons: polygons,
-    });
-    if (this.tileset){
-      this.tileset.clippingPolygons = new this.Cesium.ClippingPolygonCollection({
-        polygons: polygons,
-      });
-    }
-
-  }
-
-
-  clearDig() {
-    this.viewer.scene.globe.clippingPolygons.enabled = false
-    this.tileset.clippingPolygons.enabled = false
-    this.removaEntitiesAndPrimitivesByName('digWall')
-    this.removaEntitiesAndPrimitivesByName('digBottom')
-
-  }
-
-  removaEntitiesAndPrimitivesByName(name) {
-    const entities = this.getEntitiesByName(name)
-    entities.forEach(e => {
-      this.viewer.entities.remove(e)
-    })
-    const primitives = this.viewer.scene.primitives._primitives.filter(e => e.name === name)
-    primitives.forEach(e => {
-      this.viewer.scene.primitives.remove(e)
-    })
-  }
-
-}
 onMounted(async ()=>{
   const samCzm = new SamCesiumUtils.samCzm({Cesium:Cesium})
   Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJjMzM3OGE5Yi1lYjc5LTRhNzQtYWFjMC04M2M2MTY3YjFjM2YiLCJpZCI6NDEzMTIsImlhdCI6MTcwMzIwODY4MH0.Hda2inmYARoq6khHSp68tXlk0vPNfNEsenzYLFVLk_k'
@@ -131,8 +25,8 @@ onMounted(async ()=>{
     console.log(viewer.scene.pickPosition(e.position))
   }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
 
-  // DigTerObj = new SamCesiumUtils.Dig({viewer,Cesium})
-  DigTerObj = new Dig({viewer,Cesium,terrainProvider})
+  DigTerObj = new SamCesiumUtils.Dig({viewer,Cesium,terrainProvider})
+  // DigTerObj = new Dig({viewer,Cesium,terrainProvider})
 
   let car3PositionsList = [
     {
