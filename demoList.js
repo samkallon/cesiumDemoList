@@ -131,7 +131,7 @@ export default [
         title:'3dtile裁切',
         tag:['3dtile'],
         imgUrl:'imgs/demoFengMian/tilesetPlaneCut.png',
-        compName:'TilesetPlaneCut'
+        // compName:'TilesetPlaneCut'
     },
     {
         title:'积雪效果',
