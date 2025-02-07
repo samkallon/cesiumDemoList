@@ -28,6 +28,7 @@ import CullingVolume from '@/components/demos/CullingVolume.vue'
 import TianJiXian from "@/components/demos/TianJiXian.vue";
 import {ElMessage} from "element-plus";
 import WaterReflect from "@/components/demos/WaterReflect.vue";
+import VolumetricClouds from "@/components/demos/VolumetricClouds.vue";
 const compDic = {
   'DigTerrian':DigTerrian,
   'DynamicWall':DynamicWall,
@@ -50,7 +51,8 @@ const compDic = {
   'ParabolaFlowLine':ParabolaFlowLine,
   'CullingVolume':CullingVolume,
   TianJiXian,
-  WaterReflect
+  WaterReflect,
+  VolumetricClouds
 }
 
 const puBuLiuData = ref([])
