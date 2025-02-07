@@ -1,0 +1,1 @@
+const c=Math.sqrt(2),d=2;function o(e){const{context:a,radius:s}=e,r=s/c,t=r*d;a.rect(-r,-r,t,t)}const i=4;class u{constructor(){this.validTypes=["edge","square"]}draw(a){o(a)}getSidesCount(){return i}}async function n(e,a=!0){e.checkVersion("3.8.1"),await e.addShape(new u,a)}export{n as loadSquareShape};

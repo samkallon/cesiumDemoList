@@ -208,7 +208,7 @@ export default [
     {
         title:'反射水面',
         tag:['fbo'],
-        imgUrl:'imgs/demoFengMian/houChuLiQuanju.gif',
+        imgUrl:'imgs/demoFengMian/reflectWater.mp4',
         compName: 'WaterReflect'
     },
     {
@@ -219,7 +219,8 @@ export default [
     {
         title:'体积云',
         tag:['fbo','后处理'],
-        imgUrl:'imgs/demoFengMian/houChuLiQuanju.gif',
+        imgUrl:'imgs/demoFengMian/vClouds.mp4',
+        compName: 'VolumetricClouds'
     },
     {
         title:'无人机模拟飞行',
