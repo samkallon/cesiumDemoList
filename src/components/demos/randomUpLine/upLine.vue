@@ -17,8 +17,7 @@ onMounted(async () => {
         duration: 1
       }
   )
-  // 随机竖直飞线
-  samCzm.lineFlowInit(center, 200);
+
   const transform = Cesium.Transforms.eastNorthUpToFixedFrame(Cesium.Cartesian3.fromDegrees(center[0],center[1]))
   viewer.scene.camera.lookAtTransform(transform,new Cesium.HeadingPitchRange(0,-Math.PI / 8,2900))
   viewer.clock.onTick.addEventListener((clock)=>{

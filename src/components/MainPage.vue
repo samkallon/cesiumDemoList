@@ -29,6 +29,7 @@ import TianJiXian from "@/components/demos/TianJiXian.vue";
 import {ElMessage} from "element-plus";
 import WaterReflect from "@/components/demos/WaterReflect.vue";
 import VolumetricClouds from "@/components/demos/VolumetricClouds.vue";
+import DynamicPrimitiveList from "@/components/demos/DynamicPrimitiveList.vue";
 const compDic = {
   'DigTerrian':DigTerrian,
   'DynamicWall':DynamicWall,
@@ -52,7 +53,8 @@ const compDic = {
   'CullingVolume':CullingVolume,
   TianJiXian,
   WaterReflect,
-  VolumetricClouds
+  VolumetricClouds,
+  DynamicPrimitiveList
 }
 
 const puBuLiuData = ref([])
