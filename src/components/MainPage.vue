@@ -30,6 +30,7 @@ import {ElMessage} from "element-plus";
 import WaterReflect from "@/components/demos/WaterReflect.vue";
 import VolumetricClouds from "@/components/demos/VolumetricClouds.vue";
 import DynamicPrimitiveList from "@/components/demos/DynamicPrimitiveList.vue";
+import DroneFlyControl from "@/components/demos/DroneFlyControl.vue";
 const compDic = {
   'DigTerrian':DigTerrian,
   'DynamicWall':DynamicWall,
@@ -54,7 +55,8 @@ const compDic = {
   TianJiXian,
   WaterReflect,
   VolumetricClouds,
-  DynamicPrimitiveList
+  DynamicPrimitiveList,
+  DroneFlyControl
 }
 
 const puBuLiuData = ref([])
