@@ -135,6 +135,7 @@ export default [
         title:'无人机模拟飞行',
         tag:['fbo','后处理'],
         imgUrl:'imgs/demoFengMian/houChuLiQuanju.gif',
-        desc:"通过wasd和上下左右模拟操控无人机,并且将无人机的相机离屏渲染的结果整合到大疆带屏遥控器上"
+        desc:"通过wasd和上下左右模拟操控无人机,并且将无人机的相机离屏渲染的结果整合到大疆带屏遥控器上",
+        compName: 'DroneFlyControl'
     },
 ]
