@@ -4,6 +4,8 @@ import SamCesiumUtils from "sam-czm-utils";
 import * as Cesium from "cesium";
 
 let viewer = null
+let fbo,frustum
+
 onMounted(async () => {
   const samCzm = new SamCesiumUtils.samCzm({Cesium: Cesium})
   samCzm.initViewer({id: 'cesiumContainer'})
@@ -18,10 +20,14 @@ onMounted(async () => {
 
   const resource = await Cesium.IonResource.fromAssetId(3195351);
 
+  const hpRoll = new Cesium.HeadingPitchRoll();
+  const hpRollFrustum = new Cesium.HeadingPitchRoll(Cesium.Math.toRadians(0),Cesium.Math.toRadians(90),0);
+  const hpRange = new Cesium.HeadingPitchRange();
+  fbo = createFrameBuffer(viewer.scene.context)
 
-  const frustum = new Cesium.PerspectiveFrustum({
+  frustum = new Cesium.PerspectiveFrustum({
     fov: Cesium.Math.PI_OVER_THREE,
-    aspectRatio: 4 / 3,
+    aspectRatio: 3/4,
     near: 1.0,
     far: 100.0
   });
@@ -29,8 +35,8 @@ onMounted(async () => {
 
   const geometry = new Cesium.FrustumOutlineGeometry({
     frustum,
-    origin: initPosition,
-    orientation: new Cesium.Quaternion.fromHeadingPitchRoll(new Cesium.HeadingPitchRoll(0, 0, 0))
+    origin: new Cesium.Cartesian3(),
+    orientation: new Cesium.Quaternion.fromHeadingPitchRoll(hpRollFrustum)
   })
 
   const instance = new Cesium.GeometryInstance({
@@ -40,7 +46,7 @@ onMounted(async () => {
     },
     id: "frustum",
   });
-  viewer.scene.primitives.add(new Cesium.Primitive({
+  const frustumPrimitive =  viewer.scene.primitives.add(new Cesium.Primitive({
     geometryInstances: instance,
     appearance: new Cesium.PerInstanceColorAppearance({
       closed: false,
@@ -81,14 +87,14 @@ onMounted(async () => {
   const controller = scene.screenSpaceCameraController;
   let r = 0;
 
-  const hpRoll = new Cesium.HeadingPitchRoll();
-  const hpRange = new Cesium.HeadingPitchRange();
+
+
   let speed = 0;
   let speedY = 0
   let speedZ = 0
   const deltaRadians = Cesium.Math.toRadians(3.0);
 
-  let position = initPosition
+  let position = Cesium.Cartesian3.clone(initPosition)
   let speedVector = new Cesium.Cartesian3();
   let speedVectorY = new Cesium.Cartesian3();
   let speedVectorZ = new Cesium.Cartesian3();
@@ -154,28 +160,20 @@ onMounted(async () => {
       switch (e.code) {
         case "ArrowDown":
           speed = Math.max(speed-=1, -10);
-          // pitch up
-          // hpRoll.pitch += deltaRadians;
-          // if (hpRoll.pitch < Cesium.Math.PI / 8 ) {
-          //   hpRoll.pitch = Cesium.Math.PI / 8;
-          //   return
-          // }
-
           break;
         case "ArrowUp":
           speed = Math.min(speed+=1, 10);
-          // pitch up
-          // hpRoll.pitch -= deltaRadians;
-          // if (hpRoll.pitch > -Cesium.Math.PI / 8 ) {
-          //   hpRoll.pitch = -Cesium.Math.PI / 8;
-          // }
           break;
         case "ArrowLeft":
           // speed = Math.min(speed+=1, 10);
           // pitch up
-          hpRoll.roll += deltaRadians;
-          if (hpRoll.roll > Cesium.Math.TWO_PI) {
-            hpRoll.roll -= Cesium.Math.TWO_PI;
+          hpRoll.heading -= deltaRadians;
+          if (hpRoll.heading < -Cesium.Math.TWO_PI) {
+            hpRoll.heading += Cesium.Math.TWO_PI;
+          }
+          hpRollFrustum.heading -= deltaRadians;
+          if (hpRollFrustum.heading < -Cesium.Math.TWO_PI) {
+            hpRollFrustum.heading += Cesium.Math.TWO_PI;
           }
           break;
         case "ArrowRight":
@@ -184,6 +182,10 @@ onMounted(async () => {
           hpRoll.heading += deltaRadians;
           if (hpRoll.heading > Cesium.Math.TWO_PI) {
             hpRoll.heading -= Cesium.Math.TWO_PI;
+          }
+          hpRollFrustum.heading += deltaRadians;
+          if (hpRollFrustum.heading > Cesium.Math.TWO_PI) {
+            hpRollFrustum.heading -= Cesium.Math.TWO_PI;
           }
           break;
         case "KeyA":
@@ -197,6 +199,47 @@ onMounted(async () => {
           break;
         case "KeyS":
           speedZ = Math.max(speedZ-=1, -10);
+          break;
+        case "KeyQ":
+          // 视锥体抬升
+          hpRollFrustum.pitch += deltaRadians;
+          if (hpRollFrustum.pitch > Cesium.Math.TWO_PI) {
+            hpRollFrustum.pitch -= Cesium.Math.TWO_PI;
+          }
+          console.log(hpRollFrustum.pitch)
+          break;
+        case "KeyE":
+          // 视锥体下降
+          hpRollFrustum.pitch -= deltaRadians;
+          if (hpRollFrustum.pitch < -Cesium.Math.TWO_PI) {
+            hpRollFrustum.pitch += Cesium.Math.TWO_PI;
+          }
+          console.log(hpRollFrustum.pitch)
+          break;
+        default:
+      }
+    });
+    document.addEventListener("keyup", function (e) {
+      switch (e.code) {
+        case "ArrowDown":
+          speed = 0;
+          break;
+        case "ArrowUp":
+          // 让速度在2s内减到0
+          speed = 0
+          break;
+
+        case "KeyA":
+          speedY = 0;
+          break;
+        case "KeyD":
+          speedY = 0;
+          break;
+        case "KeyW":
+          speedZ = 0;
+          break;
+        case "KeyS":
+          speedZ = 0;
           break;
         default:
       }
@@ -226,6 +269,21 @@ onMounted(async () => {
           speedVector,
           position,
       );
+      // 更新视锥体位置
+      // frustumPrimitive.modelMatrix = Cesium.Matrix4.fromTranslationQuaternionRotationScale(
+      //     Cesium.Cartesian3.subtract(position,initPosition,new Cesium.Cartesian3()),
+      //     Cesium.Quaternion.fromHeadingPitchRoll(hpRollFrustum),
+      //     new Cesium.Cartesian3(1.0, 1.0, 1.0),
+      //     new Cesium.Matrix4());
+      // 更新视锥体朝向
+
+      Cesium.Transforms.headingPitchRollToFixedFrame(
+          position,
+          hpRollFrustum,
+          Cesium.Ellipsoid.WGS84,
+          fixedFrameTransform,
+          frustumPrimitive.modelMatrix,
+      );
       pathPosition.addSample(Cesium.JulianDate.now(), position);
       Cesium.Transforms.headingPitchRollToFixedFrame(
           position,
@@ -236,17 +294,54 @@ onMounted(async () => {
       );
 
       if (planePrimitive.ready) {
-      // Zoom to model
-      //   const transform = Cesium.Transforms.eastNorthUpToFixedFrame(planePrimitive.boundingSphere.center)
-      //   viewer.scene.camera.lookAtTransform(transform,new Cesium.HeadingPitchRange(0,-Math.PI / 8,2900))
-      // const center = planePrimitive.boundingSphere.center;
-      // hpRange.heading = hpRoll.heading;
-      // hpRange.pitch = hpRoll.pitch;
-      // camera.lookAt(center, hpRange);
-        // 创建一个entity来间接的跟踪
-      }
-    });
 
+      }
+
+      let camera = new Cesium.Camera(viewer.scene);
+      camera.setView({
+        destination: position,
+        orientation: {
+          heading:hpRollFrustum.heading + Cesium.Math.toRadians(180),
+          pitch: -hpRollFrustum.pitch,
+          roll:hpRollFrustum.roll + Cesium.Math.toRadians(180)
+        }
+      })
+      camera.frustum = new Cesium.PerspectiveFrustum({
+        fov: Cesium.Math.PI_OVER_THREE,
+        aspectRatio: 1,
+        near: 10.0,
+        far: 3000.0
+      });
+      renderToFbo(fbo, viewer.scene, camera)
+      let texture = Cesium.Texture.fromFramebuffer({
+        context: viewer.scene.context,
+        framebuffer: fbo
+      })
+      texture.type = 'sampler2D';
+
+      let width = viewer.scene.context.drawingBufferWidth;
+      let height = viewer.scene.context.drawingBufferHeight;
+      let pixels = viewer.scene.context.readPixels({
+        x: 0,
+        y: 0,
+        width: width,
+        height: height,
+        framebuffer: fbo,
+      });
+      let cavs = document.getElementById("remoteUI");
+      cavs.width = width;
+      cavs.height = height;
+      let imgData = new ImageData(new Uint8ClampedArray(pixels), width, height);
+      let ctx = cavs.getContext("2d");
+      ctx.putImageData(imgData, 0, 0, 0, 0, width, height);
+      ctx.translate(0, height);
+      ctx.scale(1, -1);
+      ctx.drawImage(cavs, 0, 0);
+      // cavs.style.height = (height * 0.3) + "px";
+      cavs.style.height = "276px";
+      // cavs.style.width = (width * 0.3) + "px";
+      cavs.style.width = "503px";
+    });
 
   } catch (error) {
     console.log(`Error loading model: ${error}`);
@@ -259,8 +354,169 @@ onMounted(async () => {
     // speedSpan.innerHTML = speed.toFixed(1);
   });
 
+  drawUI()
+
 
 })
+
+
+function createFrameBuffer(context) {
+  let width = context.drawingBufferWidth;
+  let height = context.drawingBufferHeight;
+  let framebuffer = new Cesium.Framebuffer({
+    context: context,
+    colorTextures: [
+      new Cesium.Texture({
+        context: context,
+        width: width,
+        height: height,
+        pixelFormat: Cesium.PixelFormat.RGBA,
+      }),
+    ]
+  });
+  return framebuffer;
+}
+
+function drawUI() {
+  // 获取Canvas元素和上下文
+  const canvas = document.getElementById('remoteUI');
+  const ctx = canvas.getContext('2d');
+
+  // 绘制九宫格均分线
+  function drawGridLines() {
+    // 设置线条样式
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = 1;
+
+    // 计算格子大小
+    const gridSizeWidth = canvas.width / 3;
+    const gridSizeHeight = canvas.height / 3;
+
+    // 绘制水平线
+    for (let i = 1; i < 3; i++) {
+      ctx.beginPath();
+      ctx.moveTo(0, i * gridSizeHeight);
+      ctx.lineTo(canvas.width, i * gridSizeHeight);
+      ctx.stroke();
+    }
+
+    // 绘制垂直线
+    for (let i = 1; i < 3; i++) {
+      ctx.beginPath();
+      ctx.moveTo(i * gridSizeWidth, 0);
+      ctx.lineTo(i * gridSizeWidth, canvas.height);
+      ctx.stroke();
+    }
+  }
+
+  // 绘制对角线
+  function drawDiagonals() {
+    // 设置线条样式
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 1;
+
+    // 绘制从左上到右下的对角线
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(canvas.width, canvas.height);
+    ctx.stroke();
+
+    // 绘制从右上到左下的对角线
+    ctx.beginPath();
+    ctx.moveTo(canvas.width, 0);
+    ctx.lineTo(0, canvas.height);
+    ctx.stroke();
+  }
+
+  // 执行绘制
+  drawGridLines();
+  drawDiagonals();
+}
+
+function renderToFbo(fbo, scene,cameraFbo) {
+  let camera = scene._defaultView.camera
+  scene._defaultView.camera = cameraFbo
+
+  const frameState = scene._frameState;
+  const context = scene.context;
+  const us = context.uniformState;
+
+  const view = scene._defaultView;
+  scene._view = view;
+
+  scene.updateFrameState();
+  frameState.passes.render = true;
+  frameState.passes.postProcess = scene.postProcessStages.hasSelected;
+  const renderTilesetPassState = new Cesium.Cesium3DTilePassState({
+    pass: Cesium.Cesium3DTilePass.RENDER,
+  });
+  frameState.tilesetPassState = renderTilesetPassState;
+
+  let backgroundColor = Cesium.defaultValue(scene.backgroundColor, Cesium.Color.BLACK);
+
+  frameState.backgroundColor = backgroundColor;
+
+  // frameState.atmosphere = scene.atmosphere;
+  // scene.fog.update(frameState);
+
+  us.update(frameState);
+
+  // const shadowMap = scene.shadowMap;
+  // if (Cesium.defined(shadowMap) && shadowMap.enabled) {
+  //   if (!Cesium.defined(scene.light) || scene.light instanceof SunLight) {
+  //     // Negate the sun direction so that it is from the Sun, not to the Sun
+  //     Cesium.Cartesian3.negate(us.sunDirectionWC, scene._shadowMapCamera.direction);
+  //   } else {
+  //     Cesium.Cartesian3.clone(scene.light.direction, scene._shadowMapCamera.direction);
+  //   }
+  //   frameState.shadowMaps.push(shadowMap);
+  // }
+
+  scene._computeCommandList.length = 0;
+  scene._overlayCommandList.length = 0;
+
+  const viewport = view.viewport;
+  viewport.x = 0;
+  viewport.y = 0;
+  viewport.width = context.drawingBufferWidth;
+  viewport.height = context.drawingBufferHeight;
+
+  const passState = view.passState;
+  // 将fbo赋值到passState.framebuffer中
+  passState.framebuffer = fbo;
+  passState.blendingEnabled = undefined;
+  passState.scissorTest = undefined;
+  passState.viewport = Cesium.BoundingRectangle.clone(viewport, passState.viewport);
+
+  if (Cesium.defined(scene.globe)) {
+    scene.globe.beginFrame(frameState);
+  }
+
+  scene.updateEnvironment();
+  scene.updateAndExecuteCommands(passState, backgroundColor);
+  scene.resolveFramebuffers(passState);
+
+  passState.framebuffer = undefined;
+  //executeOverlayCommands(scene, passState);
+
+  if (Cesium.defined(scene.globe)) {
+    scene.globe.endFrame(frameState);
+    if (!scene.globe.tilesLoaded) {
+      scene._renderRequested = true;
+    }
+  }
+
+  context.endFrame();
+  scene.globe.show=true;
+  scene._defaultView.camera = camera
+
+}
+
+
+
+
+
+
 
 </script>
 
@@ -268,7 +524,10 @@ onMounted(async () => {
   <div class="container">
     <div id="cesiumContainer"></div>
     <div class="remote-control">
-      <img src="@/assets/imgs/djiRemoteControl.png" alt="">
+      <img src="@/assets/imgs/djiRemoteControl.png" alt="" width="631">
+      <canvas class="fbo-content remote-ui" id="fboContent"></canvas>
+      <canvas class="remote-ui" id="remoteUI"></canvas>
+
     </div>
   </div>
 
@@ -289,5 +548,13 @@ onMounted(async () => {
   position: absolute;
   right: 0;
   bottom: 0;
+}
+.remote-ui{
+  position: absolute;
+  right: 64px;
+  bottom: 20px;
+  width: 503px;
+  height: 276px;
+  border: 1px solid white;
 }
 </style>

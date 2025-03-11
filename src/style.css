@@ -1,6 +1,6 @@
 
 
-html,body { 
+html,body {
   margin: 0;
   width: 100%;
   height: 100%;
@@ -19,6 +19,7 @@ html,body {
 }
 
 .demoDialog{
+  margin-top: 2%!important;
     padding: 0!important;
   .el-dialog__header{
     display: none;

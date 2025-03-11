@@ -142,7 +142,7 @@ async function showDemo(item) {
         </div>
       </div>
     </el-scrollbar>
-    <el-dialog class="demoDialog" v-model="demoShow" width="90%" top="5vh">
+    <el-dialog class="demoDialog" v-model="demoShow" width="90%">
       <component :is="currentComponent"></component>
     </el-dialog>
 </template>
