@@ -62,35 +62,10 @@ export default [
         compName:'TianJiXian'
     },
     {
-        title:'点光源',
-        tag:['后处理'],
-        imgUrl:'imgs/demoFengMian/dianGuangYuan.png',
-        url:'https://blog.csdn.net/kuyewb/article/details/133157526',
-        // compName: "PointLight"
-    },
-    {
-        title:'绕点旋转',
-        tag:['相机'],
-        imgUrl:'imgs/demoFengMian/dianGuangYuan.png',
-        url:'https://dc.dvgis.cn/#/editor?type=scene-ext&subType=animation&example=around_point'
-    },
-    {
         title:'DrawCommand绘制自定义Primitive',
         tag:['DrawCommand'],
         imgUrl:'imgs/demoFengMian/DrawCommandPrimitive.mp4',
         compName: 'DrawCommandPrimitive'
-    },
-    {
-        title:'电子公告牌',
-        tag:['Model','shader'],
-        imgUrl:'imgs/demoFengMian/dynamicBillboardModel.png',
-        // compName: 'DigitalBillboard'
-    },
-    {
-        title:'视锥体检测动态拉伸',
-        tag:[],
-        imgUrl:'imgs/demoFengMian/dynamicBillboardModel.png',
-        // compName: 'CullingVolume'
     },
     {
         title:'全局特效处理夜视/黑白/三角网/马赛克',
@@ -98,21 +73,10 @@ export default [
         imgUrl:'imgs/demoFengMian/houChuLiQuanju.gif',
     },
     {
-        title:'3dtile单体化',
-        tag:['3dtile'],
-        imgUrl:'imgs/demoFengMian/houChuLiQuanju.gif',
-        url:'https://github.com/liukun6356/cesium-demo.git  taishi3dtiles 路由 '
-    },
-    {
         title:'雷达云图',
         tag:['layer'],
         imgUrl:'imgs/demoFengMian/houChuLiQuanju.gif',
         url:'https://github.com/liukun6356/cesium-demo.git  czWater yutu'
-    },
-    {
-        title:'离屏渲染',
-        tag:['fbo'],
-        imgUrl:'imgs/demoFengMian/houChuLiQuanju.gif',
     },
     {
         title:'反射水面',

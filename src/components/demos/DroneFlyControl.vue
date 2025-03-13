@@ -328,7 +328,7 @@ onMounted(async () => {
         height: height,
         framebuffer: fbo,
       });
-      let cavs = document.getElementById("remoteUI");
+      let cavs = document.getElementById("fboContent");
       cavs.width = width;
       cavs.height = height;
       let imgData = new ImageData(new Uint8ClampedArray(pixels), width, height);
@@ -386,7 +386,7 @@ function drawUI() {
   function drawGridLines() {
     // 设置线条样式
     ctx.strokeStyle = '#ffffff';
-    ctx.lineWidth = 1;
+    ctx.lineWidth = 0.5;
 
     // 计算格子大小
     const gridSizeWidth = canvas.width / 3;
@@ -413,7 +413,7 @@ function drawUI() {
   function drawDiagonals() {
     // 设置线条样式
     ctx.strokeStyle = 'white';
-    ctx.lineWidth = 1;
+    ctx.lineWidth = 0.5;
 
     // 绘制从左上到右下的对角线
     ctx.beginPath();
