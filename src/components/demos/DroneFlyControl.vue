@@ -527,7 +527,7 @@ function renderToFbo(fbo, scene,cameraFbo) {
       <img src="@/assets/imgs/djiRemoteControl.png" alt="" width="631">
       <canvas class="fbo-content remote-ui" id="fboContent"></canvas>
       <canvas class="remote-ui" id="remoteUI"></canvas>
-
+      <div class="tip">WASD控制上下和左右，上下左右控制前进和转向，QE控制无人机相机视角</div>
     </div>
   </div>
 
@@ -556,5 +556,15 @@ function renderToFbo(fbo, scene,cameraFbo) {
   width: 503px;
   height: 276px;
   border: 1px solid white;
+}
+.tip{
+ position: absolute;
+  right: 50px;
+  bottom: 0;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.42);
+  padding: 4px;
+  font-size: 16px;
+  text-align: center;
 }
 </style>
