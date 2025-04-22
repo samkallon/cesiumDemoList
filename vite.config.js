@@ -7,12 +7,12 @@ import obfuscatorPlugin from "vite-plugin-javascript-obfuscator";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    obfuscatorPlugin({
-      options:{
-        optionsPreset:'high-obfuscation'
-      },
-      apply:'build'
-    }),
+    // obfuscatorPlugin({
+    //   options:{
+    //     optionsPreset:'high-obfuscation'
+    //   },
+    //   apply:'build'
+    // }),
     vue(),cesium(),
   ],
   resolve: {
