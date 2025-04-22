@@ -38,11 +38,6 @@ export default [
         compName: 'TilesetCustomFragmentShader'
     },
     {
-        title:'3dtile调整位置,姿态',
-        tag:['3dtile'],
-        imgUrl:'imgs/demoFengMian/default.png'
-    },
-    {
         title:'积雪效果',
         tag:['后处理'],
         imgUrl:'imgs/demoFengMian/snowDuiJi.png',
@@ -67,28 +62,28 @@ export default [
         imgUrl:'imgs/demoFengMian/DrawCommandPrimitive.mp4',
         compName: 'DrawCommandPrimitive'
     },
-    {
-        title:'全局特效处理夜视/黑白/三角网/马赛克',
-        tag:['后处理'],
-        imgUrl:'imgs/demoFengMian/houChuLiQuanju.gif',
-    },
-    {
-        title:'雷达云图',
-        tag:['layer'],
-        imgUrl:'imgs/demoFengMian/houChuLiQuanju.gif',
-        url:'https://github.com/liukun6356/cesium-demo.git  czWater yutu'
-    },
+    // {
+    //     title:'全局特效处理夜视/黑白/三角网/马赛克',
+    //     tag:['后处理'],
+    //     imgUrl:'imgs/demoFengMian/houChuLiQuanju.gif',
+    // },
+    // {
+    //     title:'雷达云图',
+    //     tag:['layer'],
+    //     imgUrl:'imgs/demoFengMian/houChuLiQuanju.gif',
+    //     url:'https://github.com/liukun6356/cesium-demo.git  czWater yutu'
+    // },
     {
         title:'反射水面',
         tag:['fbo'],
         imgUrl:'imgs/demoFengMian/reflectWater.mp4',
         compName: 'WaterReflect'
     },
-    {
-        title:'丁达尔效应',
-        tag:['fbo','后处理'],
-        imgUrl:'imgs/demoFengMian/houChuLiQuanju.gif',
-    },
+    // {
+    //     title:'丁达尔效应',
+    //     tag:['fbo','后处理'],
+    //     imgUrl:'imgs/demoFengMian/houChuLiQuanju.gif',
+    // },
     {
         title:'体积云',
         tag:['fbo','后处理'],
