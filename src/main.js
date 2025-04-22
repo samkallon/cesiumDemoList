@@ -8,13 +8,16 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import { createPinia } from 'pinia'
 import Particles from "@tsparticles/vue3";
 import { loadSlim } from "@tsparticles/slim";
+import router from "./router.js";
 
 
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
+app.use(router)
 app.use(ElementPlus, { locale: zhCn })
+
 app.use(createPinia())
 app.use(Particles,{
     init: async engine => {

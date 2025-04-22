@@ -4,23 +4,21 @@ import SamCesiumUtils from "sam-czm-utils";
 import * as Cesium from "cesium";
 
 let viewer = null
-let center = [118.79304711609575, 32.07511800768333]
 onMounted(async () => {
   const samCzm = new SamCesiumUtils.samCzm({Cesium:Cesium})
-  samCzm.initViewer({id:'cesiumContainer', initCamera:true})
+  samCzm.initViewer({id:'cesiumContainer', initCamera:false})
   viewer = samCzm.viewer
-  samCzm.addCircleWaterExpand(
-      {
-        viewer,
-        latlng:center,
-        radius:3000,
-        color: '#ffe100',
-        speed:3.0,
-        height:10
-      }
-  )
-})
+  const tileset = viewer.scene.primitives.add(
+      await Cesium.Cesium3DTileset.fromIonAssetId(354759),
+  );
+  viewer.flyTo(tileset,{duration:1})
 
+  let PostProcessUtils
+
+  PostProcessUtils = new SamCesiumUtils.PostProcessUtils({viewer,Cesium})
+  PostProcessUtils.add('RainFly')
+  PostProcessUtils.add('RainReflect')
+})
 </script>
 
 <template>
@@ -36,15 +34,5 @@ onMounted(async () => {
   position: relative;
 }
 
-.dig-terrian-container {
-  padding: 8px;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
 
-#cesiumContainer {
-  width: 100%;
-  height: 90vh;
-}
 </style>

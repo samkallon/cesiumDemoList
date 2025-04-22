@@ -67,8 +67,5 @@ function clear() {
   top: 0;
   left: 0;
 }
-#cesiumContainer {
-  width: 100%;
-  height: 90vh;
-}
+
 </style>

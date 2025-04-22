@@ -539,10 +539,7 @@ function renderToFbo(fbo, scene,cameraFbo) {
   position: relative;
 }
 
-#cesiumContainer {
-  width: 100%;
-  height: 90vh;
-}
+
 
 .remote-control {
   position: absolute;

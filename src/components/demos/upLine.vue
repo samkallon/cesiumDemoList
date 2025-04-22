@@ -48,8 +48,5 @@ const curr = ref(1)
   left: 0;
 }
 
-#cesiumContainer {
-  width: 100%;
-  height: 90vh;
-}
+
 </style>

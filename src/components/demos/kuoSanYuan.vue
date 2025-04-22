@@ -1,7 +1,7 @@
 <script setup>
 import {onMounted} from "vue";
-import * as Cesium from "cesium";
 import SamCesiumUtils from "sam-czm-utils";
+import * as Cesium from "cesium";
 
 let viewer = null
 let center = [118.79304711609575, 32.07511800768333]
@@ -9,13 +9,14 @@ onMounted(async () => {
   const samCzm = new SamCesiumUtils.samCzm({Cesium:Cesium})
   samCzm.initViewer({id:'cesiumContainer', initCamera:true})
   viewer = samCzm.viewer
-  samCzm.lightenEillposid(
+  samCzm.kuoSanYuan(
       {
         viewer,
-        position:Cesium.Cartesian3.fromDegrees(...center),
-        radii:new Cesium.Cartesian3(2000,2000,2000),
-        color: Cesium.Color.fromCssColorString('#fffc00'),
-        speed:10.0
+        latlng:center,
+        radius:3000,
+        color: '#ffe100',
+        speed:3.0,
+        height:10
       }
   )
 })
@@ -42,8 +43,5 @@ onMounted(async () => {
   left: 0;
 }
 
-#cesiumContainer {
-  width: 100%;
-  height: 90vh;
-}
+
 </style>

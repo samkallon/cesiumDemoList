@@ -33,7 +33,7 @@ onMounted(async () => {
   viewer.camera.changed.addEventListener(()=>{
     intersectEntityAndModifyHeight()
   })
-  
+
   function intersectEntityAndModifyHeight() {
     const frustum = viewer.camera.frustum
     const cullingVolume = frustum.computeCullingVolume(viewer.camera.position, viewer.camera.direction, viewer.camera.up);
@@ -101,8 +101,5 @@ onMounted(async () => {
   left: 0;
 }
 
-#cesiumContainer {
-  width: 100%;
-  height: 90vh;
-}
+
 </style>

@@ -74,8 +74,5 @@ onMounted(async () => {
   position: relative;
 }
 
-#cesiumContainer {
-  width: 100%;
-  height: 90vh;
-}
+
 </style>

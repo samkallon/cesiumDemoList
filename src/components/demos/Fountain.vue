@@ -1,7 +1,7 @@
 <script setup>
 import * as Cesium from 'cesium'
 import {onMounted} from "vue";
-import smoke from './smoke.png?url'
+import smoke from '../../assets/imgs/materialImg/smoke.png?url'
 import dat from "dat.gui";
 import SamCesiumUtils from "sam-czm-utils";
 let viewer = null
@@ -210,8 +210,5 @@ onMounted(async()=>{
 }
 
 
-#cesiumContainer {
-  width: 100%;
-  height: 90vh;
-}
+
 </style>

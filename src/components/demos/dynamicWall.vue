@@ -105,8 +105,5 @@ function showWall(id,type,imgUrl) {
   left: 0;
 }
 
-#cesiumContainer {
-  width: 100%;
-  height: 90vh;
-}
+
 </style>

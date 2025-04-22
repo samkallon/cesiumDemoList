@@ -9,9 +9,8 @@ onMounted(async () => {
   const samCzm = new SamCesiumUtils.samCzm({Cesium:Cesium})
   samCzm.initViewer({id:'cesiumContainer', initCamera:true})
   viewer = samCzm.viewer
-  samCzm.kuoSanYuan(
+  samCzm.addWeightCircleExpand(
       {
-        viewer,
         latlng:center,
         radius:3000,
         color: '#ffe100',
@@ -43,8 +42,5 @@ onMounted(async () => {
   left: 0;
 }
 
-#cesiumContainer {
-  width: 100%;
-  height: 90vh;
-}
+
 </style>
