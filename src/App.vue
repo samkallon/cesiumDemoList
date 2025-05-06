@@ -1,5 +1,11 @@
 <script setup>
 import tsParticleEmitter from "../public/tsParticle/tsParticleEmitter.json";
+import {useRouter} from "vue-router";
+import {ref} from "vue";
+const router = useRouter()
+function returnHome() {
+  router.push('/')
+}
 </script>
 
 <template>
@@ -13,6 +19,7 @@ import tsParticleEmitter from "../public/tsParticle/tsParticleEmitter.json";
   <div class="con">
     <router-view></router-view>
   </div>
+<!--  <el-button class="returnBtn" @click="returnHome" v-if="router.currentRoute.path !== '/'">返回</el-button>-->
 </template>
 
 <style scoped>
@@ -39,6 +46,12 @@ import tsParticleEmitter from "../public/tsParticle/tsParticleEmitter.json";
   width: 100%;
   height: calc(100% - 60px);
   margin-top: 60px;
+}
+
+.returnBtn{
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
 }
 
 </style>
