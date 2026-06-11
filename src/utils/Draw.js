@@ -1,4 +1,4 @@
-import * as Cesium from "cesium";
+﻿import * as Cesium from "cesium";
 
 export default class Draw {
     constructor(viewer) {
@@ -63,6 +63,7 @@ export default class Draw {
     startDraw(type){
         this.activeShapePoints = []
         if (type){
+        const self = this
             this.drawingMode = type
         }
         const handler = new Cesium.ScreenSpaceEventHandler(this.viewer.canvas);
@@ -76,10 +77,10 @@ export default class Draw {
                     this.floatingPoint = this.createPoint(earthPosition);
                     this.activeShapePoints.push(earthPosition);
                     const dynamicPositions = new Cesium.CallbackProperty(function () {
-                        if (this.drawingMode === "polygon") {
-                            return new Cesium.PolygonHierarchy(this.activeShapePoints);
+                        if (self.drawingMode === "polygon") {
+                            return new Cesium.PolygonHierarchy(self.activeShapePoints);
                         }
-                        return this.activeShapePoints;
+                        return self.activeShapePoints;
                     }, false);
                     this.activeShape = this.drawShape(dynamicPositions);
                 }

@@ -1,4 +1,4 @@
-<script setup>
+﻿<script setup>
 import tsParticleEmitter from "../public/tsParticle/tsParticleEmitter.json";
 import {useRouter} from "vue-router";
 import {ref} from "vue";
@@ -11,22 +11,23 @@ function returnHome() {
 <template>
   <vue-particles id="bg" :options="tsParticleEmitter"></vue-particles>
   <div class="header">
-    <div class="title" @click="router.push('/')">CESIUM示例</div>
-    <el-link href="https://www.samkallon.top" type="primary" style="margin-right: 8px">博客</el-link>
+    <div class="title" @click="router.push('/')">CESIUM DEMO</div>
+    <el-link href="https://www.samkallon.top" type="primary" style="margin-right: 8px">个人网站</el-link>
     <el-link href="https://www.samkallon.top/three-demo-list" type="primary" style="margin-right: 8px">ThreeDemo
     </el-link>
   </div>
   <div class="con">
     <router-view></router-view>
   </div>
-<!--  <el-button class="returnBtn" @click="returnHome" v-if="router.currentRoute.path !== '/'">返回</el-button>-->
+<!--  <el-button class="returnBtn" @click="returnHome" v-if="router.currentRoute.path !== '/'">杩斿洖</el-button>-->
 </template>
 
 <style scoped>
 .header {
   width: 100%;
   height: 60px;
-  background: #213547;
+  background: #151921;
+  border-bottom: 1px solid #2a2e3a;
   display: flex;
   align-items: center;
   position: fixed;

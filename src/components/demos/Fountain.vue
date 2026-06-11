@@ -1,4 +1,4 @@
-<script setup>
+﻿<script setup>
 import * as Cesium from 'cesium'
 import {onMounted} from "vue";
 import smoke from '../../assets/imgs/materialImg/smoke.png?url'
@@ -108,10 +108,10 @@ onMounted(async()=>{
         emissionRate: viewModel.emissionRate,
 
         lifetime: 0.2,
-        sizelnMeters:false,
+        sizeInMeters:false,
 
         // emitter: new Cesium.CircleEmitter(2.0),
-        emitter: new Cesium.ConeEmitter(Cesium.Math.toRadians(30.0)),// 锥形发射器
+        emitter: new Cesium.ConeEmitter(Cesium.Math.toRadians(30.0)),// 閿ュ舰鍙戝皠鍣?
 
         emitterModelMatrix: computeEmitterModelMatrix(),
 
